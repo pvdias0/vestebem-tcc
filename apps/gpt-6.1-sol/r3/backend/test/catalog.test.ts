@@ -1,0 +1,62 @@
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import { DatabaseSync } from 'node:sqlite';
+import { mkdtempSync, readFileSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join, resolve } from 'node:path';
+import { once } from 'node:events';
+import { openDatabase, backendRoot } from '../src/db.js';
+import { createApp } from '../src/app.js';
+import { seedDemo } from '../src/seed.js';
+test('catálogo público, filtros combinados, permissões e histórico de compra', async () => {
+ const dir = mkdtempSync(join(tmpdir(),'vestebem-catalog-')); const path=join(dir,'db.sqlite');
+ const old=new DatabaseSync(path);
+ old.exec(readFileSync(resolve(backendRoot,'migrations/001_initial.sql'),'utf8'));
+ old.exec(readFileSync(resolve(backendRoot,'migrations/002_orders.sql'),'utf8'));
+ old.exec("CREATE TABLE migrations(name TEXT PRIMARY KEY); INSERT INTO migrations VALUES ('001_initial.sql'),('002_orders.sql'); INSERT INTO users(name,email,password_hash) VALUES ('Antigo','old@example.com','hash'); INSERT INTO orders(customer_id,total_cents) VALUES (1,3998); INSERT INTO order_items(order_id,description,quantity,unit_price_cents) VALUES (1,'Peça antiga',2,1999)");
+ old.close();
+ const db=openDatabase(path); seedDemo(db); seedDemo(db);
+ const server=createApp(db).listen(0,'127.0.0.1'); await once(server,'listening'); const address=server.address(); assert(address && typeof address!=='string');
+ const base=`http://127.0.0.1:${address.port}/api/`;
+ const req=(route:string,method='GET',body?:unknown,cookie='')=>fetch(base+route,{method,headers:{'Content-Type':'application/json',Cookie:cookie},body:body===undefined?undefined:JSON.stringify(body)});
+ const login=async(email:string)=>{ const res=await req('login','POST',{email,password:'VesteBem@2026'}); assert.equal(res.status,200);return res.headers.get('set-cookie')!.split(';')[0]; };
+ try {
+  assert.equal(db.prepare('SELECT count(*) AS n FROM products').get()?.n,16);
+  assert.deepEqual(db.prepare('PRAGMA foreign_key_check').all(),[]);
+  const legacy=db.prepare('SELECT description,quantity,unit_price_cents,product_id FROM order_items WHERE order_id=1').get();
+  assert.equal(legacy?.description,'Peça antiga');assert.equal(legacy?.quantity,2);assert.equal(legacy?.unit_price_cents,1999);assert.equal(legacy?.product_id,null);
+  const before=JSON.stringify(db.prepare('SELECT * FROM products ORDER BY id').all());
+  const first=await (await req('products')).json(); const second=await (await req('products?page=2')).json();
+  assert.equal(first.items.length,12);assert.equal(second.items.length,4);assert.equal(first.total,16);assert.equal(first.totalPages,2);assert.equal(new Set([...first.items,...second.items].map(p=>p.id)).size,16);
+  const out=await (await req('products?page=99')).json();assert.equal(out.items.length,0);assert.equal(out.total,16);
+  const find=async(values:Record<string,string>)=> (await req('products?'+new URLSearchParams(values))).json();
+  assert.equal((await find({q:"D'Água"})).total,1);
+  assert.equal((await find({q:"colecao d'agua"})).total,1);
+  assert.equal((await find({q:'toque macio'})).total,1);
+  assert.equal((await find({q:"' OR 1=1 --"})).total,0);
+  assert.equal((await find({q:'%'})).total,0);
+  const filtered=await find({q:'conforto',category:'Casual',size:'M',minPriceCents:'6000',maxPriceCents:'9000',sort:'price_desc'});
+  assert.equal(filtered.total,1);assert.equal(filtered.items[0].name,'Jaqueta leve');
+  const mismatch=await find({category:'Casual',size:'M',maxPriceCents:'1000'});assert.equal(mismatch.total,0);
+  for (const sort of ['price_asc','price_desc','name_asc','name_desc']) { const a=await find({sort}); const b=await find({sort,page:'2'}); const all=[...a.items,...b.items]; const keys=all.map(p=>sort.startsWith('price')?p.priceCents:p.name.toLowerCase()); const sorted=[...keys].sort((a,b)=>typeof a==='number' && typeof b==='number'?a-b:a<b?-1:a>b?1:0); if(sort.endsWith('desc'))sorted.reverse();assert.deepEqual(keys,sorted); }
+  for (const query of ['page=0','page=1.5','page=x','sort=price_cents%3BDROP%20TABLE%20products','minPriceCents=-1','minPriceCents=50&maxPriceCents=10','q=x&q=y','maxPriceCents=1.5']) assert.equal((await req('products?'+query)).status,400);
+  assert.equal(JSON.stringify(db.prepare('SELECT * FROM products ORDER BY id').all()),before);
+  const product={name:"Coleção D'Água <b>Especial</b>",description:'<script>alert(1)</script> Texto simples.',category:'Teste',size:'M',priceCents:1234,stock:0};
+  assert.equal((await req('products','POST',product)).status,401);
+  const customer=await login('ana@demo.vestebem.local'); const staff=await login('funcionario@demo.vestebem.local');
+  assert.equal((await req('products','POST',product,customer)).status,403);
+  const created=await req('products','POST',product,staff);assert.equal(created.status,201);const {id}=await created.json();
+  assert.deepEqual(await (await req('products/'+id)).json(),{id,...product});
+  assert.equal((await req('products/'+id,'PUT',product)).status,401); assert.equal((await req('products/'+id,'PUT',product,customer)).status,403);
+  for(const changes of [{priceCents:-1},{priceCents:0.1},{priceCents:'10'},{stock:-1},{stock:1.5},{stock:'1'},{name:' '},{description:''},{category:''},{size:''}]) assert.equal((await req('products/'+id,'PUT',{...product,...changes},staff)).status,400);
+  assert.equal((await req('products/999999')).status,404); assert.equal((await req('products/999999','PUT',product,staff)).status,404);
+  const orderResponse=await req('orders','POST',{items:[{productId:id,quantity:2,unitPriceCents:1,name:'Falso'}],totalCents:2,confirmDelivery:true,deliveryVersion:1},customer);assert.equal(orderResponse.status,201);const orderId=(await orderResponse.json()).id;
+  const purchase=await (await req('orders/'+orderId,'GET',undefined,customer)).json();assert.equal(purchase.totalCents,2468);assert.equal(purchase.items[0].name,product.name);assert.equal(purchase.items[0].productId,id);assert.equal(purchase.items[0].unitPriceCents,1234);
+  assert.equal((await (await req('products/'+id)).json()).stock,0);
+  assert.equal((await req('products/'+id,'PUT',{...product,name:'Nome atualizado',priceCents:9999,stock:20},staff)).status,200);
+  assert.deepEqual(await (await req('orders/'+orderId,'GET',undefined,customer)).json(),purchase);
+  const legacyResponse=await (await req('orders/1','GET',undefined,staff)).json();assert.equal(legacyResponse.totalCents,3998);assert.equal(legacyResponse.items[0].name,'Peça antiga');assert.equal(legacyResponse.items[0].productId,null);
+  seedDemo(db);assert.equal(db.prepare('SELECT count(*) AS n FROM products').get()?.n,17);
+  const reopened=openDatabase(path);try{assert.equal(reopened.prepare('SELECT price_cents FROM products WHERE id=?').get(id)?.price_cents,9999);assert.equal(reopened.prepare('SELECT total_cents FROM orders WHERE id=?').get(orderId)?.total_cents,2468);}finally{reopened.close();}
+ }finally{const closed=once(server,'close');server.close();server.closeAllConnections();await closed;db.close();rmSync(dir,{recursive:true,force:true});}
+});

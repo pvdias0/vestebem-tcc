@@ -1,0 +1,12 @@
+node_modules/
+dist/
+build/
+.npm-cache/
+test-results/
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+.env

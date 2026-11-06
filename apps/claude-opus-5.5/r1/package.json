@@ -1,0 +1,19 @@
+{
+  "name": "vestebem",
+  "private": true,
+  "version": "0.1.0",
+  "description": "VesteBem - loja de roupas (etapa 4: conta e entrega)",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "install:all": "npm ci --prefix backend && npm ci --prefix frontend",
+    "db:migrate": "npm run db:migrate --prefix backend",
+    "db:seed": "npm run db:seed --prefix backend",
+    "dev": "node scripts/dev.mjs",
+    "typecheck": "npm run typecheck --prefix backend && npm run typecheck --prefix frontend",
+    "build": "npm run build --prefix backend && npm run build --prefix frontend",
+    "start": "npm run start --prefix backend",
+    "test": "npm run test --prefix backend"
+  }
+}

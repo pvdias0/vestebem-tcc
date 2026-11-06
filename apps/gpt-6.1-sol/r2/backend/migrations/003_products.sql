@@ -1,0 +1,2 @@
+CREATE TABLE products (id INTEGER PRIMARY KEY, name TEXT NOT NULL CHECK(length(trim(name)) BETWEEN 1 AND 200), description TEXT NOT NULL CHECK(length(description)<=5000), category TEXT NOT NULL CHECK(length(trim(category)) BETWEEN 1 AND 100), size TEXT NOT NULL CHECK(length(trim(size)) BETWEEN 1 AND 30), price_cents INTEGER NOT NULL CHECK(typeof(price_cents)='integer' AND price_cents>=0), stock INTEGER NOT NULL CHECK(typeof(stock)='integer' AND stock>=0), demo_key TEXT UNIQUE);
+ALTER TABLE order_items ADD COLUMN product_id INTEGER REFERENCES products(id);

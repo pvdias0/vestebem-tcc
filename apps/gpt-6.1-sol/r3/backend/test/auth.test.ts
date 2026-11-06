@@ -1,0 +1,52 @@
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import { mkdtempSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { once } from 'node:events';
+import { openDatabase } from '../src/db.js';
+import { createApp } from '../src/app.js';
+test('cadastro, autenticação, isolamento, revogação e persistência', async () => {
+ const dir = mkdtempSync(join(tmpdir(), 'vestebem-'));
+ const path = join(dir, 'test.sqlite');
+ let db = openDatabase(path);
+ let server = createApp(db).listen(0, '127.0.0.1');
+ await once(server, 'listening');
+ const address = server.address();
+ assert(address && typeof address !== 'string');
+ let base = `http://127.0.0.1:${address.port}`;
+ async function request(route: string, body?: object, cookie = '') { return fetch(base + '/api/' + route, { method: body ? 'POST' : 'GET', headers: { 'Content-Type': 'application/json', Cookie: cookie }, body: body ? JSON.stringify(body) : undefined }); }
+ try {
+  assert.equal((await request('me')).status, 401);
+  assert.equal((await request('register', { name: 'A', email: 'x', password: '1' })).status, 400);
+  const account = { name: 'Ana Silva', email: 'ANA@example.com', password: 'senha-segura-123', role: 'admin' };
+  const registered = await request('register', account);
+  assert.equal(registered.status, 201);
+  assert(!JSON.stringify(await registered.json()).includes('password'));
+  assert.equal(db.prepare('SELECT role FROM users').get()?.role, 'customer');
+  assert.equal((await request('register', { ...account, email: 'ana@example.com' })).status, 409);
+  assert.equal((await request('login', { email: account.email, password: 'errada' })).status, 401);
+  const login = await request('login', account);
+  assert.equal(login.status, 200);
+  const header = login.headers.get('set-cookie')!;
+  assert(header.includes('HttpOnly')); assert(header.includes('SameSite=Strict'));
+  const cookie = header.split(';')[0];
+  assert.deepEqual(await (await request('me', undefined, cookie)).json(), { name: account.name, email: 'ana@example.com', role: 'customer' });
+  await request('register', { name: 'Bruno', email: 'bruno@example.com', password: account.password });
+  const second = await request('login', { email: 'bruno@example.com', password: account.password });
+  const otherCookie = second.headers.get('set-cookie')!.split(';')[0];
+  assert.equal((await (await request('me', undefined, otherCookie)).json()).name, 'Bruno');
+  assert.equal((await request('logout', {}, cookie)).status, 204);
+  assert.equal((await request('me', undefined, cookie)).status, 401);
+  assert.equal((await request('me', undefined, otherCookie)).status, 200);
+  const csrf = await fetch(base + '/api/logout', { method: 'POST', headers: { Origin: 'https://outro.example', Cookie: otherCookie } });
+  assert.equal(csrf.status, 403);
+  db.prepare('UPDATE sessions SET expires_at=0').run();
+  assert.equal((await request('me', undefined, otherCookie)).status, 401);
+  const close = once(server, 'close'); server.close(); await close; db.close();
+  db = openDatabase(path); server = createApp(db).listen(0, '127.0.0.1'); await once(server, 'listening');
+  const restarted = server.address(); assert(restarted && typeof restarted !== 'string'); base = `http://127.0.0.1:${restarted.port}`;
+  assert.equal((await request('login', account)).status, 200);
+  assert.equal(db.prepare('SELECT count(*) AS count FROM migrations').get()?.count, 4);
+ } finally { const closed = once(server, 'close'); server.close(); await closed; db.close(); rmSync(dir, { recursive: true, force: true }); }
+});

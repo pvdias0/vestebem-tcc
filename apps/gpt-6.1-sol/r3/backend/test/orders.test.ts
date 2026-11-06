@@ -1,0 +1,76 @@
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import { mkdtempSync, readFileSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join, resolve } from 'node:path';
+import { once } from 'node:events';
+import { DatabaseSync } from 'node:sqlite';
+import { createHash } from 'node:crypto';
+import { openDatabase, backendRoot } from '../src/db.js';
+import { createApp } from '../src/app.js';
+import { seedDemo } from '../src/seed.js';
+test('evolução do banco, pedidos e permissões por perfil', async () => {
+ const dir = mkdtempSync(join(tmpdir(), 'vestebem-orders-'));
+ const path = join(dir, 'orders.sqlite');
+ const original = new DatabaseSync(path);
+ original.exec(readFileSync(resolve(backendRoot, 'migrations/001_initial.sql'), 'utf8'));
+ original.exec("CREATE TABLE migrations(name TEXT PRIMARY KEY, applied_at TEXT DEFAULT CURRENT_TIMESTAMP); INSERT INTO migrations(name) VALUES ('001_initial.sql')");
+ original.prepare('INSERT INTO users(name,email,password_hash) VALUES (?,?,?)').run('Cliente antigo', 'antigo@example.com', 'hash-preservado');
+ original.prepare('INSERT INTO sessions VALUES (?,?,?)').run(createHash('sha256').update('sessao-antiga').digest('hex'), 1, Date.now()+60000);
+ original.close();
+ const db = openDatabase(path);
+ const server = createApp(db).listen(0, '127.0.0.1');
+ await once(server, 'listening');
+ const address = server.address(); assert(address && typeof address !== 'string');
+ const base = `http://127.0.0.1:${address.port}/api/`;
+ const request = (route: string, cookie = '', method = 'GET', body?: unknown) => fetch(base+route, { method, headers: { Cookie: cookie, 'Content-Type': 'application/json' }, body: body === undefined ? undefined : JSON.stringify(body) });
+ const login = async (email: string) => { const res = await request('login', '', 'POST', { email, password: 'VesteBem@2026' }); assert.equal(res.status, 200); return res.headers.get('set-cookie')!.split(';')[0]; };
+ try {
+  assert.equal(db.prepare('SELECT password_hash FROM users WHERE id=1').get()?.password_hash, 'hash-preservado');
+  assert.equal((await request('me', 'vestebem_session=sessao-antiga')).status, 200);
+  assert.deepEqual(db.prepare('PRAGMA foreign_key_check').all(), []);
+  seedDemo(db); seedDemo(db);
+  assert.equal(db.prepare('SELECT count(*) AS n FROM users').get()?.n, 4);
+  assert.equal(db.prepare('SELECT count(*) AS n FROM orders').get()?.n, 2);
+  const ana = await login('ana@demo.vestebem.local');
+  const bruno = await login('bruno@demo.vestebem.local');
+  const employee = await login('funcionario@demo.vestebem.local');
+  assert.equal((await request('orders')).status, 401);
+  assert.equal((await request('orders/1')).status, 401);
+  assert.equal((await request('orders', '', 'POST', { items: [] })).status, 401);
+  assert.equal((await request('orders/1/status', '', 'PATCH', { status: 'sent' })).status, 401);
+  assert.equal((await (await request('orders', ana)).json()).length, 1);
+  assert.equal((await (await request('orders', bruno)).json()).length, 1);
+  assert.equal((await (await request('orders', employee)).json()).length, 2);
+  const anaOrder = (await (await request('orders', ana)).json())[0];
+  assert.equal((await request('orders/'+anaOrder.id, bruno)).status, 404);
+  assert.equal((await request('orders/'+anaOrder.id+'/status', bruno, 'PATCH', { status: 'sent' })).status, 404);
+  assert.equal((await request('orders/'+anaOrder.id+'/status', ana, 'PATCH', { status: 'sent' })).status, 403);
+  assert.equal((await request('orders/'+anaOrder.id, employee)).status, 200);
+  const item = { productId: Number(db.prepare("SELECT id FROM products WHERE demo_key='demo-product-1'").get()!.id), quantity: 3 };
+  const freeId = Number(db.prepare("SELECT id FROM products WHERE demo_key='demo-product-16'").get()!.id);
+  for (const items of [[], null, [null], [{ ...item, quantity: 0 }], [{ ...item, quantity: -1 }], [{ ...item, quantity: 1.5 }], [{ ...item, quantity: '2' }], [{ ...item, productId: -1 }], [{ ...item, productId: 999999 }], [item,item], [{ description: 'Peça manual', quantity: 1, unitPriceCents: 50 }], Array(51).fill(item)]) assert.equal((await request('orders', ana, 'POST', { items, confirmDelivery: true, deliveryVersion: 1 })).status, 400);
+  assert.equal((await request('orders', employee, 'POST', { items: [item] })).status, 403);
+  const created = await request('orders', ana, 'POST', { items: [{ ...item, description: 'nome forjado', unitPriceCents: 1 }, { productId: freeId, quantity: 1 }], customerId: 1, status: 'sent', totalCents: 1, confirmDelivery: true, deliveryVersion: 1 });
+  assert.equal(created.status, 201);
+  const { id } = await created.json();
+  const details = await (await request('orders/'+id, ana)).json();
+  assert.equal(details.totalCents, 8970); assert.equal(details.status, 'received'); assert.equal(details.customerEmail, 'ana@demo.vestebem.local'); assert.equal(details.items.length, 2); assert.equal(details.items[0].name, "Coleção D'Água"); assert.equal(details.items[0].productId,item.productId); assert(Number.isFinite(Date.parse(details.createdAt)));
+  assert.equal((await request('orders/'+id, bruno)).status, 404);
+  assert.equal((await request('orders/999999', employee)).status, 404);
+  assert.equal((await request('orders/'+id+'/status', employee, 'PATCH', { status: 'invalid' })).status, 400);
+  for (const status of ['preparing','sent','cancelled','received']) {
+   assert.equal((await request('orders/'+id+'/status', employee, 'PATCH', { status })).status, 200);
+   assert.equal((await (await request('orders/'+id, ana)).json()).status, status);
+  }
+  assert.equal((await request('me', ana, 'PATCH', { role: 'employee' })).status, 404);
+  assert.equal((await (await request('me', ana)).json()).role, 'customer');
+  const registered = await request('register', '', 'POST', { name: 'Novo cliente', email: 'novo@example.com', password: 'senha-valida', role: 'employee' });
+  assert.equal(registered.status, 201); assert.equal(db.prepare("SELECT role FROM users WHERE email='novo@example.com'").get()?.role, 'customer');
+  seedDemo(db); assert.equal(db.prepare('SELECT count(*) AS n FROM orders').get()?.n, 3);
+  await request('logout', employee, 'POST', {});
+  assert.equal((await request('orders', employee)).status, 401);
+  const reopened = openDatabase(path);
+  try { assert.equal(reopened.prepare('SELECT total_cents FROM orders WHERE id=?').get(id)?.total_cents, 8970); assert.deepEqual(reopened.prepare('PRAGMA foreign_key_check').all(), []); } finally { reopened.close(); }
+ } finally { const closed = once(server, 'close'); server.close(); await closed; db.close(); rmSync(dir, { recursive: true, force: true }); }
+});

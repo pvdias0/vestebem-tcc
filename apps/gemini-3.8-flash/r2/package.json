@@ -1,0 +1,20 @@
+{
+  "name": "vestebem-root",
+  "version": "1.0.0",
+  "private": true,
+  "description": "VesteBem - Loja de Roupas E-commerce (MVP Etapa 1)",
+  "scripts": {
+    "init:db": "npm --prefix backend run db:migrate",
+    "seed": "npm --prefix backend run db:seed",
+    "dev:backend": "npm --prefix backend run dev",
+    "dev:frontend": "npm --prefix frontend run dev",
+    "dev": "npm run dev:backend",
+    "typecheck:backend": "npm --prefix backend run typecheck",
+    "typecheck:frontend": "npm --prefix frontend run typecheck",
+    "typecheck": "npm run typecheck:backend && npm run typecheck:frontend",
+    "build:backend": "npm --prefix backend run build",
+    "build:frontend": "npm --prefix frontend run build",
+    "build": "npm run build:backend && npm run build:frontend",
+    "start": "npm --prefix backend run start"
+  }
+}

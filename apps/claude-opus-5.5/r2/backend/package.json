@@ -1,0 +1,27 @@
+{
+  "name": "vestebem-backend",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "db:migrate": "tsx src/migrate-cli.ts",
+    "typecheck": "tsc --noEmit && tsc -p tsconfig.test.json",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "test": "tsx --test src/app.test.ts src/orders.test.ts src/products.test.ts src/account.test.ts",
+    "db:seed": "tsx src/seed.ts"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "dependencies": {
+    "express": "^5.3.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^24.19.2",
+    "tsx": "^4.23.15",
+    "typescript": "^5.9.3"
+  }
+}
