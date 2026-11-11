@@ -1,0 +1,29 @@
+Iniciando execução de migrations...
+[Migration] 001_initial_users_table aplicada com sucesso.
+[Migration] 002_orders_and_roles aplicada com sucesso.
+[Migration] 003_products_catalog aplicada com sucesso.
+[Migration] 004_user_profile_and_order_delivery aplicada com sucesso.
+Todas as migrations foram aplicadas com êxito.
+[Seed] Preparando dados de demonstração...
+[Seed] Usuário criado: Carlos Oliveira (Cliente) (cliente1@vestebem.com) - Perfil: customer
+[Seed] Usuário criado: Mariana Souza (Cliente) (cliente2@vestebem.com) - Perfil: customer
+[Seed] Usuário criado: Fernanda Lima (Funcionária) (funcionario@vestebem.com) - Perfil: employee
+[Seed] Produto criado: Vestido Floral Coleção D'Água [Tam: M]
+[Seed] Produto criado: Camiseta Básica de Algodão Pima [Tam: G]
+[Seed] Produto criado: Camiseta Básica Slim Preta [Tam: P]
+[Seed] Produto criado: Camisa Social Manga Longa Branca [Tam: GG]
+[Seed] Produto criado: Camisa Linho Casual Bege [Tam: M]
+[Seed] Produto criado: Calça Jeans Skinny Lavagem Escura [Tam: 40]
+[Seed] Produto criado: Calça Alfaiataria Reta Cinza [Tam: 42]
+[Seed] Produto criado: Jaqueta Jeans Trucker Vintage [Tam: G]
+[Seed] Produto criado: Blazer Estruturado Navy Blue [Tam: M]
+[Seed] Produto criado: Saia Midi Plissada Verde Oliva [Tam: P]
+[Seed] Produto criado: Shorts Jeans Desfiado Verão [Tam: 38]
+[Seed] Produto criado: Suéter de Tricô Canelado Gola V [Tam: GG]
+[Seed] Produto criado: Polo Piquet Clássica Vermelha [Tam: M]
+[Seed] Produto criado: Bermuda Chino Sarja Areia [Tam: 44]
+[Seed] Produto criado: Vestido Longo Envelope Coral [Tam: G]
+[Seed] Produto criado: Cardigã Longo Algodão Mescla [Tam: U]
+[Seed] Inserido pedido inicial com entrega para cliente1@vestebem.com.
+[Seed] Inserido pedido inicial com entrega para cliente2@vestebem.com.
+[Seed] Carga de demonstração finalizada com sucesso!

@@ -1,0 +1,6 @@
+Banco inicializado e migrations aplicadas.
+(node:252) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+Demonstração preparada: dois clientes com dados pessoais e endereços fictícios, um funcionário, dois pedidos e 16 produtos.
+(node:259) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)

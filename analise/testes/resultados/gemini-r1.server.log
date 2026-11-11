@@ -1,0 +1,3 @@
+(node:28) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+[VesteBem Backend] Servidor rodando na porta 4200 (http://localhost:4200)

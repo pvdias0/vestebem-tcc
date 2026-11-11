@@ -1,0 +1,32 @@
+Banco: C:\Users\Pvito\AppData\Local\Temp\vt24\claude-r2\backend\data\vestebem.db
+VesteBem rodando em http://localhost:4102
+Error: near "Object": syntax error
+    at searchProducts (file:///C:/Users/Pvito/AppData/Local/Temp/vt24/claude-r2/backend/dist/products.js:151:10)
+    at file:///C:/Users/Pvito/AppData/Local/Temp/vt24/claude-r2/backend/dist/products.js:176:18
+    at Layer.handleRequest (C:\Users\Pvito\AppData\Local\Temp\vt24\claude-r2\backend\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\Pvito\AppData\Local\Temp\vt24\claude-r2\backend\node_modules\router\lib\route.js:157:13)
+    at Route.dispatch (C:\Users\Pvito\AppData\Local\Temp\vt24\claude-r2\backend\node_modules\router\lib\route.js:117:3)
+    at handle (C:\Users\Pvito\AppData\Local\Temp\vt24\claude-r2\backend\node_modules\router\index.js:435:11)
+    at Layer.handleRequest (C:\Users\Pvito\AppData\Local\Temp\vt24\claude-r2\backend\node_modules\router\lib\layer.js:152:17)
+    at C:\Users\Pvito\AppData\Local\Temp\vt24\claude-r2\backend\node_modules\router\index.js:295:15
+    at processParams (C:\Users\Pvito\AppData\Local\Temp\vt24\claude-r2\backend\node_modules\router\index.js:582:12)
+    at next (C:\Users\Pvito\AppData\Local\Temp\vt24\claude-r2\backend\node_modules\router\index.js:291:5) {
+  code: 'ERR_SQLITE_ERROR',
+  errcode: 1,
+  errstr: 'SQL logic error'
+}
+Error: no such column: object Object
+    at searchProducts (file:///C:/Users/Pvito/AppData/Local/Temp/vt24/claude-r2/backend/dist/products.js:151:10)
+    at file:///C:/Users/Pvito/AppData/Local/Temp/vt24/claude-r2/backend/dist/products.js:176:18
+    at Layer.handleRequest (C:\Users\Pvito\AppData\Local\Temp\vt24\claude-r2\backend\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\Pvito\AppData\Local\Temp\vt24\claude-r2\backend\node_modules\router\lib\route.js:157:13)
+    at Route.dispatch (C:\Users\Pvito\AppData\Local\Temp\vt24\claude-r2\backend\node_modules\router\lib\route.js:117:3)
+    at handle (C:\Users\Pvito\AppData\Local\Temp\vt24\claude-r2\backend\node_modules\router\index.js:435:11)
+    at Layer.handleRequest (C:\Users\Pvito\AppData\Local\Temp\vt24\claude-r2\backend\node_modules\router\lib\layer.js:152:17)
+    at C:\Users\Pvito\AppData\Local\Temp\vt24\claude-r2\backend\node_modules\router\index.js:295:15
+    at processParams (C:\Users\Pvito\AppData\Local\Temp\vt24\claude-r2\backend\node_modules\router\index.js:582:12)
+    at next (C:\Users\Pvito\AppData\Local\Temp\vt24\claude-r2\backend\node_modules\router\index.js:291:5) {
+  code: 'ERR_SQLITE_ERROR',
+  errcode: 1,
+  errstr: 'SQL logic error'
+}

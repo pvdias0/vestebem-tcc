@@ -1,0 +1,8 @@
+Migrations aplicadas: 001_initial.sql, 002_roles_and_orders.sql, 003_products.sql, 004_account_and_shipping.sql
+Banco: /sessions/rcw-01ayhgx2lgptk1j3cxwk2r9m/run/claude-r2/backend/data/vestebem.db
+(node:70) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:77) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+Dados de demonstração prontos (3 contas; 18 produtos novos; 4 pedidos novos).
+Banco: /sessions/rcw-01ayhgx2lgptk1j3cxwk2r9m/run/claude-r2/backend/data/vestebem.db

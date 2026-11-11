@@ -1,0 +1,35 @@
+[Migrations] Executing migrations...
+[Migrations] Applied migration: 001_initial_schema.sql
+[Migrations] Applied migration: 002_orders_and_roles.sql
+[Migrations] Applied migration: 003_products_and_order_items.sql
+[Migrations] Applied migration: 004_user_profile_and_shipping.sql
+[Migrations] All migrations completed successfully.
+(node:112) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+[Seed] Verificando e semeando dados de demonstração...
+[Seed] Usuário criado: alice@vestebem.com.br (customer)
+[Seed] Usuário criado: bruno@vestebem.com.br (customer)
+[Seed] Usuário criado: carlos@vestebem.com.br (employee)
+[Seed] Produto criado: Vestido Floral Coleção D'Água
+[Seed] Produto criado: Camiseta Básica Algodão Pima
+[Seed] Produto criado: Calça Jeans Slim Fit Azul Escuro
+[Seed] Produto criado: Blusa de Seda Mangas Bufantes
+[Seed] Produto criado: Camisa Social Linho Natural
+[Seed] Produto criado: Jaqueta Jeans Vintage Oversized
+[Seed] Produto criado: Saia Plissada Midi Terracota
+[Seed] Produto criado: Blazer Estruturado em Alfaiataria
+[Seed] Produto criado: Calça Pantalona Alfaiataria Bege
+[Seed] Produto criado: Suéter de Tricô Canelado Marfim
+[Seed] Produto criado: Bermuda Chino Casual Areia
+[Seed] Produto criado: Vestido Longo Frente Única Coral
+[Seed] Produto criado: Camisa Polo Casual Piquet Branco
+[Seed] Produto criado: Cardigan Alongado Malha Fina
+[Seed] Produto criado: Regata Canelada Gola Alta Preta
+[Seed] Produto criado: Macacão Pantacourt com Cinto Amarração
+[Seed] Produto criado: Top Cropped em Linho Rústico
+[Seed] Pedido de demonstração criado: demo-order-alice-1 (Status: recebido)
+[Seed] Pedido de demonstração criado: demo-order-alice-2 (Status: em preparação)
+[Seed] Pedido de demonstração criado: demo-order-bruno-1 (Status: enviado)
+[Seed] Semeação finalizada com sucesso!
+(node:119) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)

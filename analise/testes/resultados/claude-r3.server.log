@@ -1,0 +1,3 @@
+(node:142) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+VesteBem rodando em http://localhost:4200

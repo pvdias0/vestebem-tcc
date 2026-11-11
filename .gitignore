@@ -10,3 +10,7 @@ test-results/
 *.sqlite-shm
 *.sqlite-wal
 .env
+
+analise/codeql/ferramenta/
+analise/codeql/db/
+*.db

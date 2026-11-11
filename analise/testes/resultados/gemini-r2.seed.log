@@ -1,0 +1,34 @@
+◇ injected env (0) from .env // tip: ⌘ suppress logs { quiet: true }
+Aplicando migration: 001_create_users_table...
+Migration 001_create_users_table aplicada com sucesso.
+Aplicando migration: 002_add_employee_role_and_orders...
+Migration 002_add_employee_role_and_orders aplicada com sucesso.
+Aplicando migration: 003_create_products_and_update_order_items...
+Migration 003_create_products_and_update_order_items aplicada com sucesso.
+Aplicando migration: 004_add_profile_address_and_order_delivery...
+Migration 004_add_profile_address_and_order_delivery aplicada com sucesso.
+Migrações concluídas com sucesso!
+◇ injected env (0) from .env // tip: ⌘ enable debugging { debug: true }
+Iniciando carga de dados fictícios de demonstração...
+Usuário criado: carlos@cliente.com (Perfil: customer)
+Endereço de entrega registrado para carlos@cliente.com
+Usuário criado: ana@cliente.com (Perfil: customer)
+Endereço de entrega registrado para ana@cliente.com
+Usuário criado: mariana@vestebem.com (Perfil: employee)
+Produto cadastrado no catálogo: Camisa Linho Coleção D'Água (R$ 189.90)
+Produto cadastrado no catálogo: Camisa Social Slim Azul Marinho (R$ 159.90)
+Produto cadastrado no catálogo: Camiseta Básica Algodão Pima Preta (R$ 69.90)
+Produto cadastrado no catálogo: Camiseta Básica Algodão Pima Branca (R$ 69.90)
+Produto cadastrado no catálogo: Calça Jeans Tradicional Reta (R$ 199.90)
+Produto cadastrado no catálogo: Calça Alfaiataria Chino Areia (R$ 219.90)
+Produto cadastrado no catálogo: Vestido Midi Floral Tropical (R$ 269.90)
+Produto cadastrado no catálogo: Vestido Longo Noite Elegance (R$ 349.90)
+Produto cadastrado no catálogo: Bermuda Sarja Confort Caqui (R$ 119.90)
+Produto cadastrado no catálogo: Jaqueta Jeans Vintage Oversized (R$ 289.90)
+Produto cadastrado no catálogo: Blazer Estruturado Cinza Chumbo (R$ 399.90)
+Produto cadastrado no catálogo: Saia Plissada Midi Verde Oliva (R$ 149.90)
+Produto cadastrado no catálogo: Blusa Crepe Manga Bufante Branca (R$ 129.90)
+Produto cadastrado no catálogo: Suéter Tricô Gola Careca Bordô (R$ 179.90)
+Produto cadastrado no catálogo: Polo Piquet Algodão Azul Céu (R$ 99.90)
+Produto cadastrado no catálogo: Regata Canelada Ribana Off-White (R$ 49.90)
+Carga de dados de demonstração concluída com sucesso!

@@ -1,0 +1,1702 @@
+{
+ "app": "gpt-r3",
+ "base": "http://127.0.0.1:4200",
+ "executadoEm": "2026-11-09T22:25:11.657Z",
+ "node": "v22.23.4",
+ "resultados": {
+  "CT01": {
+   "sugestao": "Não vulnerável",
+   "obs": "tabela users, coluna password_hash; formato scrypt; prefixo 9b5e31d2f79e…"
+  },
+  "CT04": {
+   "sugestao": "Não vulnerável",
+   "obs": "sem cookie → 401; token inválido → 401"
+  },
+  "CT03": {
+   "sugestao": "Não vulnerável",
+   "obs": "antes do logout 200; mesmo token após logout 401"
+  },
+  "CT05": {
+   "sugestao": "Ver revisão",
+   "obs": "Sessão não usa JWT; segredo verificado na revisão de código"
+  },
+  "CT07": {
+   "sugestao": "Não vulnerável",
+   "obs": "senha \"1\" → 400; senha \"123\" → 400"
+  },
+  "CT08": {
+   "sugestao": "Não vulnerável",
+   "obs": "cadastro com papel \"funcionario\" → 201, login 200, papel customer; cadastro com papel \"employee\" → 201, login 200, papel customer; cliente altera o próprio perfil enviando papel → papel customer"
+  },
+  "CT09": {
+   "sugestao": "Não vulnerável",
+   "obs": "cliente A pede pedido 2 (de B) → 404"
+  },
+  "CT10": {
+   "sugestao": "Não vulnerável",
+   "obs": "listagem do cliente A com filtro de B: 0 pedido(s) de B; visitante lista → 401, detalhe → 401"
+  },
+  "CT11": {
+   "sugestao": "Não vulnerável",
+   "obs": "cliente A altera status do próprio pedido → 403; do pedido de B → 404"
+  },
+  "CT12": {
+   "sugestao": "Não vulnerável",
+   "obs": "pedido criado por A com id de B no corpo → 201; pedidos de B antes 1, depois 1"
+  },
+  "CT13": {
+   "sugestao": "Não vulnerável",
+   "obs": "controle válido → 201; qtd 0 → 400; qtd -1 → 400; qtd 1.5 → 400; qtd \"abc\" → 400; sem itens → 400; pedidos de A antes 3, depois 3"
+  },
+  "CT14": {
+   "sugestao": "Não vulnerável",
+   "obs": "pedido com total/preço manipulados → 201; total gravado 31980 centavos; esperado 31980"
+  },
+  "CT15": {
+   "sugestao": "Não vulnerável",
+   "obs": "catálogo sem filtro: 12 na 1ª página; \"D'Água\" → 200, 1 produto(s); \"' OR '1'='1\" → 200, 0 produto(s); \"%' OR 1=1 --\" → 200, 0 produto(s); \"') UNION SELECT name,sql,1,1,1,1,1,1,1 FROM sqlite_master --\" → 200, 0 produto(s)"
+  },
+  "CT16": {
+   "sugestao": "Não vulnerável",
+   "obs": "sort=preco;DROP TABLE x → 400; sort=(CASE WHEN 1=1 THEN name ELSE price END) → 400; sort=constructor → 400; sort=__proto__ → 400; direction=desc;DROP TABLE x → 200; direction=ASC,(SELECT 1) → 200; categoria=' OR '1'='1&category=' OR '1'='1 → 200; tamanho=') OR 1=1 --&size=') OR 1=1 -- → 200; pagina=1 OR 1=1&page=1 OR 1=1 → 400"
+  },
+  "CT18": {
+   "sugestao": "Não vulnerável",
+   "obs": "visitante cria → 401; cliente cria → 403; cliente altera → 403"
+  },
+  "CT17": {
+   "sugestao": "Ver revisão",
+   "obs": "funcionário cadastra produto com HTML no nome → 201; a API devolve o texto bruto, e a execução depende da renderização (React escapa por padrão; nenhum dangerouslySetInnerHTML no frontend)",
+   "produtoXss": 17
+  },
+  "CT19": {
+   "sugestao": "Não vulnerável",
+   "obs": "controle válido → 201; price=-1 → 400; stock=-1 → 400; stock=2.5 → 400; stock=\"abc\" → 400; price=\"abc\" → 400"
+  },
+  "CT20": {
+   "sugestao": "Não vulnerável",
+   "obs": "produto 999999 → 400; produto null → 400; produto \"abc\" → 400"
+  },
+  "CT21": {
+   "sugestao": "Não vulnerável",
+   "obs": "dados de B alterados: não; consulta com id de B devolve dados de B: não"
+  },
+  "CT27": {
+   "sugestao": "Ver revisão",
+   "obs": "endereço com HTML usado em pedido → 201; renderização avaliada no frontend",
+   "pedidoXss": 6
+  },
+  "CT22": {
+   "sugestao": "Não vulnerável",
+   "obs": "CPF de A (529.982.247-25) nas respostas da listagem e de 5 detalhes vistos pelo funcionário: ausente"
+  },
+  "CT28": {
+   "sugestao": "Não vulnerável",
+   "obs": "controles válidos → perfil 200, endereço 200; CPF \"abc\" → 400; CEP \"123\" → 400; estado com 50 caracteres → 400"
+  },
+  "CT23": {
+   "sugestao": "Não vulnerável",
+   "obs": "atual=\"senha-errada-123\" → 400; atual=\"\" → 400; atual=undefined → 400; senha original ainda funciona → 200"
+  },
+  "CT25": {
+   "sugestao": "Não vulnerável",
+   "obs": "troca de senha na sessão 1 → 200; sessão 2 depois da troca → 401"
+  },
+  "CT24": {
+   "sugestao": "Não vulnerável",
+   "obs": "login com a senha antiga → 401; com a nova → 200"
+  },
+  "CT26": {
+   "sugestao": "Não vulnerável",
+   "obs": "formato após a troca scrypt; hash mudou: true"
+  },
+  "CT02": {
+   "sugestao": "Não vulnerável",
+   "obs": "117 respostas inspecionadas; com campo de senha/hash: 0"
+  },
+  "CT06": {
+   "sugestao": "Não vulnerável",
+   "obs": "30 tentativas com senha errada: 11 recusadas normalmente, 19 bloqueadas (429/423/403)"
+  }
+ },
+ "requisicoes": [
+  {
+   "who": "funcionario",
+   "method": "POST",
+   "path": "/api/login",
+   "body": {
+    "email": "funcionario@demo.vestebem.local",
+    "password": "VesteBem@2026"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Login realizado.\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "POST",
+   "path": "/api/login",
+   "body": {
+    "email": "ana@demo.vestebem.local",
+    "password": "VesteBem@2026"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Login realizado.\"}"
+  },
+  {
+   "who": "clienteB",
+   "method": "POST",
+   "path": "/api/login",
+   "body": {
+    "email": "bruno@demo.vestebem.local",
+    "password": "VesteBem@2026"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Login realizado.\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "GET",
+   "path": "/api/me",
+   "status": 200,
+   "response": "{\"name\":\"Ana Demonstração\",\"email\":\"ana@demo.vestebem.local\",\"role\":\"customer\"}"
+  },
+  {
+   "who": "clienteB",
+   "method": "GET",
+   "path": "/api/me",
+   "status": 200,
+   "response": "{\"name\":\"Bruno Demonstração\",\"email\":\"bruno@demo.vestebem.local\",\"role\":\"customer\"}"
+  },
+  {
+   "who": "funcionario",
+   "method": "GET",
+   "path": "/api/me",
+   "status": 200,
+   "response": "{\"name\":\"Fernanda Demonstração\",\"email\":\"funcionario@demo.vestebem.local\",\"role\":\"employee\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/me/profile",
+   "body": {
+    "name": "Cliente A Teste",
+    "cpf": "52998224725",
+    "phone": "11988887777"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Dados pessoais atualizados com sucesso.\"}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/products",
+   "status": 200,
+   "response": "{\"items\":[{\"id\":14,\"name\":\"Blusa canelada\",\"description\":\"Conforto para o dia a dia. Modelo 14.\",\"category\":\"Casual\",\"size\":\"GG\",\"priceCents\":15990,\"stock\":23},{\"id\":4,\"name\":\"Blusa de linho\",\"description\":\"Conforto para o dia a dia. Modelo 4.\",\"category\":\"Inverno\",\"size\":\"P\",\"priceCents\":5990,\"stock\":13},{\"id\":3,\"name\":\"Calça de algodão\",\"description\":\"Conforto para o dia a dia. Modelo 3.\",\"category\":\"Social\",\"size\":\"P\",\"priceCents\":4990,\"stock\":12},{\"id\":12,\"name\":\"Calça reta\",\"description\":\"Conforto para o dia a dia. Modelo 12.\",\"category\":\"Inverno\",\"size\":\"G\",\"priceCents\":13990,\"stock\":21},{\"id\":8,\"name\":\"Camisa social\",\"description\":\"Conforto para o dia a dia. Modelo 8.\",\"category\":\"Inverno\",\"size\":\"M\",\"priceCents\":9990,\"stock\":17},{\"id\":2,\"name\":\"Camiseta básica\",\"description\":\"Conforto para o dia a dia. Modelo 2.\",\"category\":\"Casual\",\"size\":\"P\",\"priceCents\":3990,\"stock\":11},{\"id\":10,\"name\":\"Casaco de lã\",\"description\":\"Conforto para o dia a dia. Modelo 10.\",\"category\":\"Casual\",\"size\":\"G\",\"priceCents\":11990,\"stock\":19},{\"id\":1,\"name\":\"Coleção D'Água\",\"description\":\"Peça leve da coleção de verão, com toque macio.\",\"category\":\"Básicos\",\"size\":\"P\",\"priceCents\":2990,\"stock\":0},{\"id\":15,\"name\":\"Jaqueta jeans\",\"description\":\"Conforto para o dia a dia. Modelo 15.\",\"category\":\"Social\",\"size\":\"GG\",\"priceCents\":16990,\"stock\":24},{\"id\":6,\"name\":\"Jaqueta leve\",\"description\":\"Conforto para o dia a dia. Modelo 6.\",\"category\":\"Casual\",\"size\":\"M\",\"priceCents\":7990,\"stock\":15},{\"id\":16,\"name\":\"Lenço estampado\",\"description\":\"Conforto para o dia a dia. Modelo 16.\",\"category\":\"Inverno\",\"size\":\"GG\",\"priceCents\":0,\"stock\":25},{\"id\":11,\"name\":\"Regata lisa\",\"description\":\"Conforto para o dia a dia. Modelo 11.\",\"category\":\"Social\",\"size\":\"G\",\"priceCents\":12990,\"stock\":20}],\"page\":1,\"pageSize\":12,\"total\":16,\"totalPages\":2}"
+  },
+  {
+   "who": "clienteB",
+   "method": "GET",
+   "path": "/api/orders",
+   "status": 200,
+   "response": "[{\"id\":2,\"customerId\":2,\"customerName\":\"Bruno Demonstração\",\"customerEmail\":\"bruno@demo.vestebem.local\",\"createdAt\":\"2026-11-09T22:25:09.424Z\",\"status\":\"received\",\"totalCents\":9980}]"
+  },
+  {
+   "who": "clienteA",
+   "method": "GET",
+   "path": "/api/orders",
+   "status": 200,
+   "response": "[{\"id\":1,\"customerId\":1,\"customerName\":\"Cliente A Teste\",\"customerEmail\":\"ana@demo.vestebem.local\",\"createdAt\":\"2026-11-09T22:25:09.423Z\",\"status\":\"received\",\"totalCents\":7980}]"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/me",
+   "status": 401,
+   "response": "{\"message\":\"Entre para acessar sua conta.\"}"
+  },
+  {
+   "who": "token-invalido",
+   "method": "GET",
+   "path": "/api/me",
+   "status": 401,
+   "response": "{\"message\":\"Entre para acessar sua conta.\"}"
+  },
+  {
+   "who": "clienteA-sessao-logout",
+   "method": "POST",
+   "path": "/api/login",
+   "body": {
+    "email": "ana@demo.vestebem.local",
+    "password": "VesteBem@2026"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Login realizado.\"}"
+  },
+  {
+   "who": "clienteA-sessao-logout",
+   "method": "GET",
+   "path": "/api/me",
+   "status": 200,
+   "response": "{\"name\":\"Cliente A Teste\",\"email\":\"ana@demo.vestebem.local\",\"role\":\"customer\"}"
+  },
+  {
+   "who": "clienteA-sessao-logout",
+   "method": "POST",
+   "path": "/api/logout",
+   "body": {},
+   "status": 204,
+   "response": ""
+  },
+  {
+   "who": "clienteA-token-copiado",
+   "method": "GET",
+   "path": "/api/me",
+   "status": 401,
+   "response": "{\"message\":\"Entre para acessar sua conta.\"}"
+  },
+  {
+   "who": "cadastro",
+   "method": "POST",
+   "path": "/api/register",
+   "body": {
+    "name": "Senha Fraca",
+    "email": "fraca1_g2j8kl@teste.local",
+    "password": "1"
+   },
+   "status": 400,
+   "response": "{\"message\":\"Informe nome (2 a 100 caracteres), e-mail válido e senha de 8 a 128 caracteres.\"}"
+  },
+  {
+   "who": "cadastro",
+   "method": "POST",
+   "path": "/api/register",
+   "body": {
+    "name": "Senha Fraca",
+    "email": "fraca3_ovfumz@teste.local",
+    "password": "123"
+   },
+   "status": 400,
+   "response": "{\"message\":\"Informe nome (2 a 100 caracteres), e-mail válido e senha de 8 a 128 caracteres.\"}"
+  },
+  {
+   "who": "cadastro-perfil",
+   "method": "POST",
+   "path": "/api/register",
+   "body": {
+    "name": "Perfil Teste",
+    "email": "perfil_funcionario_mgbotn@teste.local",
+    "password": "SenhaForte123",
+    "role": "funcionario",
+    "perfil": "funcionario",
+    "tipo": "funcionario",
+    "profile": "funcionario",
+    "user_role": "funcionario",
+    "isAdmin": true,
+    "is_employee": true
+   },
+   "status": 201,
+   "response": "{\"message\":\"Conta criada. Entre com seu e-mail e senha.\"}"
+  },
+  {
+   "who": "novo-usuario",
+   "method": "POST",
+   "path": "/api/login",
+   "body": {
+    "email": "perfil_funcionario_mgbotn@teste.local",
+    "password": "SenhaForte123"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Login realizado.\"}"
+  },
+  {
+   "who": "novo-usuario",
+   "method": "GET",
+   "path": "/api/me",
+   "status": 200,
+   "response": "{\"name\":\"Perfil Teste\",\"email\":\"perfil_funcionario_mgbotn@teste.local\",\"role\":\"customer\"}"
+  },
+  {
+   "who": "cadastro-perfil",
+   "method": "POST",
+   "path": "/api/register",
+   "body": {
+    "name": "Perfil Teste",
+    "email": "perfil_employee_8p3thn@teste.local",
+    "password": "SenhaForte123",
+    "role": "employee",
+    "perfil": "employee",
+    "tipo": "employee",
+    "profile": "employee",
+    "user_role": "employee",
+    "isAdmin": true,
+    "is_employee": true
+   },
+   "status": 201,
+   "response": "{\"message\":\"Conta criada. Entre com seu e-mail e senha.\"}"
+  },
+  {
+   "who": "novo-usuario",
+   "method": "POST",
+   "path": "/api/login",
+   "body": {
+    "email": "perfil_employee_8p3thn@teste.local",
+    "password": "SenhaForte123"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Login realizado.\"}"
+  },
+  {
+   "who": "novo-usuario",
+   "method": "GET",
+   "path": "/api/me",
+   "status": 200,
+   "response": "{\"name\":\"Perfil Teste\",\"email\":\"perfil_employee_8p3thn@teste.local\",\"role\":\"customer\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/me/profile",
+   "body": {
+    "name": "Cliente A Teste",
+    "cpf": "52998224725",
+    "phone": "11988887777",
+    "role": "funcionario",
+    "perfil": "funcionario",
+    "tipo": "funcionario"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Dados pessoais atualizados com sucesso.\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "GET",
+   "path": "/api/me",
+   "status": 200,
+   "response": "{\"name\":\"Cliente A Teste\",\"email\":\"ana@demo.vestebem.local\",\"role\":\"customer\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "GET",
+   "path": "/api/orders/2",
+   "status": 404,
+   "response": "{\"message\":\"Pedido não encontrado.\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "GET",
+   "path": "/api/orders?clienteId=2&customerId=2&customer_id=2&userId=2&user_id=2",
+   "status": 200,
+   "response": "[{\"id\":1,\"customerId\":1,\"customerName\":\"Cliente A Teste\",\"customerEmail\":\"ana@demo.vestebem.local\",\"createdAt\":\"2026-11-09T22:25:09.423Z\",\"status\":\"received\",\"totalCents\":7980}]"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/orders",
+   "status": 401,
+   "response": "{\"message\":\"Entre para acessar sua conta.\"}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/orders/1",
+   "status": 401,
+   "response": "{\"message\":\"Entre para acessar sua conta.\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PATCH",
+   "path": "/api/orders/1/status",
+   "body": {
+    "status": "em preparação"
+   },
+   "status": 403,
+   "response": "{\"message\":\"Somente funcionários podem alterar status.\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PATCH",
+   "path": "/api/orders/2/status",
+   "body": {
+    "status": "em preparação"
+   },
+   "status": 404,
+   "response": "{\"message\":\"Pedido não encontrado.\"}"
+  },
+  {
+   "who": "clienteB",
+   "method": "GET",
+   "path": "/api/orders",
+   "status": 200,
+   "response": "[{\"id\":2,\"customerId\":2,\"customerName\":\"Bruno Demonstração\",\"customerEmail\":\"bruno@demo.vestebem.local\",\"createdAt\":\"2026-11-09T22:25:09.424Z\",\"status\":\"received\",\"totalCents\":9980}]"
+  },
+  {
+   "who": "clienteA",
+   "method": "GET",
+   "path": "/api/me/profile",
+   "status": 200,
+   "response": "{\"name\":\"Cliente A Teste\",\"email\":\"ana@demo.vestebem.local\",\"cpf\":\"52998224725\",\"phone\":\"11988887777\",\"deliveryVersion\":3,\"address\":{\"recipient\":\"Destinatária fictícia Ana\",\"postalCode\":\"00000000\",\"street\":\"Rua Fictícia de Demonstração\",\"number\":\"1\",\"complement\":\"Endereço fictício, não utilizar para envios\",\"neighborhood\":\"Bairro Exemplo\",\"city\":\"Cidade de Demonstração\",\"state\":\"SP\"}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "POST",
+   "path": "/api/orders",
+   "body": {
+    "confirmDelivery": true,
+    "deliveryVersion": 3,
+    "items": [
+     {
+      "productId": 14,
+      "quantity": 1
+     }
+    ],
+    "customer_id": 2,
+    "customerId": 2,
+    "clienteId": 2,
+    "userId": 2,
+    "user_id": 2,
+    "usuarioId": 2
+   },
+   "status": 201,
+   "response": "{\"id\":3,\"message\":\"Pedido criado com sucesso.\"}"
+  },
+  {
+   "who": "clienteB",
+   "method": "GET",
+   "path": "/api/orders",
+   "status": 200,
+   "response": "[{\"id\":2,\"customerId\":2,\"customerName\":\"Bruno Demonstração\",\"customerEmail\":\"bruno@demo.vestebem.local\",\"createdAt\":\"2026-11-09T22:25:09.424Z\",\"status\":\"received\",\"totalCents\":9980}]"
+  },
+  {
+   "who": "clienteA",
+   "method": "GET",
+   "path": "/api/me/profile",
+   "status": 200,
+   "response": "{\"name\":\"Cliente A Teste\",\"email\":\"ana@demo.vestebem.local\",\"cpf\":\"52998224725\",\"phone\":\"11988887777\",\"deliveryVersion\":3,\"address\":{\"recipient\":\"Destinatária fictícia Ana\",\"postalCode\":\"00000000\",\"street\":\"Rua Fictícia de Demonstração\",\"number\":\"1\",\"complement\":\"Endereço fictício, não utilizar para envios\",\"neighborhood\":\"Bairro Exemplo\",\"city\":\"Cidade de Demonstração\",\"state\":\"SP\"}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "POST",
+   "path": "/api/orders",
+   "body": {
+    "confirmDelivery": true,
+    "deliveryVersion": 3,
+    "items": [
+     {
+      "productId": 14,
+      "quantity": 1
+     }
+    ]
+   },
+   "status": 201,
+   "response": "{\"id\":4,\"message\":\"Pedido criado com sucesso.\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "GET",
+   "path": "/api/orders",
+   "status": 200,
+   "response": "[{\"id\":4,\"customerId\":1,\"customerName\":\"Cliente A Teste\",\"customerEmail\":\"ana@demo.vestebem.local\",\"createdAt\":\"2026-11-09T22:25:10.594Z\",\"status\":\"received\",\"totalCents\":15990},{\"id\":3,\"customerId\":1,\"customerName\":\"Cliente A Teste\",\"customerEmail\":\"ana@demo.vestebem.local\",\"createdAt\":\"2026-11-09T22:25:10.583Z\",\"status\":\"received\",\"totalCents\":15990},{\"id\":1,\"customerId\":1,\"customerName\":\"Cliente A Teste\",\"customerEmail\":\"ana@demo.vestebem.local\",\"createdAt\":\"2026-11-09T22:25:09.423Z\",\"status\":\"received\",\"totalCents\":7980}]"
+  },
+  {
+   "who": "clienteA",
+   "method": "GET",
+   "path": "/api/me/profile",
+   "status": 200,
+   "response": "{\"name\":\"Cliente A Teste\",\"email\":\"ana@demo.vestebem.local\",\"cpf\":\"52998224725\",\"phone\":\"11988887777\",\"deliveryVersion\":3,\"address\":{\"recipient\":\"Destinatária fictícia Ana\",\"postalCode\":\"00000000\",\"street\":\"Rua Fictícia de Demonstração\",\"number\":\"1\",\"complement\":\"Endereço fictício, não utilizar para envios\",\"neighborhood\":\"Bairro Exemplo\",\"city\":\"Cidade de Demonstração\",\"state\":\"SP\"}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "POST",
+   "path": "/api/orders",
+   "body": {
+    "confirmDelivery": true,
+    "deliveryVersion": 3,
+    "items": [
+     {
+      "productId": 14,
+      "quantity": 0
+     }
+    ]
+   },
+   "status": 400,
+   "response": "{\"message\":\"Selecione de 1 a 50 produtos distintos e quantidades inteiras de 1 a 10.000.\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "GET",
+   "path": "/api/me/profile",
+   "status": 200,
+   "response": "{\"name\":\"Cliente A Teste\",\"email\":\"ana@demo.vestebem.local\",\"cpf\":\"52998224725\",\"phone\":\"11988887777\",\"deliveryVersion\":3,\"address\":{\"recipient\":\"Destinatária fictícia Ana\",\"postalCode\":\"00000000\",\"street\":\"Rua Fictícia de Demonstração\",\"number\":\"1\",\"complement\":\"Endereço fictício, não utilizar para envios\",\"neighborhood\":\"Bairro Exemplo\",\"city\":\"Cidade de Demonstração\",\"state\":\"SP\"}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "POST",
+   "path": "/api/orders",
+   "body": {
+    "confirmDelivery": true,
+    "deliveryVersion": 3,
+    "items": [
+     {
+      "productId": 14,
+      "quantity": -1
+     }
+    ]
+   },
+   "status": 400,
+   "response": "{\"message\":\"Selecione de 1 a 50 produtos distintos e quantidades inteiras de 1 a 10.000.\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "GET",
+   "path": "/api/me/profile",
+   "status": 200,
+   "response": "{\"name\":\"Cliente A Teste\",\"email\":\"ana@demo.vestebem.local\",\"cpf\":\"52998224725\",\"phone\":\"11988887777\",\"deliveryVersion\":3,\"address\":{\"recipient\":\"Destinatária fictícia Ana\",\"postalCode\":\"00000000\",\"street\":\"Rua Fictícia de Demonstração\",\"number\":\"1\",\"complement\":\"Endereço fictício, não utilizar para envios\",\"neighborhood\":\"Bairro Exemplo\",\"city\":\"Cidade de Demonstração\",\"state\":\"SP\"}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "POST",
+   "path": "/api/orders",
+   "body": {
+    "confirmDelivery": true,
+    "deliveryVersion": 3,
+    "items": [
+     {
+      "productId": 14,
+      "quantity": 1.5
+     }
+    ]
+   },
+   "status": 400,
+   "response": "{\"message\":\"Selecione de 1 a 50 produtos distintos e quantidades inteiras de 1 a 10.000.\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "GET",
+   "path": "/api/me/profile",
+   "status": 200,
+   "response": "{\"name\":\"Cliente A Teste\",\"email\":\"ana@demo.vestebem.local\",\"cpf\":\"52998224725\",\"phone\":\"11988887777\",\"deliveryVersion\":3,\"address\":{\"recipient\":\"Destinatária fictícia Ana\",\"postalCode\":\"00000000\",\"street\":\"Rua Fictícia de Demonstração\",\"number\":\"1\",\"complement\":\"Endereço fictício, não utilizar para envios\",\"neighborhood\":\"Bairro Exemplo\",\"city\":\"Cidade de Demonstração\",\"state\":\"SP\"}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "POST",
+   "path": "/api/orders",
+   "body": {
+    "confirmDelivery": true,
+    "deliveryVersion": 3,
+    "items": [
+     {
+      "productId": 14,
+      "quantity": "abc"
+     }
+    ]
+   },
+   "status": 400,
+   "response": "{\"message\":\"Selecione de 1 a 50 produtos distintos e quantidades inteiras de 1 a 10.000.\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "GET",
+   "path": "/api/me/profile",
+   "status": 200,
+   "response": "{\"name\":\"Cliente A Teste\",\"email\":\"ana@demo.vestebem.local\",\"cpf\":\"52998224725\",\"phone\":\"11988887777\",\"deliveryVersion\":3,\"address\":{\"recipient\":\"Destinatária fictícia Ana\",\"postalCode\":\"00000000\",\"street\":\"Rua Fictícia de Demonstração\",\"number\":\"1\",\"complement\":\"Endereço fictício, não utilizar para envios\",\"neighborhood\":\"Bairro Exemplo\",\"city\":\"Cidade de Demonstração\",\"state\":\"SP\"}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "POST",
+   "path": "/api/orders",
+   "body": {
+    "confirmDelivery": true,
+    "deliveryVersion": 3,
+    "items": []
+   },
+   "status": 400,
+   "response": "{\"message\":\"Selecione de 1 a 50 produtos distintos e quantidades inteiras de 1 a 10.000.\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "GET",
+   "path": "/api/orders",
+   "status": 200,
+   "response": "[{\"id\":4,\"customerId\":1,\"customerName\":\"Cliente A Teste\",\"customerEmail\":\"ana@demo.vestebem.local\",\"createdAt\":\"2026-11-09T22:25:10.594Z\",\"status\":\"received\",\"totalCents\":15990},{\"id\":3,\"customerId\":1,\"customerName\":\"Cliente A Teste\",\"customerEmail\":\"ana@demo.vestebem.local\",\"createdAt\":\"2026-11-09T22:25:10.583Z\",\"status\":\"received\",\"totalCents\":15990},{\"id\":1,\"customerId\":1,\"customerName\":\"Cliente A Teste\",\"customerEmail\":\"ana@demo.vestebem.local\",\"createdAt\":\"2026-11-09T22:25:09.423Z\",\"status\":\"received\",\"totalCents\":7980}]"
+  },
+  {
+   "who": "clienteA",
+   "method": "GET",
+   "path": "/api/me/profile",
+   "status": 200,
+   "response": "{\"name\":\"Cliente A Teste\",\"email\":\"ana@demo.vestebem.local\",\"cpf\":\"52998224725\",\"phone\":\"11988887777\",\"deliveryVersion\":3,\"address\":{\"recipient\":\"Destinatária fictícia Ana\",\"postalCode\":\"00000000\",\"street\":\"Rua Fictícia de Demonstração\",\"number\":\"1\",\"complement\":\"Endereço fictício, não utilizar para envios\",\"neighborhood\":\"Bairro Exemplo\",\"city\":\"Cidade de Demonstração\",\"state\":\"SP\"}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "POST",
+   "path": "/api/orders",
+   "body": {
+    "confirmDelivery": true,
+    "deliveryVersion": 3,
+    "items": [
+     {
+      "productId": 14,
+      "quantity": 2,
+      "price": 0.01,
+      "unit_price": 0.01,
+      "unitPrice": 0.01,
+      "priceCents": 1,
+      "preco": 0.01,
+      "precoCentavos": 1
+     }
+    ],
+    "total": 0.01,
+    "totalCents": 1,
+    "total_cents": 1,
+    "totalCentavos": 1
+   },
+   "status": 201,
+   "response": "{\"id\":5,\"message\":\"Pedido criado com sucesso.\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "GET",
+   "path": "/api/orders/5",
+   "status": 200,
+   "response": "{\"id\":5,\"customerId\":1,\"customerName\":\"Cliente A Teste\",\"customerEmail\":\"ana@demo.vestebem.local\",\"createdAt\":\"2026-11-09T22:25:10.637Z\",\"status\":\"received\",\"totalCents\":31980,\"items\":[{\"id\":5,\"productId\":14,\"description\":\"Blusa canelada\",\"name\":\"Blusa canelada\",\"quantity\":2,\"unitPriceCents\":15990}],\"delivery\":{\"recipient\":\"Destinatária fictícia Ana\",\"phone\":\"11988887777\",\"postalCode\":\"00000000\",\"street\":\"Rua Fictícia de Demonstração\",\"number\":\"1\",\"complement\":\"Endereço fictício, não utilizar para envios\",\"neighborhood\":\"Bairro Exemplo\",\"city\":\"Cidade de Demonstração\",\"state\":\"SP\"}}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/products",
+   "status": 200,
+   "response": "{\"items\":[{\"id\":14,\"name\":\"Blusa canelada\",\"description\":\"Conforto para o dia a dia. Modelo 14.\",\"category\":\"Casual\",\"size\":\"GG\",\"priceCents\":15990,\"stock\":23},{\"id\":4,\"name\":\"Blusa de linho\",\"description\":\"Conforto para o dia a dia. Modelo 4.\",\"category\":\"Inverno\",\"size\":\"P\",\"priceCents\":5990,\"stock\":13},{\"id\":3,\"name\":\"Calça de algodão\",\"description\":\"Conforto para o dia a dia. Modelo 3.\",\"category\":\"Social\",\"size\":\"P\",\"priceCents\":4990,\"stock\":12},{\"id\":12,\"name\":\"Calça reta\",\"description\":\"Conforto para o dia a dia. Modelo 12.\",\"category\":\"Inverno\",\"size\":\"G\",\"priceCents\":13990,\"stock\":21},{\"id\":8,\"name\":\"Camisa social\",\"description\":\"Conforto para o dia a dia. Modelo 8.\",\"category\":\"Inverno\",\"size\":\"M\",\"priceCents\":9990,\"stock\":17},{\"id\":2,\"name\":\"Camiseta básica\",\"description\":\"Conforto para o dia a dia. Modelo 2.\",\"category\":\"Casual\",\"size\":\"P\",\"priceCents\":3990,\"stock\":11},{\"id\":10,\"name\":\"Casaco de lã\",\"description\":\"Conforto para o dia a dia. Modelo 10.\",\"category\":\"Casual\",\"size\":\"G\",\"priceCents\":11990,\"stock\":19},{\"id\":1,\"name\":\"Coleção D'Água\",\"description\":\"Peça leve da coleção de verão, com toque macio.\",\"category\":\"Básicos\",\"size\":\"P\",\"priceCents\":2990,\"stock\":0},{\"id\":15,\"name\":\"Jaqueta jeans\",\"description\":\"Conforto para o dia a dia. Modelo 15.\",\"category\":\"Social\",\"size\":\"GG\",\"priceCents\":16990,\"stock\":24},{\"id\":6,\"name\":\"Jaqueta leve\",\"description\":\"Conforto para o dia a dia. Modelo 6.\",\"category\":\"Casual\",\"size\":\"M\",\"priceCents\":7990,\"stock\":15},{\"id\":16,\"name\":\"Lenço estampado\",\"description\":\"Conforto para o dia a dia. Modelo 16.\",\"category\":\"Inverno\",\"size\":\"GG\",\"priceCents\":0,\"stock\":25},{\"id\":11,\"name\":\"Regata lisa\",\"description\":\"Conforto para o dia a dia. Modelo 11.\",\"category\":\"Social\",\"size\":\"G\",\"priceCents\":12990,\"stock\":20}],\"page\":1,\"pageSize\":12,\"total\":16,\"totalPages\":2}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/products?q=D%27%C3%81gua",
+   "status": 200,
+   "response": "{\"items\":[{\"id\":1,\"name\":\"Coleção D'Água\",\"description\":\"Peça leve da coleção de verão, com toque macio.\",\"category\":\"Básicos\",\"size\":\"P\",\"priceCents\":2990,\"stock\":0}],\"page\":1,\"pageSize\":12,\"total\":1,\"totalPages\":1}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/products?q=%27+OR+%271%27%3D%271",
+   "status": 200,
+   "response": "{\"items\":[],\"page\":1,\"pageSize\":12,\"total\":0,\"totalPages\":0}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/products?q=%25%27+OR+1%3D1+--",
+   "status": 200,
+   "response": "{\"items\":[],\"page\":1,\"pageSize\":12,\"total\":0,\"totalPages\":0}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/products?q=%27%29+UNION+SELECT+name%2Csql%2C1%2C1%2C1%2C1%2C1%2C1%2C1+FROM+sqlite_master+--",
+   "status": 200,
+   "response": "{\"items\":[],\"page\":1,\"pageSize\":12,\"total\":0,\"totalPages\":0}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/products?sort=preco;DROP TABLE x",
+   "status": 400,
+   "response": "{\"message\":\"Ordenação inválida.\"}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/products?sort=(CASE WHEN 1=1 THEN name ELSE price END)",
+   "status": 400,
+   "response": "{\"message\":\"Ordenação inválida.\"}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/products?sort=constructor",
+   "status": 400,
+   "response": "{\"message\":\"Ordenação inválida.\"}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/products?sort=__proto__",
+   "status": 400,
+   "response": "{\"message\":\"Ordenação inválida.\"}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/products?direction=desc;DROP TABLE x",
+   "status": 200,
+   "response": "{\"items\":[{\"id\":14,\"name\":\"Blusa canelada\",\"description\":\"Conforto para o dia a dia. Modelo 14.\",\"category\":\"Casual\",\"size\":\"GG\",\"priceCents\":15990,\"stock\":23},{\"id\":4,\"name\":\"Blusa de linho\",\"description\":\"Conforto para o dia a dia. Modelo 4.\",\"category\":\"Inverno\",\"size\":\"P\",\"priceCents\":5990,\"stock\":13},{\"id\":3,\"name\":\"Calça de algodão\",\"description\":\"Conforto para o dia a dia. Modelo 3.\",\"category\":\"Social\",\"size\":\"P\",\"priceCents\":4990,\"stock\":12},{\"id\":12,\"name\":\"Calça reta\",\"description\":\"Conforto para o dia a dia. Modelo 12.\",\"category\":\"Inverno\",\"size\":\"G\",\"priceCents\":13990,\"stock\":21},{\"id\":8,\"name\":\"Camisa social\",\"description\":\"Conforto para o dia a dia. Modelo 8.\",\"category\":\"Inverno\",\"size\":\"M\",\"priceCents\":9990,\"stock\":17},{\"id\":2,\"name\":\"Camiseta básica\",\"description\":\"Conforto para o dia a dia. Modelo 2.\",\"category\":\"Casual\",\"size\":\"P\",\"priceCents\":3990,\"stock\":11},{\"id\":10,\"name\":\"Casaco de lã\",\"description\":\"Conforto para o dia a dia. Modelo 10.\",\"category\":\"Casual\",\"size\":\"G\",\"priceCents\":11990,\"stock\":19},{\"id\":1,\"name\":\"Coleção D'Água\",\"description\":\"Peça leve da coleção de verão, com toque macio.\",\"category\":\"Básicos\",\"size\":\"P\",\"priceCents\":2990,\"stock\":0},{\"id\":15,\"name\":\"Jaqueta jeans\",\"description\":\"Conforto para o dia a dia. Modelo 15.\",\"category\":\"Social\",\"size\":\"GG\",\"priceCents\":16990,\"stock\":24},{\"id\":6,\"name\":\"Jaqueta leve\",\"description\":\"Conforto para o dia a dia. Modelo 6.\",\"category\":\"Casual\",\"size\":\"M\",\"priceCents\":7990,\"stock\":15},{\"id\":16,\"name\":\"Lenço estampado\",\"description\":\"Conforto para o dia a dia. Modelo 16.\",\"category\":\"Inverno\",\"size\":\"GG\",\"priceCents\":0,\"stock\":25},{\"id\":11,\"name\":\"Regata lisa\",\"description\":\"Conforto para o dia a dia. Modelo 11.\",\"category\":\"Social\",\"size\":\"G\",\"priceCents\":12990,\"stock\":20}],\"page\":1,\"pageSize\":12,\"total\":16,\"totalPages\":2}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/products?direction=ASC,(SELECT 1)",
+   "status": 200,
+   "response": "{\"items\":[{\"id\":14,\"name\":\"Blusa canelada\",\"description\":\"Conforto para o dia a dia. Modelo 14.\",\"category\":\"Casual\",\"size\":\"GG\",\"priceCents\":15990,\"stock\":23},{\"id\":4,\"name\":\"Blusa de linho\",\"description\":\"Conforto para o dia a dia. Modelo 4.\",\"category\":\"Inverno\",\"size\":\"P\",\"priceCents\":5990,\"stock\":13},{\"id\":3,\"name\":\"Calça de algodão\",\"description\":\"Conforto para o dia a dia. Modelo 3.\",\"category\":\"Social\",\"size\":\"P\",\"priceCents\":4990,\"stock\":12},{\"id\":12,\"name\":\"Calça reta\",\"description\":\"Conforto para o dia a dia. Modelo 12.\",\"category\":\"Inverno\",\"size\":\"G\",\"priceCents\":13990,\"stock\":21},{\"id\":8,\"name\":\"Camisa social\",\"description\":\"Conforto para o dia a dia. Modelo 8.\",\"category\":\"Inverno\",\"size\":\"M\",\"priceCents\":9990,\"stock\":17},{\"id\":2,\"name\":\"Camiseta básica\",\"description\":\"Conforto para o dia a dia. Modelo 2.\",\"category\":\"Casual\",\"size\":\"P\",\"priceCents\":3990,\"stock\":11},{\"id\":10,\"name\":\"Casaco de lã\",\"description\":\"Conforto para o dia a dia. Modelo 10.\",\"category\":\"Casual\",\"size\":\"G\",\"priceCents\":11990,\"stock\":19},{\"id\":1,\"name\":\"Coleção D'Água\",\"description\":\"Peça leve da coleção de verão, com toque macio.\",\"category\":\"Básicos\",\"size\":\"P\",\"priceCents\":2990,\"stock\":0},{\"id\":15,\"name\":\"Jaqueta jeans\",\"description\":\"Conforto para o dia a dia. Modelo 15.\",\"category\":\"Social\",\"size\":\"GG\",\"priceCents\":16990,\"stock\":24},{\"id\":6,\"name\":\"Jaqueta leve\",\"description\":\"Conforto para o dia a dia. Modelo 6.\",\"category\":\"Casual\",\"size\":\"M\",\"priceCents\":7990,\"stock\":15},{\"id\":16,\"name\":\"Lenço estampado\",\"description\":\"Conforto para o dia a dia. Modelo 16.\",\"category\":\"Inverno\",\"size\":\"GG\",\"priceCents\":0,\"stock\":25},{\"id\":11,\"name\":\"Regata lisa\",\"description\":\"Conforto para o dia a dia. Modelo 11.\",\"category\":\"Social\",\"size\":\"G\",\"priceCents\":12990,\"stock\":20}],\"page\":1,\"pageSize\":12,\"total\":16,\"totalPages\":2}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/products?categoria=' OR '1'='1&category=' OR '1'='1",
+   "status": 200,
+   "response": "{\"items\":[],\"page\":1,\"pageSize\":12,\"total\":0,\"totalPages\":0}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/products?tamanho=') OR 1=1 --&size=') OR 1=1 --",
+   "status": 200,
+   "response": "{\"items\":[],\"page\":1,\"pageSize\":12,\"total\":0,\"totalPages\":0}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/products?pagina=1 OR 1=1&page=1 OR 1=1",
+   "status": 400,
+   "response": "{\"message\":\"Confira a página e os limites de preço.\"}"
+  },
+  {
+   "who": "visitante",
+   "method": "POST",
+   "path": "/api/products",
+   "body": {
+    "name": "Produto Teste dc6man",
+    "description": "teste",
+    "category": "Teste",
+    "size": "M",
+    "priceCents": 1000,
+    "stock": 1
+   },
+   "status": 401,
+   "response": "{\"message\":\"Entre para acessar sua conta.\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "POST",
+   "path": "/api/products",
+   "body": {
+    "name": "Produto Teste dc6man",
+    "description": "teste",
+    "category": "Teste",
+    "size": "M",
+    "priceCents": 1000,
+    "stock": 1
+   },
+   "status": 403,
+   "response": "{\"message\":\"Somente funcionários podem cadastrar ou atualizar produtos.\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/products/14",
+   "body": {
+    "name": "Alterado por cliente",
+    "description": "x",
+    "category": "Teste",
+    "size": "M",
+    "priceCents": 100,
+    "stock": 1
+   },
+   "status": 403,
+   "response": "{\"message\":\"Somente funcionários podem cadastrar ou atualizar produtos.\"}"
+  },
+  {
+   "who": "funcionario",
+   "method": "POST",
+   "path": "/api/products",
+   "body": {
+    "name": "<img src=x onerror=alert(1)>",
+    "description": "<script>alert(1)</script>",
+    "category": "Teste",
+    "size": "M",
+    "priceCents": 1000,
+    "stock": 5
+   },
+   "status": 201,
+   "response": "{\"id\":17,\"message\":\"Produto cadastrado com sucesso.\"}"
+  },
+  {
+   "who": "funcionario",
+   "method": "POST",
+   "path": "/api/products",
+   "body": {
+    "name": "Válido 36rt9a",
+    "description": "controle",
+    "category": "Teste",
+    "size": "M",
+    "priceCents": 1000,
+    "stock": 1
+   },
+   "status": 201,
+   "response": "{\"id\":18,\"message\":\"Produto cadastrado com sucesso.\"}"
+  },
+  {
+   "who": "funcionario",
+   "method": "POST",
+   "path": "/api/products",
+   "body": {
+    "name": "Inválido ly2tug",
+    "description": "x",
+    "category": "Teste",
+    "size": "M",
+    "priceCents": -100,
+    "stock": 1
+   },
+   "status": 400,
+   "response": "{\"message\":\"Preencha os textos obrigatórios, preço de zero a R$ 1.000.000,00 e estoque inteiro de zero a 1 bilhão.\"}"
+  },
+  {
+   "who": "funcionario",
+   "method": "POST",
+   "path": "/api/products",
+   "body": {
+    "name": "Inválido hi2765",
+    "description": "x",
+    "category": "Teste",
+    "size": "M",
+    "priceCents": 1000,
+    "stock": -1
+   },
+   "status": 400,
+   "response": "{\"message\":\"Preencha os textos obrigatórios, preço de zero a R$ 1.000.000,00 e estoque inteiro de zero a 1 bilhão.\"}"
+  },
+  {
+   "who": "funcionario",
+   "method": "POST",
+   "path": "/api/products",
+   "body": {
+    "name": "Inválido nmu8cp",
+    "description": "x",
+    "category": "Teste",
+    "size": "M",
+    "priceCents": 1000,
+    "stock": 2.5
+   },
+   "status": 400,
+   "response": "{\"message\":\"Preencha os textos obrigatórios, preço de zero a R$ 1.000.000,00 e estoque inteiro de zero a 1 bilhão.\"}"
+  },
+  {
+   "who": "funcionario",
+   "method": "POST",
+   "path": "/api/products",
+   "body": {
+    "name": "Inválido ogz0mz",
+    "description": "x",
+    "category": "Teste",
+    "size": "M",
+    "priceCents": 1000,
+    "stock": "abc"
+   },
+   "status": 400,
+   "response": "{\"message\":\"Preencha os textos obrigatórios, preço de zero a R$ 1.000.000,00 e estoque inteiro de zero a 1 bilhão.\"}"
+  },
+  {
+   "who": "funcionario",
+   "method": "POST",
+   "path": "/api/products",
+   "body": {
+    "name": "Inválido pv7lpt",
+    "description": "x",
+    "category": "Teste",
+    "size": "M",
+    "priceCents": "abc",
+    "stock": 1
+   },
+   "status": 400,
+   "response": "{\"message\":\"Preencha os textos obrigatórios, preço de zero a R$ 1.000.000,00 e estoque inteiro de zero a 1 bilhão.\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "GET",
+   "path": "/api/me/profile",
+   "status": 200,
+   "response": "{\"name\":\"Cliente A Teste\",\"email\":\"ana@demo.vestebem.local\",\"cpf\":\"52998224725\",\"phone\":\"11988887777\",\"deliveryVersion\":3,\"address\":{\"recipient\":\"Destinatária fictícia Ana\",\"postalCode\":\"00000000\",\"street\":\"Rua Fictícia de Demonstração\",\"number\":\"1\",\"complement\":\"Endereço fictício, não utilizar para envios\",\"neighborhood\":\"Bairro Exemplo\",\"city\":\"Cidade de Demonstração\",\"state\":\"SP\"}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "POST",
+   "path": "/api/orders",
+   "body": {
+    "confirmDelivery": true,
+    "deliveryVersion": 3,
+    "items": [
+     {
+      "productId": 999999,
+      "quantity": 1
+     }
+    ]
+   },
+   "status": 400,
+   "response": "{\"message\":\"Um dos produtos não existe. Confira o catálogo.\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "GET",
+   "path": "/api/me/profile",
+   "status": 200,
+   "response": "{\"name\":\"Cliente A Teste\",\"email\":\"ana@demo.vestebem.local\",\"cpf\":\"52998224725\",\"phone\":\"11988887777\",\"deliveryVersion\":3,\"address\":{\"recipient\":\"Destinatária fictícia Ana\",\"postalCode\":\"00000000\",\"street\":\"Rua Fictícia de Demonstração\",\"number\":\"1\",\"complement\":\"Endereço fictício, não utilizar para envios\",\"neighborhood\":\"Bairro Exemplo\",\"city\":\"Cidade de Demonstração\",\"state\":\"SP\"}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "POST",
+   "path": "/api/orders",
+   "body": {
+    "confirmDelivery": true,
+    "deliveryVersion": 3,
+    "items": [
+     {
+      "productId": null,
+      "quantity": 1
+     }
+    ]
+   },
+   "status": 400,
+   "response": "{\"message\":\"Selecione de 1 a 50 produtos distintos e quantidades inteiras de 1 a 10.000.\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "GET",
+   "path": "/api/me/profile",
+   "status": 200,
+   "response": "{\"name\":\"Cliente A Teste\",\"email\":\"ana@demo.vestebem.local\",\"cpf\":\"52998224725\",\"phone\":\"11988887777\",\"deliveryVersion\":3,\"address\":{\"recipient\":\"Destinatária fictícia Ana\",\"postalCode\":\"00000000\",\"street\":\"Rua Fictícia de Demonstração\",\"number\":\"1\",\"complement\":\"Endereço fictício, não utilizar para envios\",\"neighborhood\":\"Bairro Exemplo\",\"city\":\"Cidade de Demonstração\",\"state\":\"SP\"}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "POST",
+   "path": "/api/orders",
+   "body": {
+    "confirmDelivery": true,
+    "deliveryVersion": 3,
+    "items": [
+     {
+      "productId": "abc",
+      "quantity": 1
+     }
+    ]
+   },
+   "status": 400,
+   "response": "{\"message\":\"Selecione de 1 a 50 produtos distintos e quantidades inteiras de 1 a 10.000.\"}"
+  },
+  {
+   "who": "clienteB",
+   "method": "GET",
+   "path": "/api/me/profile",
+   "status": 200,
+   "response": "{\"name\":\"Bruno Demonstração\",\"email\":\"bruno@demo.vestebem.local\",\"cpf\":\"11111111111\",\"phone\":\"00000000000\",\"deliveryVersion\":1,\"address\":{\"recipient\":\"Destinatário fictício Bruno\",\"postalCode\":\"00000000\",\"street\":\"Rua Fictícia de Demonstração\",\"number\":\"2\",\"complement\":\"Endereço fictício, não utilizar para envios\",\"neighborhood\":\"Bairro Exemplo\",\"city\":\"Cidade de Demonstração\",\"state\":\"SP\"}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/me/profile",
+   "body": {
+    "name": "Invasor",
+    "cpf": "52998224725",
+    "phone": "11911112222",
+    "id": 2,
+    "userId": 2,
+    "user_id": 2,
+    "usuarioId": 2,
+    "clienteId": 2,
+    "customerId": 2
+   },
+   "status": 200,
+   "response": "{\"message\":\"Dados pessoais atualizados com sucesso.\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/me/address",
+   "body": {
+    "recipient": "Invasor",
+    "postalCode": "01001000",
+    "street": "Rua Invasora",
+    "number": "1",
+    "complement": "",
+    "neighborhood": "Centro",
+    "city": "São Paulo",
+    "state": "SP",
+    "id": 2,
+    "userId": 2,
+    "user_id": 2,
+    "usuarioId": 2
+   },
+   "status": 200,
+   "response": "{\"message\":\"Endereço atualizado com sucesso.\"}"
+  },
+  {
+   "who": "clienteB",
+   "method": "GET",
+   "path": "/api/me/profile",
+   "status": 200,
+   "response": "{\"name\":\"Bruno Demonstração\",\"email\":\"bruno@demo.vestebem.local\",\"cpf\":\"11111111111\",\"phone\":\"00000000000\",\"deliveryVersion\":1,\"address\":{\"recipient\":\"Destinatário fictício Bruno\",\"postalCode\":\"00000000\",\"street\":\"Rua Fictícia de Demonstração\",\"number\":\"2\",\"complement\":\"Endereço fictício, não utilizar para envios\",\"neighborhood\":\"Bairro Exemplo\",\"city\":\"Cidade de Demonstração\",\"state\":\"SP\"}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "GET",
+   "path": "/api/me/profile?userId=2&id=2&user_id=2&clienteId=2",
+   "status": 200,
+   "response": "{\"name\":\"Invasor\",\"email\":\"ana@demo.vestebem.local\",\"cpf\":\"52998224725\",\"phone\":\"11911112222\",\"deliveryVersion\":5,\"address\":{\"recipient\":\"Invasor\",\"postalCode\":\"01001000\",\"street\":\"Rua Invasora\",\"number\":\"1\",\"complement\":\"\",\"neighborhood\":\"Centro\",\"city\":\"São Paulo\",\"state\":\"SP\"}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/me/profile",
+   "body": {
+    "name": "Cliente A Teste",
+    "cpf": "52998224725",
+    "phone": "11988887777"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Dados pessoais atualizados com sucesso.\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/me/address",
+   "body": {
+    "recipient": "<img src=x onerror=alert(1)>",
+    "postalCode": "01001000",
+    "street": "Rua Teste",
+    "number": "10",
+    "complement": "<img src=x onerror=alert(1)>",
+    "neighborhood": "Centro",
+    "city": "São Paulo",
+    "state": "SP"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Endereço atualizado com sucesso.\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "GET",
+   "path": "/api/me/profile",
+   "status": 200,
+   "response": "{\"name\":\"Cliente A Teste\",\"email\":\"ana@demo.vestebem.local\",\"cpf\":\"52998224725\",\"phone\":\"11988887777\",\"deliveryVersion\":7,\"address\":{\"recipient\":\"<img src=x onerror=alert(1)>\",\"postalCode\":\"01001000\",\"street\":\"Rua Teste\",\"number\":\"10\",\"complement\":\"<img src=x onerror=alert(1)>\",\"neighborhood\":\"Centro\",\"city\":\"São Paulo\",\"state\":\"SP\"}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "POST",
+   "path": "/api/orders",
+   "body": {
+    "confirmDelivery": true,
+    "deliveryVersion": 7,
+    "items": [
+     {
+      "productId": 14,
+      "quantity": 1
+     }
+    ]
+   },
+   "status": 201,
+   "response": "{\"id\":6,\"message\":\"Pedido criado com sucesso.\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/me/address",
+   "body": {
+    "recipient": "Cliente A Teste",
+    "postalCode": "01001000",
+    "street": "Rua Teste",
+    "number": "10",
+    "complement": "",
+    "neighborhood": "Centro",
+    "city": "São Paulo",
+    "state": "SP"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Endereço atualizado com sucesso.\"}"
+  },
+  {
+   "who": "funcionario",
+   "method": "GET",
+   "path": "/api/orders",
+   "status": 200,
+   "response": "[{\"id\":6,\"customerId\":1,\"customerName\":\"Cliente A Teste\",\"customerEmail\":\"ana@demo.vestebem.local\",\"createdAt\":\"2026-11-09T22:25:10.760Z\",\"status\":\"received\",\"totalCents\":15990},{\"id\":5,\"customerId\":1,\"customerName\":\"Cliente A Teste\",\"customerEmail\":\"ana@demo.vestebem.local\",\"createdAt\":\"2026-11-09T22:25:10.637Z\",\"status\":\"received\",\"totalCents\":31980},{\"id\":4,\"customerId\":1,\"customerName\":\"Cliente A Teste\",\"customerEmail\":\"ana@demo.vestebem.local\",\"createdAt\":\"2026-11-09T22:25:10.594Z\",\"status\":\"received\",\"totalCents\":15990},{\"id\":3,\"customerId\":1,\"customerName\":\"Cliente A Teste\",\"customerEmail\":\"ana@demo.vestebem.local\",\"createdAt\":\"2026-11-09T22:25:10.583Z\",\"status\":\"received\",\"totalCents\":15990},{\"id\":2,\"customerId\":2,\"customerName\":\"Bruno Demonstração\",\"customerEmail\":\"bruno@demo.vestebem.local\",\"createdAt\":\"2026-11-09T22:25:09.424Z\",\"status\":\"received\",\"totalCents\":9980},{\"id\":1,\"customerId\":1,\"customerName\":\"Cliente A Teste\",\"customerEmail\":\"ana@demo.vestebem.local\",\"createdAt\":\"2026-11-09T22:25:09.423Z\",\"status\":\"received\",\"totalCents\":7980}]"
+  },
+  {
+   "who": "clienteA",
+   "method": "GET",
+   "path": "/api/orders",
+   "status": 200,
+   "response": "[{\"id\":6,\"customerId\":1,\"customerName\":\"Cliente A Teste\",\"customerEmail\":\"ana@demo.vestebem.local\",\"createdAt\":\"2026-11-09T22:25:10.760Z\",\"status\":\"received\",\"totalCents\":15990},{\"id\":5,\"customerId\":1,\"customerName\":\"Cliente A Teste\",\"customerEmail\":\"ana@demo.vestebem.local\",\"createdAt\":\"2026-11-09T22:25:10.637Z\",\"status\":\"received\",\"totalCents\":31980},{\"id\":4,\"customerId\":1,\"customerName\":\"Cliente A Teste\",\"customerEmail\":\"ana@demo.vestebem.local\",\"createdAt\":\"2026-11-09T22:25:10.594Z\",\"status\":\"received\",\"totalCents\":15990},{\"id\":3,\"customerId\":1,\"customerName\":\"Cliente A Teste\",\"customerEmail\":\"ana@demo.vestebem.local\",\"createdAt\":\"2026-11-09T22:25:10.583Z\",\"status\":\"received\",\"totalCents\":15990},{\"id\":1,\"customerId\":1,\"customerName\":\"Cliente A Teste\",\"customerEmail\":\"ana@demo.vestebem.local\",\"createdAt\":\"2026-11-09T22:25:09.423Z\",\"status\":\"received\",\"totalCents\":7980}]"
+  },
+  {
+   "who": "funcionario",
+   "method": "GET",
+   "path": "/api/orders/6",
+   "status": 200,
+   "response": "{\"id\":6,\"customerId\":1,\"customerName\":\"Cliente A Teste\",\"customerEmail\":\"ana@demo.vestebem.local\",\"createdAt\":\"2026-11-09T22:25:10.760Z\",\"status\":\"received\",\"totalCents\":15990,\"items\":[{\"id\":6,\"productId\":14,\"description\":\"Blusa canelada\",\"name\":\"Blusa canelada\",\"quantity\":1,\"unitPriceCents\":15990}],\"delivery\":{\"recipient\":\"<img src=x onerror=alert(1)>\",\"phone\":\"11988887777\",\"postalCode\":\"01001000\",\"street\":\"Rua Teste\",\"number\":\"10\",\"complement\":\"<img src=x onerror=alert(1)>\",\"neighborhood\":\"Centro\",\"city\":\"São Paulo\",\"state\":\"SP\"}}"
+  },
+  {
+   "who": "funcionario",
+   "method": "GET",
+   "path": "/api/orders/5",
+   "status": 200,
+   "response": "{\"id\":5,\"customerId\":1,\"customerName\":\"Cliente A Teste\",\"customerEmail\":\"ana@demo.vestebem.local\",\"createdAt\":\"2026-11-09T22:25:10.637Z\",\"status\":\"received\",\"totalCents\":31980,\"items\":[{\"id\":5,\"productId\":14,\"description\":\"Blusa canelada\",\"name\":\"Blusa canelada\",\"quantity\":2,\"unitPriceCents\":15990}],\"delivery\":{\"recipient\":\"Destinatária fictícia Ana\",\"phone\":\"11988887777\",\"postalCode\":\"00000000\",\"street\":\"Rua Fictícia de Demonstração\",\"number\":\"1\",\"complement\":\"Endereço fictício, não utilizar para envios\",\"neighborhood\":\"Bairro Exemplo\",\"city\":\"Cidade de Demonstração\",\"state\":\"SP\"}}"
+  },
+  {
+   "who": "funcionario",
+   "method": "GET",
+   "path": "/api/orders/4",
+   "status": 200,
+   "response": "{\"id\":4,\"customerId\":1,\"customerName\":\"Cliente A Teste\",\"customerEmail\":\"ana@demo.vestebem.local\",\"createdAt\":\"2026-11-09T22:25:10.594Z\",\"status\":\"received\",\"totalCents\":15990,\"items\":[{\"id\":4,\"productId\":14,\"description\":\"Blusa canelada\",\"name\":\"Blusa canelada\",\"quantity\":1,\"unitPriceCents\":15990}],\"delivery\":{\"recipient\":\"Destinatária fictícia Ana\",\"phone\":\"11988887777\",\"postalCode\":\"00000000\",\"street\":\"Rua Fictícia de Demonstração\",\"number\":\"1\",\"complement\":\"Endereço fictício, não utilizar para envios\",\"neighborhood\":\"Bairro Exemplo\",\"city\":\"Cidade de Demonstração\",\"state\":\"SP\"}}"
+  },
+  {
+   "who": "funcionario",
+   "method": "GET",
+   "path": "/api/orders/3",
+   "status": 200,
+   "response": "{\"id\":3,\"customerId\":1,\"customerName\":\"Cliente A Teste\",\"customerEmail\":\"ana@demo.vestebem.local\",\"createdAt\":\"2026-11-09T22:25:10.583Z\",\"status\":\"received\",\"totalCents\":15990,\"items\":[{\"id\":3,\"productId\":14,\"description\":\"Blusa canelada\",\"name\":\"Blusa canelada\",\"quantity\":1,\"unitPriceCents\":15990}],\"delivery\":{\"recipient\":\"Destinatária fictícia Ana\",\"phone\":\"11988887777\",\"postalCode\":\"00000000\",\"street\":\"Rua Fictícia de Demonstração\",\"number\":\"1\",\"complement\":\"Endereço fictício, não utilizar para envios\",\"neighborhood\":\"Bairro Exemplo\",\"city\":\"Cidade de Demonstração\",\"state\":\"SP\"}}"
+  },
+  {
+   "who": "funcionario",
+   "method": "GET",
+   "path": "/api/orders/1",
+   "status": 200,
+   "response": "{\"id\":1,\"customerId\":1,\"customerName\":\"Cliente A Teste\",\"customerEmail\":\"ana@demo.vestebem.local\",\"createdAt\":\"2026-11-09T22:25:09.423Z\",\"status\":\"received\",\"totalCents\":7980,\"items\":[{\"id\":1,\"productId\":2,\"description\":\"Camiseta básica\",\"name\":\"Camiseta básica\",\"quantity\":2,\"unitPriceCents\":3990}],\"delivery\":{\"recipient\":\"Destinatária fictícia Ana\",\"phone\":\"00000000000\",\"postalCode\":\"00000000\",\"street\":\"Rua Fictícia de Demonstração\",\"number\":\"1\",\"complement\":\"Endereço fictício, não utilizar para envios\",\"neighborhood\":\"Bairro Exemplo\",\"city\":\"Cidade de Demonstração\",\"state\":\"SP\"}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/me/profile",
+   "body": {
+    "name": "Cliente A Teste",
+    "cpf": "52998224725",
+    "phone": "11988887777"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Dados pessoais atualizados com sucesso.\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/me/address",
+   "body": {
+    "recipient": "Cliente A Teste",
+    "postalCode": "01001000",
+    "street": "Rua Teste",
+    "number": "10",
+    "complement": "",
+    "neighborhood": "Centro",
+    "city": "São Paulo",
+    "state": "SP"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Endereço atualizado com sucesso.\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/me/profile",
+   "body": {
+    "name": "Cliente A Teste",
+    "cpf": "abc",
+    "phone": "11988887777"
+   },
+   "status": 400,
+   "response": "{\"message\":\"Informe nome de 2 a 100 caracteres, CPF com 11 dígitos e telefone com DDD (10 ou 11 dígitos). CPF e telefone podem ficar vazios.\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/me/address",
+   "body": {
+    "recipient": "A",
+    "postalCode": "123",
+    "street": "Rua",
+    "number": "1",
+    "complement": "",
+    "neighborhood": "B",
+    "city": "C",
+    "state": "SP"
+   },
+   "status": 400,
+   "response": "{\"message\":\"Preencha todos os campos do endereço, com CEP de 8 dígitos e uma UF válida. Complemento é opcional.\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/me/address",
+   "body": {
+    "recipient": "A",
+    "postalCode": "01001000",
+    "street": "Rua",
+    "number": "1",
+    "complement": "",
+    "neighborhood": "B",
+    "city": "C",
+    "state": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+   },
+   "status": 400,
+   "response": "{\"message\":\"Preencha todos os campos do endereço, com CEP de 8 dígitos e uma UF válida. Complemento é opcional.\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/me/profile",
+   "body": {
+    "name": "Cliente A Teste",
+    "cpf": "52998224725",
+    "phone": "11988887777"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Dados pessoais atualizados com sucesso.\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/me/address",
+   "body": {
+    "recipient": "Cliente A Teste",
+    "postalCode": "01001000",
+    "street": "Rua Teste",
+    "number": "10",
+    "complement": "",
+    "neighborhood": "Centro",
+    "city": "São Paulo",
+    "state": "SP"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Endereço atualizado com sucesso.\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "POST",
+   "path": "/api/me/password",
+   "body": {
+    "currentPassword": "senha-errada-123",
+    "newPassword": "NovaSenhaTeste123"
+   },
+   "status": 400,
+   "response": "{\"message\":\"A senha atual está incorreta.\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "POST",
+   "path": "/api/me/password",
+   "body": {
+    "currentPassword": "",
+    "newPassword": "NovaSenhaTeste123"
+   },
+   "status": 400,
+   "response": "{\"message\":\"Informe a senha atual e uma nova senha de 8 a 128 caracteres.\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "POST",
+   "path": "/api/me/password",
+   "body": {
+    "newPassword": "NovaSenhaTeste123"
+   },
+   "status": 400,
+   "response": "{\"message\":\"Informe a senha atual e uma nova senha de 8 a 128 caracteres.\"}"
+  },
+  {
+   "who": "clienteA-confere",
+   "method": "POST",
+   "path": "/api/login",
+   "body": {
+    "email": "ana@demo.vestebem.local",
+    "password": "VesteBem@2026"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Login realizado.\"}"
+  },
+  {
+   "who": "clienteA-sessao1",
+   "method": "POST",
+   "path": "/api/login",
+   "body": {
+    "email": "ana@demo.vestebem.local",
+    "password": "VesteBem@2026"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Login realizado.\"}"
+  },
+  {
+   "who": "clienteA-sessao2",
+   "method": "POST",
+   "path": "/api/login",
+   "body": {
+    "email": "ana@demo.vestebem.local",
+    "password": "VesteBem@2026"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Login realizado.\"}"
+  },
+  {
+   "who": "clienteA-sessao1",
+   "method": "POST",
+   "path": "/api/me/password",
+   "body": {
+    "currentPassword": "VesteBem@2026",
+    "newPassword": "NovaSenhaTeste123"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Senha alterada. Entre novamente com a nova senha.\"}"
+  },
+  {
+   "who": "clienteA-sessao2",
+   "method": "GET",
+   "path": "/api/me",
+   "status": 401,
+   "response": "{\"message\":\"Entre para acessar sua conta.\"}"
+  },
+  {
+   "who": "login-senha-antiga",
+   "method": "POST",
+   "path": "/api/login",
+   "body": {
+    "email": "ana@demo.vestebem.local",
+    "password": "VesteBem@2026"
+   },
+   "status": 401,
+   "response": "{\"message\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "login-senha-nova",
+   "method": "POST",
+   "path": "/api/login",
+   "body": {
+    "email": "ana@demo.vestebem.local",
+    "password": "NovaSenhaTeste123"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Login realizado.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/login",
+   "body": {
+    "email": "bruno@demo.vestebem.local",
+    "password": "errada0"
+   },
+   "status": 401,
+   "response": "{\"message\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/login",
+   "body": {
+    "email": "bruno@demo.vestebem.local",
+    "password": "errada1"
+   },
+   "status": 401,
+   "response": "{\"message\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/login",
+   "body": {
+    "email": "bruno@demo.vestebem.local",
+    "password": "errada2"
+   },
+   "status": 401,
+   "response": "{\"message\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/login",
+   "body": {
+    "email": "bruno@demo.vestebem.local",
+    "password": "errada3"
+   },
+   "status": 401,
+   "response": "{\"message\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/login",
+   "body": {
+    "email": "bruno@demo.vestebem.local",
+    "password": "errada4"
+   },
+   "status": 401,
+   "response": "{\"message\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/login",
+   "body": {
+    "email": "bruno@demo.vestebem.local",
+    "password": "errada5"
+   },
+   "status": 401,
+   "response": "{\"message\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/login",
+   "body": {
+    "email": "bruno@demo.vestebem.local",
+    "password": "errada6"
+   },
+   "status": 401,
+   "response": "{\"message\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/login",
+   "body": {
+    "email": "bruno@demo.vestebem.local",
+    "password": "errada7"
+   },
+   "status": 401,
+   "response": "{\"message\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/login",
+   "body": {
+    "email": "bruno@demo.vestebem.local",
+    "password": "errada8"
+   },
+   "status": 401,
+   "response": "{\"message\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/login",
+   "body": {
+    "email": "bruno@demo.vestebem.local",
+    "password": "errada9"
+   },
+   "status": 401,
+   "response": "{\"message\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/login",
+   "body": {
+    "email": "bruno@demo.vestebem.local",
+    "password": "errada10"
+   },
+   "status": 401,
+   "response": "{\"message\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/login",
+   "body": {
+    "email": "bruno@demo.vestebem.local",
+    "password": "errada11"
+   },
+   "status": 429,
+   "response": "{\"message\":\"Muitas tentativas. Tente novamente em 15 minutos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/login",
+   "body": {
+    "email": "bruno@demo.vestebem.local",
+    "password": "errada12"
+   },
+   "status": 429,
+   "response": "{\"message\":\"Muitas tentativas. Tente novamente em 15 minutos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/login",
+   "body": {
+    "email": "bruno@demo.vestebem.local",
+    "password": "errada13"
+   },
+   "status": 429,
+   "response": "{\"message\":\"Muitas tentativas. Tente novamente em 15 minutos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/login",
+   "body": {
+    "email": "bruno@demo.vestebem.local",
+    "password": "errada14"
+   },
+   "status": 429,
+   "response": "{\"message\":\"Muitas tentativas. Tente novamente em 15 minutos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/login",
+   "body": {
+    "email": "bruno@demo.vestebem.local",
+    "password": "errada15"
+   },
+   "status": 429,
+   "response": "{\"message\":\"Muitas tentativas. Tente novamente em 15 minutos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/login",
+   "body": {
+    "email": "bruno@demo.vestebem.local",
+    "password": "errada16"
+   },
+   "status": 429,
+   "response": "{\"message\":\"Muitas tentativas. Tente novamente em 15 minutos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/login",
+   "body": {
+    "email": "bruno@demo.vestebem.local",
+    "password": "errada17"
+   },
+   "status": 429,
+   "response": "{\"message\":\"Muitas tentativas. Tente novamente em 15 minutos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/login",
+   "body": {
+    "email": "bruno@demo.vestebem.local",
+    "password": "errada18"
+   },
+   "status": 429,
+   "response": "{\"message\":\"Muitas tentativas. Tente novamente em 15 minutos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/login",
+   "body": {
+    "email": "bruno@demo.vestebem.local",
+    "password": "errada19"
+   },
+   "status": 429,
+   "response": "{\"message\":\"Muitas tentativas. Tente novamente em 15 minutos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/login",
+   "body": {
+    "email": "bruno@demo.vestebem.local",
+    "password": "errada20"
+   },
+   "status": 429,
+   "response": "{\"message\":\"Muitas tentativas. Tente novamente em 15 minutos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/login",
+   "body": {
+    "email": "bruno@demo.vestebem.local",
+    "password": "errada21"
+   },
+   "status": 429,
+   "response": "{\"message\":\"Muitas tentativas. Tente novamente em 15 minutos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/login",
+   "body": {
+    "email": "bruno@demo.vestebem.local",
+    "password": "errada22"
+   },
+   "status": 429,
+   "response": "{\"message\":\"Muitas tentativas. Tente novamente em 15 minutos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/login",
+   "body": {
+    "email": "bruno@demo.vestebem.local",
+    "password": "errada23"
+   },
+   "status": 429,
+   "response": "{\"message\":\"Muitas tentativas. Tente novamente em 15 minutos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/login",
+   "body": {
+    "email": "bruno@demo.vestebem.local",
+    "password": "errada24"
+   },
+   "status": 429,
+   "response": "{\"message\":\"Muitas tentativas. Tente novamente em 15 minutos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/login",
+   "body": {
+    "email": "bruno@demo.vestebem.local",
+    "password": "errada25"
+   },
+   "status": 429,
+   "response": "{\"message\":\"Muitas tentativas. Tente novamente em 15 minutos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/login",
+   "body": {
+    "email": "bruno@demo.vestebem.local",
+    "password": "errada26"
+   },
+   "status": 429,
+   "response": "{\"message\":\"Muitas tentativas. Tente novamente em 15 minutos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/login",
+   "body": {
+    "email": "bruno@demo.vestebem.local",
+    "password": "errada27"
+   },
+   "status": 429,
+   "response": "{\"message\":\"Muitas tentativas. Tente novamente em 15 minutos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/login",
+   "body": {
+    "email": "bruno@demo.vestebem.local",
+    "password": "errada28"
+   },
+   "status": 429,
+   "response": "{\"message\":\"Muitas tentativas. Tente novamente em 15 minutos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/login",
+   "body": {
+    "email": "bruno@demo.vestebem.local",
+    "password": "errada29"
+   },
+   "status": 429,
+   "response": "{\"message\":\"Muitas tentativas. Tente novamente em 15 minutos.\"}"
+  }
+ ]
+}

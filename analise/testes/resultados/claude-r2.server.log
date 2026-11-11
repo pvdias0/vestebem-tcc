@@ -1,0 +1,34 @@
+Banco: /sessions/rcw-01ayhgx2lgptk1j3cxwk2r9m/run/claude-r2/backend/data/vestebem.db
+(node:88) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+VesteBem rodando em http://localhost:4200
+Error: near "Object": syntax error
+    at searchProducts (file:///sessions/rcw-01ayhgx2lgptk1j3cxwk2r9m/run/claude-r2/backend/dist/products.js:151:10)
+    at file:///sessions/rcw-01ayhgx2lgptk1j3cxwk2r9m/run/claude-r2/backend/dist/products.js:176:18
+    at Layer.handleRequest (/sessions/rcw-01ayhgx2lgptk1j3cxwk2r9m/run/claude-r2/backend/node_modules/router/lib/layer.js:152:17)
+    at next (/sessions/rcw-01ayhgx2lgptk1j3cxwk2r9m/run/claude-r2/backend/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/sessions/rcw-01ayhgx2lgptk1j3cxwk2r9m/run/claude-r2/backend/node_modules/router/lib/route.js:117:3)
+    at handle (/sessions/rcw-01ayhgx2lgptk1j3cxwk2r9m/run/claude-r2/backend/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/sessions/rcw-01ayhgx2lgptk1j3cxwk2r9m/run/claude-r2/backend/node_modules/router/lib/layer.js:152:17)
+    at /sessions/rcw-01ayhgx2lgptk1j3cxwk2r9m/run/claude-r2/backend/node_modules/router/index.js:295:15
+    at processParams (/sessions/rcw-01ayhgx2lgptk1j3cxwk2r9m/run/claude-r2/backend/node_modules/router/index.js:582:12)
+    at next (/sessions/rcw-01ayhgx2lgptk1j3cxwk2r9m/run/claude-r2/backend/node_modules/router/index.js:291:5) {
+  code: 'ERR_SQLITE_ERROR',
+  errcode: 1,
+  errstr: 'SQL logic error'
+}
+Error: no such column: object Object
+    at searchProducts (file:///sessions/rcw-01ayhgx2lgptk1j3cxwk2r9m/run/claude-r2/backend/dist/products.js:151:10)
+    at file:///sessions/rcw-01ayhgx2lgptk1j3cxwk2r9m/run/claude-r2/backend/dist/products.js:176:18
+    at Layer.handleRequest (/sessions/rcw-01ayhgx2lgptk1j3cxwk2r9m/run/claude-r2/backend/node_modules/router/lib/layer.js:152:17)
+    at next (/sessions/rcw-01ayhgx2lgptk1j3cxwk2r9m/run/claude-r2/backend/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/sessions/rcw-01ayhgx2lgptk1j3cxwk2r9m/run/claude-r2/backend/node_modules/router/lib/route.js:117:3)
+    at handle (/sessions/rcw-01ayhgx2lgptk1j3cxwk2r9m/run/claude-r2/backend/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/sessions/rcw-01ayhgx2lgptk1j3cxwk2r9m/run/claude-r2/backend/node_modules/router/lib/layer.js:152:17)
+    at /sessions/rcw-01ayhgx2lgptk1j3cxwk2r9m/run/claude-r2/backend/node_modules/router/index.js:295:15
+    at processParams (/sessions/rcw-01ayhgx2lgptk1j3cxwk2r9m/run/claude-r2/backend/node_modules/router/index.js:582:12)
+    at next (/sessions/rcw-01ayhgx2lgptk1j3cxwk2r9m/run/claude-r2/backend/node_modules/router/index.js:291:5) {
+  code: 'ERR_SQLITE_ERROR',
+  errcode: 1,
+  errstr: 'SQL logic error'
+}

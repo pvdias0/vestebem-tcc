@@ -1,0 +1,1606 @@
+{
+ "app": "claude-r3",
+ "base": "http://127.0.0.1:4103",
+ "executadoEm": "2026-11-11T02:01:13.265Z",
+ "node": "v24.16.0",
+ "resultados": {
+  "CT01": {
+   "sugestao": "Não vulnerável",
+   "obs": "tabela users, coluna password_hash; formato scrypt; prefixo scrypt$fcaf6…"
+  },
+  "CT04": {
+   "sugestao": "Não vulnerável",
+   "obs": "sem cookie → 401; token inválido → 401"
+  },
+  "CT03": {
+   "sugestao": "Não vulnerável",
+   "obs": "antes do logout 200; mesmo token após logout 401"
+  },
+  "CT05": {
+   "sugestao": "Ver revisão",
+   "obs": "Sessão não usa JWT; segredo verificado na revisão de código"
+  },
+  "CT07": {
+   "sugestao": "Não vulnerável",
+   "obs": "senha \"1\" → 400; senha \"123\" → 400"
+  },
+  "CT08": {
+   "sugestao": "Não vulnerável",
+   "obs": "cadastro com papel \"funcionario\" → 201, login 200, papel customer; cadastro com papel \"employee\" → 201, login 200, papel customer; cliente altera o próprio perfil enviando papel → papel customer"
+  },
+  "CT09": {
+   "sugestao": "Não vulnerável",
+   "obs": "cliente A pede pedido 3 (de B) → 404"
+  },
+  "CT10": {
+   "sugestao": "Não vulnerável",
+   "obs": "listagem do cliente A com filtro de B: 0 pedido(s) de B; visitante lista → 401, detalhe → 401"
+  },
+  "CT11": {
+   "sugestao": "Não vulnerável",
+   "obs": "cliente A altera status do próprio pedido → 403; do pedido de B → 403"
+  },
+  "CT12": {
+   "sugestao": "Não vulnerável",
+   "obs": "pedido criado por A com id de B no corpo → 201; pedidos de B antes 2, depois 2"
+  },
+  "CT13": {
+   "sugestao": "Não vulnerável",
+   "obs": "controle válido → 201; qtd 0 → 400; qtd -1 → 400; qtd 1.5 → 400; qtd \"abc\" → 400; sem itens → 400; pedidos de A antes 4, depois 4"
+  },
+  "CT14": {
+   "sugestao": "Não vulnerável",
+   "obs": "pedido com total/preço manipulados → 201; total gravado 17980 centavos; esperado 17980"
+  },
+  "CT15": {
+   "sugestao": "Não vulnerável",
+   "obs": "catálogo sem filtro: 12 na 1ª página; \"D'Água\" → 200, 1 produto(s); \"' OR '1'='1\" → 200, 0 produto(s); \"%' OR 1=1 --\" → 200, 0 produto(s); \"') UNION SELECT name,sql,1,1,1,1,1,1,1 FROM sqlite_master --\" → 200, 0 produto(s)"
+  },
+  "CT16": {
+   "sugestao": "Não vulnerável",
+   "obs": "sort=preco;DROP TABLE x → 400; sort=(CASE WHEN 1=1 THEN name ELSE price END) → 400; sort=constructor → 400; sort=__proto__ → 400; order=desc;DROP TABLE x → 400; order=ASC,(SELECT 1) → 400; categoria=' OR '1'='1&category=' OR '1'='1 → 200; tamanho=') OR 1=1 --&size=') OR 1=1 -- → 200; pagina=1 OR 1=1&page=1 OR 1=1 → 400"
+  },
+  "CT18": {
+   "sugestao": "Não vulnerável",
+   "obs": "visitante cria → 401; cliente cria → 403; cliente altera → 403"
+  },
+  "CT17": {
+   "sugestao": "Ver revisão",
+   "obs": "funcionário cadastra produto com HTML no nome → 201; a API devolve o texto bruto, e a execução depende da renderização (React escapa por padrão; nenhum dangerouslySetInnerHTML no frontend)",
+   "produtoXss": 19
+  },
+  "CT19": {
+   "sugestao": "Não vulnerável",
+   "obs": "controle válido → 201; price=-1 → 400; stock=-1 → 400; stock=2.5 → 400; stock=\"abc\" → 400; price=\"abc\" → 400"
+  },
+  "CT20": {
+   "sugestao": "Não vulnerável",
+   "obs": "produto 999999 → 400; produto null → 400; produto \"abc\" → 400"
+  },
+  "CT21": {
+   "sugestao": "Não vulnerável",
+   "obs": "dados de B alterados: não; consulta com id de B devolve dados de B: não"
+  },
+  "CT27": {
+   "sugestao": "Ver revisão",
+   "obs": "endereço com HTML usado em pedido → 201; renderização avaliada no frontend",
+   "pedidoXss": 8
+  },
+  "CT22": {
+   "sugestao": "Não vulnerável",
+   "obs": "CPF de A (529.982.247-25) nas respostas da listagem e de 5 detalhes vistos pelo funcionário: ausente"
+  },
+  "CT28": {
+   "sugestao": "Vulnerável",
+   "obs": "controles válidos → perfil 200, endereço 200; CPF \"abc\" → 200; CEP \"123\" → 400; estado com 50 caracteres → 400"
+  },
+  "CT23": {
+   "sugestao": "Não vulnerável",
+   "obs": "atual=\"senha-errada-123\" → 400; atual=\"\" → 400; atual=undefined → 400; senha original ainda funciona → 200"
+  },
+  "CT25": {
+   "sugestao": "Não vulnerável",
+   "obs": "troca de senha na sessão 1 → 204; sessão 2 depois da troca → 401"
+  },
+  "CT24": {
+   "sugestao": "Não vulnerável",
+   "obs": "login com a senha antiga → 401; com a nova → 200"
+  },
+  "CT26": {
+   "sugestao": "Não vulnerável",
+   "obs": "formato após a troca scrypt; hash mudou: true"
+  },
+  "CT02": {
+   "sugestao": "Não vulnerável",
+   "obs": "105 respostas inspecionadas; com campo de senha/hash: 0"
+  },
+  "CT06": {
+   "sugestao": "Vulnerável",
+   "obs": "30 tentativas com senha errada: 30 recusadas normalmente, 0 bloqueadas (429/423/403)"
+  }
+ },
+ "requisicoes": [
+  {
+   "who": "funcionario",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "carlos@demo.vestebem",
+    "password": "demo1234"
+   },
+   "status": 200,
+   "response": "{\"user\":{\"id\":4,\"name\":\"Carlos Funcionário (demo)\",\"email\":\"carlos@demo.vestebem\",\"role\":\"funcionario\"}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "ana@demo.vestebem",
+    "password": "demo1234"
+   },
+   "status": 200,
+   "response": "{\"user\":{\"id\":1,\"name\":\"Ana Cliente (demo)\",\"email\":\"ana@demo.vestebem\",\"role\":\"cliente\"}}"
+  },
+  {
+   "who": "clienteB",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "bruno@demo.vestebem",
+    "password": "demo1234"
+   },
+   "status": 200,
+   "response": "{\"user\":{\"id\":2,\"name\":\"Bruno Cliente (demo)\",\"email\":\"bruno@demo.vestebem\",\"role\":\"cliente\"}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "GET",
+   "path": "/api/account",
+   "status": 200,
+   "response": "{\"user\":{\"id\":1,\"name\":\"Ana Cliente (demo)\",\"email\":\"ana@demo.vestebem\",\"role\":\"cliente\",\"cpf\":\"12345678909\",\"phone\":\"11900000001\"},\"address\":{\"recipient\":\"Ana Cliente (demo)\",\"cep\":\"01000000\",\"street\":\"Rua Fictícia das Flores\",\"number\":\"100\",\"complement\":\"Apto 12\",\"district\":\"Jardim Exemplo\",\"city\":\"São Paulo\",\"state\":\"SP\"}}"
+  },
+  {
+   "who": "clienteB",
+   "method": "GET",
+   "path": "/api/account",
+   "status": 200,
+   "response": "{\"user\":{\"id\":2,\"name\":\"Bruno Cliente (demo)\",\"email\":\"bruno@demo.vestebem\",\"role\":\"cliente\",\"cpf\":\"98765432100\",\"phone\":\"21900000002\"},\"address\":{\"recipient\":\"Bruno Cliente (demo)\",\"cep\":\"20000000\",\"street\":\"Avenida Imaginária\",\"number\":\"2000\",\"complement\":null,\"district\":\"Centro Demo\",\"city\":\"Rio de Janeiro\",\"state\":\"RJ\"}}"
+  },
+  {
+   "who": "funcionario",
+   "method": "GET",
+   "path": "/api/account",
+   "status": 200,
+   "response": "{\"user\":{\"id\":4,\"name\":\"Carlos Funcionário (demo)\",\"email\":\"carlos@demo.vestebem\",\"role\":\"funcionario\",\"cpf\":null,\"phone\":\"31900000003\"},\"address\":null}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/account/profile",
+   "body": {
+    "name": "Cliente A Teste",
+    "cpf": "52998224725",
+    "phone": "11988887777"
+   },
+   "status": 200,
+   "response": "{\"user\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"ana@demo.vestebem\",\"role\":\"cliente\",\"cpf\":\"52998224725\",\"phone\":\"11988887777\"},\"address\":{\"recipient\":\"Ana Cliente (demo)\",\"cep\":\"01000000\",\"street\":\"Rua Fictícia das Flores\",\"number\":\"100\",\"complement\":\"Apto 12\",\"district\":\"Jardim Exemplo\",\"city\":\"São Paulo\",\"state\":\"SP\"}}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/products",
+   "status": 200,
+   "response": "{\"products\":[{\"id\":9,\"name\":\"Bermuda Sarja\",\"description\":\"Bermuda de sarja com cinco bolsos. Cor: cáqui.\",\"category\":\"Bermudas\",\"size\":\"40\",\"priceCents\":8990,\"stock\":20,\"createdAt\":\"2026-11-11T02:01:10.365Z\",\"updatedAt\":\"2026-11-11T02:01:10.365Z\"},{\"id\":10,\"name\":\"Bermuda Tactel\",\"description\":\"Bermuda leve de tactel com forro interno.\",\"category\":\"Bermudas\",\"size\":\"G\",\"priceCents\":5990,\"stock\":22,\"createdAt\":\"2026-11-11T02:01:10.367Z\",\"updatedAt\":\"2026-11-11T02:01:10.367Z\"},{\"id\":17,\"name\":\"Boné Aba Curva\",\"description\":\"Boné de sarja com regulagem traseira.\",\"category\":\"Acessórios\",\"size\":\"Único\",\"priceCents\":4500,\"stock\":40,\"createdAt\":\"2026-11-11T02:01:10.379Z\",\"updatedAt\":\"2026-11-11T02:01:10.379Z\"},{\"id\":8,\"name\":\"Calça de Moletom Jogger\",\"description\":\"Moletom flanelado com punho na barra e cordão.\",\"category\":\"Calças\",\"size\":\"M\",\"priceCents\":11990,\"stock\":15,\"createdAt\":\"2026-11-11T02:01:10.363Z\",\"updatedAt\":\"2026-11-11T02:01:10.363Z\"},{\"id\":6,\"name\":\"Calça Jeans Reta\",\"description\":\"Jeans com elastano, modelagem reta e lavagem média.\",\"category\":\"Calças\",\"size\":\"38\",\"priceCents\":15990,\"stock\":10,\"createdAt\":\"2026-11-11T02:01:10.360Z\",\"updatedAt\":\"2026-11-11T02:01:10.360Z\"},{\"id\":7,\"name\":\"Calça Jeans Reta\",\"description\":\"Jeans com elastano, modelagem reta e lavagem média.\",\"category\":\"Calças\",\"size\":\"42\",\"priceCents\":15990,\"stock\":7,\"createdAt\":\"2026-11-11T02:01:10.361Z\",\"updatedAt\":\"2026-11-11T02:01:10.361Z\"},{\"id\":1,\"name\":\"Camiseta Básica Algodão\",\"description\":\"Camiseta de algodão penteado, gola careca.\\nCor: branca.\",\"category\":\"Camisetas\",\"size\":\"P\",\"priceCents\":4990,\"stock\":30,\"createdAt\":\"2026-11-11T02:01:10.347Z\",\"updatedAt\":\"2026-11-11T02:01:10.347Z\"},{\"id\":2,\"name\":\"Camiseta Básica Algodão\",\"description\":\"Camiseta de algodão penteado, gola careca.\\nCor: branca.\",\"category\":\"Camisetas\",\"size\":\"M\",\"priceCents\":4990,\"stock\":25,\"createdAt\":\"2026-11-11T02:01:10.352Z\",\"updatedAt\":\"2026-11-11T02:01:10.352Z\"},{\"id\":3,\"name\":\"Camiseta Básica Algodão\",\"description\":\"Camiseta de algodão penteado, gola careca.\\nCor: branca.\",\"category\":\"Camisetas\",\"size\":\"G\",\"priceCents\":4990,\"stock\":0,\"createdAt\":\"2026-11-11T02:01:10.355Z\",\"updatedAt\":\"2026-11-11T02:01:10.355Z\"},{\"id\":4,\"name\":\"Camiseta Estampada Coleção D'Água\",\"description\":\"Estampa exclusiva da coleção D'Água, inspirada no mar.\",\"category\":\"Camisetas\",\"size\":\"M\",\"priceCents\":6990,\"stock\":12,\"createdAt\":\"2026-11-11T02:01:10.356Z\",\"updatedAt\":\"2026-11-11T02:01:10.356Z\"},{\"id\":18,\"name\":\"Cinto de Couro\",\"description\":\"Cinto de couro legítimo com fivela prateada.\",\"category\":\"Acessórios\",\"size\":\"Único\",\"priceCents\":7900,\"stock\":14,\"createdAt\":\"2026-11-11T02:01:10.381Z\",\"updatedAt\":\"2026-11-11T02:01:10.381Z\"},{\"id\":14,\"name\":\"Jaqueta Corta-Vento\",\"description\":\"Jaqueta impermeável com capuz e bolsos com zíper.\",\"category\":\"Casacos\",\"size\":\"G\",\"priceCents\":22990,\"stock\":6,\"createdAt\":\"2026-11-11T02:01:10.374Z\",\"updatedAt\":\"2026-11-11T02:01:10.374Z\"}],\"page\":1,\"pageSize\":12,\"total\":18,\"totalPages\":2}"
+  },
+  {
+   "who": "clienteB",
+   "method": "GET",
+   "path": "/api/orders",
+   "status": 200,
+   "response": "{\"orders\":[{\"id\":3,\"status\":\"em_preparacao\",\"totalCents\":27490,\"createdAt\":\"2026-10-10T10:15:00.000Z\",\"updatedAt\":\"2026-10-10T10:15:00.000Z\",\"itemCount\":2,\"customer\":{\"id\":2,\"name\":\"Bruno Cliente (demo)\",\"email\":\"bruno@demo.vestebem\"}},{\"id\":4,\"status\":\"cancelado\",\"totalCents\":8990,\"createdAt\":\"2026-09-05T18:45:00.000Z\",\"updatedAt\":\"2026-09-05T18:45:00.000Z\",\"itemCount\":1,\"customer\":{\"id\":2,\"name\":\"Bruno Cliente (demo)\",\"email\":\"bruno@demo.vestebem\"}}]}"
+  },
+  {
+   "who": "clienteA",
+   "method": "GET",
+   "path": "/api/orders",
+   "status": 200,
+   "response": "{\"orders\":[{\"id\":2,\"status\":\"recebido\",\"totalCents\":18900,\"createdAt\":\"2026-10-20T15:30:00.000Z\",\"updatedAt\":\"2026-10-20T15:30:00.000Z\",\"itemCount\":1,\"customer\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"ana@demo.vestebem\"}},{\"id\":1,\"status\":\"enviado\",\"totalCents\":25970,\"createdAt\":\"2026-10-01T13:00:00.000Z\",\"updatedAt\":\"2026-10-01T13:00:00.000Z\",\"itemCount\":2,\"customer\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"ana@demo.vestebem\"}}]}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/account",
+   "status": 401,
+   "response": "{\"error\":\"Você precisa entrar para acessar esta página.\"}"
+  },
+  {
+   "who": "token-invalido",
+   "method": "GET",
+   "path": "/api/account",
+   "status": 401,
+   "response": "{\"error\":\"Você precisa entrar para acessar esta página.\"}"
+  },
+  {
+   "who": "clienteA-sessao-logout",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "ana@demo.vestebem",
+    "password": "demo1234"
+   },
+   "status": 200,
+   "response": "{\"user\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"ana@demo.vestebem\",\"role\":\"cliente\"}}"
+  },
+  {
+   "who": "clienteA-sessao-logout",
+   "method": "GET",
+   "path": "/api/account",
+   "status": 200,
+   "response": "{\"user\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"ana@demo.vestebem\",\"role\":\"cliente\",\"cpf\":\"52998224725\",\"phone\":\"11988887777\"},\"address\":{\"recipient\":\"Ana Cliente (demo)\",\"cep\":\"01000000\",\"street\":\"Rua Fictícia das Flores\",\"number\":\"100\",\"complement\":\"Apto 12\",\"district\":\"Jardim Exemplo\",\"city\":\"São Paulo\",\"state\":\"SP\"}}"
+  },
+  {
+   "who": "clienteA-sessao-logout",
+   "method": "POST",
+   "path": "/api/auth/logout",
+   "body": {},
+   "status": 204,
+   "response": ""
+  },
+  {
+   "who": "clienteA-token-copiado",
+   "method": "GET",
+   "path": "/api/account",
+   "status": 401,
+   "response": "{\"error\":\"Você precisa entrar para acessar esta página.\"}"
+  },
+  {
+   "who": "cadastro",
+   "method": "POST",
+   "path": "/api/auth/register",
+   "body": {
+    "name": "Senha Fraca",
+    "email": "fraca1_vv70qg@teste.local",
+    "password": "1"
+   },
+   "status": 400,
+   "response": "{\"error\":\"Verifique os dados informados.\",\"fields\":{\"password\":\"A senha deve ter entre 8 e 128 caracteres.\"}}"
+  },
+  {
+   "who": "cadastro",
+   "method": "POST",
+   "path": "/api/auth/register",
+   "body": {
+    "name": "Senha Fraca",
+    "email": "fraca3_d6wo9k@teste.local",
+    "password": "123"
+   },
+   "status": 400,
+   "response": "{\"error\":\"Verifique os dados informados.\",\"fields\":{\"password\":\"A senha deve ter entre 8 e 128 caracteres.\"}}"
+  },
+  {
+   "who": "cadastro-perfil",
+   "method": "POST",
+   "path": "/api/auth/register",
+   "body": {
+    "name": "Perfil Teste",
+    "email": "perfil_funcionario_05ssmk@teste.local",
+    "password": "SenhaForte123",
+    "role": "funcionario",
+    "perfil": "funcionario",
+    "tipo": "funcionario",
+    "profile": "funcionario",
+    "user_role": "funcionario",
+    "isAdmin": true,
+    "is_employee": true
+   },
+   "status": 201,
+   "response": "{\"user\":{\"id\":5,\"name\":\"Perfil Teste\",\"email\":\"perfil_funcionario_05ssmk@teste.local\",\"role\":\"cliente\"}}"
+  },
+  {
+   "who": "novo-usuario",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "perfil_funcionario_05ssmk@teste.local",
+    "password": "SenhaForte123"
+   },
+   "status": 200,
+   "response": "{\"user\":{\"id\":5,\"name\":\"Perfil Teste\",\"email\":\"perfil_funcionario_05ssmk@teste.local\",\"role\":\"cliente\"}}"
+  },
+  {
+   "who": "novo-usuario",
+   "method": "GET",
+   "path": "/api/account",
+   "status": 200,
+   "response": "{\"user\":{\"id\":5,\"name\":\"Perfil Teste\",\"email\":\"perfil_funcionario_05ssmk@teste.local\",\"role\":\"cliente\",\"cpf\":null,\"phone\":null},\"address\":null}"
+  },
+  {
+   "who": "cadastro-perfil",
+   "method": "POST",
+   "path": "/api/auth/register",
+   "body": {
+    "name": "Perfil Teste",
+    "email": "perfil_employee_17chfd@teste.local",
+    "password": "SenhaForte123",
+    "role": "employee",
+    "perfil": "employee",
+    "tipo": "employee",
+    "profile": "employee",
+    "user_role": "employee",
+    "isAdmin": true,
+    "is_employee": true
+   },
+   "status": 201,
+   "response": "{\"user\":{\"id\":6,\"name\":\"Perfil Teste\",\"email\":\"perfil_employee_17chfd@teste.local\",\"role\":\"cliente\"}}"
+  },
+  {
+   "who": "novo-usuario",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "perfil_employee_17chfd@teste.local",
+    "password": "SenhaForte123"
+   },
+   "status": 200,
+   "response": "{\"user\":{\"id\":6,\"name\":\"Perfil Teste\",\"email\":\"perfil_employee_17chfd@teste.local\",\"role\":\"cliente\"}}"
+  },
+  {
+   "who": "novo-usuario",
+   "method": "GET",
+   "path": "/api/account",
+   "status": 200,
+   "response": "{\"user\":{\"id\":6,\"name\":\"Perfil Teste\",\"email\":\"perfil_employee_17chfd@teste.local\",\"role\":\"cliente\",\"cpf\":null,\"phone\":null},\"address\":null}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/account/profile",
+   "body": {
+    "name": "Cliente A Teste",
+    "cpf": "52998224725",
+    "phone": "11988887777",
+    "role": "funcionario",
+    "perfil": "funcionario",
+    "tipo": "funcionario"
+   },
+   "status": 200,
+   "response": "{\"user\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"ana@demo.vestebem\",\"role\":\"cliente\",\"cpf\":\"52998224725\",\"phone\":\"11988887777\"},\"address\":{\"recipient\":\"Ana Cliente (demo)\",\"cep\":\"01000000\",\"street\":\"Rua Fictícia das Flores\",\"number\":\"100\",\"complement\":\"Apto 12\",\"district\":\"Jardim Exemplo\",\"city\":\"São Paulo\",\"state\":\"SP\"}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "GET",
+   "path": "/api/account",
+   "status": 200,
+   "response": "{\"user\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"ana@demo.vestebem\",\"role\":\"cliente\",\"cpf\":\"52998224725\",\"phone\":\"11988887777\"},\"address\":{\"recipient\":\"Ana Cliente (demo)\",\"cep\":\"01000000\",\"street\":\"Rua Fictícia das Flores\",\"number\":\"100\",\"complement\":\"Apto 12\",\"district\":\"Jardim Exemplo\",\"city\":\"São Paulo\",\"state\":\"SP\"}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "GET",
+   "path": "/api/orders/3",
+   "status": 404,
+   "response": "{\"error\":\"Pedido não encontrado.\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "GET",
+   "path": "/api/orders?clienteId=2&customerId=2&customer_id=2&userId=2&user_id=2",
+   "status": 200,
+   "response": "{\"orders\":[{\"id\":2,\"status\":\"recebido\",\"totalCents\":18900,\"createdAt\":\"2026-10-20T15:30:00.000Z\",\"updatedAt\":\"2026-10-20T15:30:00.000Z\",\"itemCount\":1,\"customer\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"ana@demo.vestebem\"}},{\"id\":1,\"status\":\"enviado\",\"totalCents\":25970,\"createdAt\":\"2026-10-01T13:00:00.000Z\",\"updatedAt\":\"2026-10-01T13:00:00.000Z\",\"itemCount\":2,\"customer\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"ana@demo.vestebem\"}}]}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/orders",
+   "status": 401,
+   "response": "{\"error\":\"Você precisa entrar para acessar esta página.\"}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/orders/2",
+   "status": 401,
+   "response": "{\"error\":\"Você precisa entrar para acessar esta página.\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PATCH",
+   "path": "/api/orders/2/status",
+   "body": {
+    "status": "em_preparacao"
+   },
+   "status": 403,
+   "response": "{\"error\":\"Somente funcionários podem alterar o status de pedidos.\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PATCH",
+   "path": "/api/orders/3/status",
+   "body": {
+    "status": "em_preparacao"
+   },
+   "status": 403,
+   "response": "{\"error\":\"Somente funcionários podem alterar o status de pedidos.\"}"
+  },
+  {
+   "who": "clienteB",
+   "method": "GET",
+   "path": "/api/orders",
+   "status": 200,
+   "response": "{\"orders\":[{\"id\":3,\"status\":\"em_preparacao\",\"totalCents\":27490,\"createdAt\":\"2026-10-10T10:15:00.000Z\",\"updatedAt\":\"2026-10-10T10:15:00.000Z\",\"itemCount\":2,\"customer\":{\"id\":2,\"name\":\"Bruno Cliente (demo)\",\"email\":\"bruno@demo.vestebem\"}},{\"id\":4,\"status\":\"cancelado\",\"totalCents\":8990,\"createdAt\":\"2026-09-05T18:45:00.000Z\",\"updatedAt\":\"2026-09-05T18:45:00.000Z\",\"itemCount\":1,\"customer\":{\"id\":2,\"name\":\"Bruno Cliente (demo)\",\"email\":\"bruno@demo.vestebem\"}}]}"
+  },
+  {
+   "who": "clienteA",
+   "method": "POST",
+   "path": "/api/orders",
+   "body": {
+    "confirmShipping": true,
+    "items": [
+     {
+      "productId": 9,
+      "quantity": 1
+     }
+    ],
+    "customer_id": 2,
+    "customerId": 2,
+    "clienteId": 2,
+    "userId": 2,
+    "user_id": 2,
+    "usuarioId": 2
+   },
+   "status": 201,
+   "response": "{\"order\":{\"id\":5,\"status\":\"recebido\",\"totalCents\":8990,\"createdAt\":\"2026-11-11T02:01:11.587Z\",\"updatedAt\":\"2026-11-11T02:01:11.587Z\",\"itemCount\":1,\"customer\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"ana@demo.vestebem\"},\"items\":[{\"productId\":9,\"description\":\"Bermuda Sarja\",\"quantity\":1,\"unitPriceCents\":8990,\"subtotalCents\":8990}],\"shipping\":{\"recipient\":\"Ana Cliente (demo)\",\"phone\":\"11988887777\",\"cep\":\"01000000\",\"street\":\"Rua Fictícia das Flores\",\"number\":\"100\",\"complement\":\"Apto 12\",\"district\":\"Jardim Exemplo\",\"city\":\"São Paulo\",\"state\":\"SP\"}}}"
+  },
+  {
+   "who": "clienteB",
+   "method": "GET",
+   "path": "/api/orders",
+   "status": 200,
+   "response": "{\"orders\":[{\"id\":3,\"status\":\"em_preparacao\",\"totalCents\":27490,\"createdAt\":\"2026-10-10T10:15:00.000Z\",\"updatedAt\":\"2026-10-10T10:15:00.000Z\",\"itemCount\":2,\"customer\":{\"id\":2,\"name\":\"Bruno Cliente (demo)\",\"email\":\"bruno@demo.vestebem\"}},{\"id\":4,\"status\":\"cancelado\",\"totalCents\":8990,\"createdAt\":\"2026-09-05T18:45:00.000Z\",\"updatedAt\":\"2026-09-05T18:45:00.000Z\",\"itemCount\":1,\"customer\":{\"id\":2,\"name\":\"Bruno Cliente (demo)\",\"email\":\"bruno@demo.vestebem\"}}]}"
+  },
+  {
+   "who": "clienteA",
+   "method": "POST",
+   "path": "/api/orders",
+   "body": {
+    "confirmShipping": true,
+    "items": [
+     {
+      "productId": 9,
+      "quantity": 1
+     }
+    ]
+   },
+   "status": 201,
+   "response": "{\"order\":{\"id\":6,\"status\":\"recebido\",\"totalCents\":8990,\"createdAt\":\"2026-11-11T02:01:11.592Z\",\"updatedAt\":\"2026-11-11T02:01:11.592Z\",\"itemCount\":1,\"customer\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"ana@demo.vestebem\"},\"items\":[{\"productId\":9,\"description\":\"Bermuda Sarja\",\"quantity\":1,\"unitPriceCents\":8990,\"subtotalCents\":8990}],\"shipping\":{\"recipient\":\"Ana Cliente (demo)\",\"phone\":\"11988887777\",\"cep\":\"01000000\",\"street\":\"Rua Fictícia das Flores\",\"number\":\"100\",\"complement\":\"Apto 12\",\"district\":\"Jardim Exemplo\",\"city\":\"São Paulo\",\"state\":\"SP\"}}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "GET",
+   "path": "/api/orders",
+   "status": 200,
+   "response": "{\"orders\":[{\"id\":6,\"status\":\"recebido\",\"totalCents\":8990,\"createdAt\":\"2026-11-11T02:01:11.592Z\",\"updatedAt\":\"2026-11-11T02:01:11.592Z\",\"itemCount\":1,\"customer\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"ana@demo.vestebem\"}},{\"id\":5,\"status\":\"recebido\",\"totalCents\":8990,\"createdAt\":\"2026-11-11T02:01:11.587Z\",\"updatedAt\":\"2026-11-11T02:01:11.587Z\",\"itemCount\":1,\"customer\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"ana@demo.vestebem\"}},{\"id\":2,\"status\":\"recebido\",\"totalCents\":18900,\"createdAt\":\"2026-10-20T15:30:00.000Z\",\"updatedAt\":\"2026-10-20T15:30:00.000Z\",\"itemCount\":1,\"customer\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"ana@demo.vestebem\"}},{\"id\":1,\"status\":\"enviado\",\"totalCents\":25970,\"createdAt\":\"2026-10-01T13:00:00.000Z\",\"updatedAt\":\"2026-10-01T13:00:00.000Z\",\"itemCount\":2,\"customer\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"ana@demo.vestebem\"}}]}"
+  },
+  {
+   "who": "clienteA",
+   "method": "POST",
+   "path": "/api/orders",
+   "body": {
+    "confirmShipping": true,
+    "items": [
+     {
+      "productId": 9,
+      "quantity": 0
+     }
+    ]
+   },
+   "status": 400,
+   "response": "{\"error\":\"Item 1: a quantidade deve ser um número inteiro entre 1 e 9999.\",\"errors\":[\"Item 1: a quantidade deve ser um número inteiro entre 1 e 9999.\"]}"
+  },
+  {
+   "who": "clienteA",
+   "method": "POST",
+   "path": "/api/orders",
+   "body": {
+    "confirmShipping": true,
+    "items": [
+     {
+      "productId": 9,
+      "quantity": -1
+     }
+    ]
+   },
+   "status": 400,
+   "response": "{\"error\":\"Item 1: a quantidade deve ser um número inteiro entre 1 e 9999.\",\"errors\":[\"Item 1: a quantidade deve ser um número inteiro entre 1 e 9999.\"]}"
+  },
+  {
+   "who": "clienteA",
+   "method": "POST",
+   "path": "/api/orders",
+   "body": {
+    "confirmShipping": true,
+    "items": [
+     {
+      "productId": 9,
+      "quantity": 1.5
+     }
+    ]
+   },
+   "status": 400,
+   "response": "{\"error\":\"Item 1: a quantidade deve ser um número inteiro entre 1 e 9999.\",\"errors\":[\"Item 1: a quantidade deve ser um número inteiro entre 1 e 9999.\"]}"
+  },
+  {
+   "who": "clienteA",
+   "method": "POST",
+   "path": "/api/orders",
+   "body": {
+    "confirmShipping": true,
+    "items": [
+     {
+      "productId": 9,
+      "quantity": "abc"
+     }
+    ]
+   },
+   "status": 400,
+   "response": "{\"error\":\"Item 1: a quantidade deve ser um número inteiro entre 1 e 9999.\",\"errors\":[\"Item 1: a quantidade deve ser um número inteiro entre 1 e 9999.\"]}"
+  },
+  {
+   "who": "clienteA",
+   "method": "POST",
+   "path": "/api/orders",
+   "body": {
+    "confirmShipping": true,
+    "items": []
+   },
+   "status": 400,
+   "response": "{\"error\":\"O pedido deve conter pelo menos um item.\",\"errors\":[\"O pedido deve conter pelo menos um item.\"]}"
+  },
+  {
+   "who": "clienteA",
+   "method": "GET",
+   "path": "/api/orders",
+   "status": 200,
+   "response": "{\"orders\":[{\"id\":6,\"status\":\"recebido\",\"totalCents\":8990,\"createdAt\":\"2026-11-11T02:01:11.592Z\",\"updatedAt\":\"2026-11-11T02:01:11.592Z\",\"itemCount\":1,\"customer\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"ana@demo.vestebem\"}},{\"id\":5,\"status\":\"recebido\",\"totalCents\":8990,\"createdAt\":\"2026-11-11T02:01:11.587Z\",\"updatedAt\":\"2026-11-11T02:01:11.587Z\",\"itemCount\":1,\"customer\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"ana@demo.vestebem\"}},{\"id\":2,\"status\":\"recebido\",\"totalCents\":18900,\"createdAt\":\"2026-10-20T15:30:00.000Z\",\"updatedAt\":\"2026-10-20T15:30:00.000Z\",\"itemCount\":1,\"customer\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"ana@demo.vestebem\"}},{\"id\":1,\"status\":\"enviado\",\"totalCents\":25970,\"createdAt\":\"2026-10-01T13:00:00.000Z\",\"updatedAt\":\"2026-10-01T13:00:00.000Z\",\"itemCount\":2,\"customer\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"ana@demo.vestebem\"}}]}"
+  },
+  {
+   "who": "clienteA",
+   "method": "POST",
+   "path": "/api/orders",
+   "body": {
+    "confirmShipping": true,
+    "items": [
+     {
+      "productId": 9,
+      "quantity": 2,
+      "price": 0.01,
+      "unit_price": 0.01,
+      "unitPrice": 0.01,
+      "priceCents": 1,
+      "preco": 0.01,
+      "precoCentavos": 1
+     }
+    ],
+    "total": 0.01,
+    "totalCents": 1,
+    "total_cents": 1,
+    "totalCentavos": 1
+   },
+   "status": 201,
+   "response": "{\"order\":{\"id\":7,\"status\":\"recebido\",\"totalCents\":17980,\"createdAt\":\"2026-11-11T02:01:11.604Z\",\"updatedAt\":\"2026-11-11T02:01:11.604Z\",\"itemCount\":1,\"customer\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"ana@demo.vestebem\"},\"items\":[{\"productId\":9,\"description\":\"Bermuda Sarja\",\"quantity\":2,\"unitPriceCents\":8990,\"subtotalCents\":17980}],\"shipping\":{\"recipient\":\"Ana Cliente (demo)\",\"phone\":\"11988887777\",\"cep\":\"01000000\",\"street\":\"Rua Fictícia das Flores\",\"number\":\"100\",\"complement\":\"Apto 12\",\"district\":\"Jardim Exemplo\",\"city\":\"São Paulo\",\"state\":\"SP\"}}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "GET",
+   "path": "/api/orders/7",
+   "status": 200,
+   "response": "{\"order\":{\"id\":7,\"status\":\"recebido\",\"totalCents\":17980,\"createdAt\":\"2026-11-11T02:01:11.604Z\",\"updatedAt\":\"2026-11-11T02:01:11.604Z\",\"itemCount\":1,\"customer\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"ana@demo.vestebem\"},\"items\":[{\"productId\":9,\"description\":\"Bermuda Sarja\",\"quantity\":2,\"unitPriceCents\":8990,\"subtotalCents\":17980}],\"shipping\":{\"recipient\":\"Ana Cliente (demo)\",\"phone\":\"11988887777\",\"cep\":\"01000000\",\"street\":\"Rua Fictícia das Flores\",\"number\":\"100\",\"complement\":\"Apto 12\",\"district\":\"Jardim Exemplo\",\"city\":\"São Paulo\",\"state\":\"SP\"}}}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/products",
+   "status": 200,
+   "response": "{\"products\":[{\"id\":9,\"name\":\"Bermuda Sarja\",\"description\":\"Bermuda de sarja com cinco bolsos. Cor: cáqui.\",\"category\":\"Bermudas\",\"size\":\"40\",\"priceCents\":8990,\"stock\":20,\"createdAt\":\"2026-11-11T02:01:10.365Z\",\"updatedAt\":\"2026-11-11T02:01:10.365Z\"},{\"id\":10,\"name\":\"Bermuda Tactel\",\"description\":\"Bermuda leve de tactel com forro interno.\",\"category\":\"Bermudas\",\"size\":\"G\",\"priceCents\":5990,\"stock\":22,\"createdAt\":\"2026-11-11T02:01:10.367Z\",\"updatedAt\":\"2026-11-11T02:01:10.367Z\"},{\"id\":17,\"name\":\"Boné Aba Curva\",\"description\":\"Boné de sarja com regulagem traseira.\",\"category\":\"Acessórios\",\"size\":\"Único\",\"priceCents\":4500,\"stock\":40,\"createdAt\":\"2026-11-11T02:01:10.379Z\",\"updatedAt\":\"2026-11-11T02:01:10.379Z\"},{\"id\":8,\"name\":\"Calça de Moletom Jogger\",\"description\":\"Moletom flanelado com punho na barra e cordão.\",\"category\":\"Calças\",\"size\":\"M\",\"priceCents\":11990,\"stock\":15,\"createdAt\":\"2026-11-11T02:01:10.363Z\",\"updatedAt\":\"2026-11-11T02:01:10.363Z\"},{\"id\":6,\"name\":\"Calça Jeans Reta\",\"description\":\"Jeans com elastano, modelagem reta e lavagem média.\",\"category\":\"Calças\",\"size\":\"38\",\"priceCents\":15990,\"stock\":10,\"createdAt\":\"2026-11-11T02:01:10.360Z\",\"updatedAt\":\"2026-11-11T02:01:10.360Z\"},{\"id\":7,\"name\":\"Calça Jeans Reta\",\"description\":\"Jeans com elastano, modelagem reta e lavagem média.\",\"category\":\"Calças\",\"size\":\"42\",\"priceCents\":15990,\"stock\":7,\"createdAt\":\"2026-11-11T02:01:10.361Z\",\"updatedAt\":\"2026-11-11T02:01:10.361Z\"},{\"id\":1,\"name\":\"Camiseta Básica Algodão\",\"description\":\"Camiseta de algodão penteado, gola careca.\\nCor: branca.\",\"category\":\"Camisetas\",\"size\":\"P\",\"priceCents\":4990,\"stock\":30,\"createdAt\":\"2026-11-11T02:01:10.347Z\",\"updatedAt\":\"2026-11-11T02:01:10.347Z\"},{\"id\":2,\"name\":\"Camiseta Básica Algodão\",\"description\":\"Camiseta de algodão penteado, gola careca.\\nCor: branca.\",\"category\":\"Camisetas\",\"size\":\"M\",\"priceCents\":4990,\"stock\":25,\"createdAt\":\"2026-11-11T02:01:10.352Z\",\"updatedAt\":\"2026-11-11T02:01:10.352Z\"},{\"id\":3,\"name\":\"Camiseta Básica Algodão\",\"description\":\"Camiseta de algodão penteado, gola careca.\\nCor: branca.\",\"category\":\"Camisetas\",\"size\":\"G\",\"priceCents\":4990,\"stock\":0,\"createdAt\":\"2026-11-11T02:01:10.355Z\",\"updatedAt\":\"2026-11-11T02:01:10.355Z\"},{\"id\":4,\"name\":\"Camiseta Estampada Coleção D'Água\",\"description\":\"Estampa exclusiva da coleção D'Água, inspirada no mar.\",\"category\":\"Camisetas\",\"size\":\"M\",\"priceCents\":6990,\"stock\":12,\"createdAt\":\"2026-11-11T02:01:10.356Z\",\"updatedAt\":\"2026-11-11T02:01:10.356Z\"},{\"id\":18,\"name\":\"Cinto de Couro\",\"description\":\"Cinto de couro legítimo com fivela prateada.\",\"category\":\"Acessórios\",\"size\":\"Único\",\"priceCents\":7900,\"stock\":14,\"createdAt\":\"2026-11-11T02:01:10.381Z\",\"updatedAt\":\"2026-11-11T02:01:10.381Z\"},{\"id\":14,\"name\":\"Jaqueta Corta-Vento\",\"description\":\"Jaqueta impermeável com capuz e bolsos com zíper.\",\"category\":\"Casacos\",\"size\":\"G\",\"priceCents\":22990,\"stock\":6,\"createdAt\":\"2026-11-11T02:01:10.374Z\",\"updatedAt\":\"2026-11-11T02:01:10.374Z\"}],\"page\":1,\"pageSize\":12,\"total\":18,\"totalPages\":2}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/products?q=D%27%C3%81gua",
+   "status": 200,
+   "response": "{\"products\":[{\"id\":4,\"name\":\"Camiseta Estampada Coleção D'Água\",\"description\":\"Estampa exclusiva da coleção D'Água, inspirada no mar.\",\"category\":\"Camisetas\",\"size\":\"M\",\"priceCents\":6990,\"stock\":12,\"createdAt\":\"2026-11-11T02:01:10.356Z\",\"updatedAt\":\"2026-11-11T02:01:10.356Z\"}],\"page\":1,\"pageSize\":12,\"total\":1,\"totalPages\":1}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/products?q=%27+OR+%271%27%3D%271",
+   "status": 200,
+   "response": "{\"products\":[],\"page\":1,\"pageSize\":12,\"total\":0,\"totalPages\":1}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/products?q=%25%27+OR+1%3D1+--",
+   "status": 200,
+   "response": "{\"products\":[],\"page\":1,\"pageSize\":12,\"total\":0,\"totalPages\":1}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/products?q=%27%29+UNION+SELECT+name%2Csql%2C1%2C1%2C1%2C1%2C1%2C1%2C1+FROM+sqlite_master+--",
+   "status": 200,
+   "response": "{\"products\":[],\"page\":1,\"pageSize\":12,\"total\":0,\"totalPages\":1}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/products?sort=preco;DROP TABLE x",
+   "status": 400,
+   "response": "{\"error\":\"Ordenação inválida.\",\"errors\":[\"Ordenação inválida.\"]}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/products?sort=(CASE WHEN 1=1 THEN name ELSE price END)",
+   "status": 400,
+   "response": "{\"error\":\"Ordenação inválida.\",\"errors\":[\"Ordenação inválida.\"]}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/products?sort=constructor",
+   "status": 400,
+   "response": "{\"error\":\"Ordenação inválida.\",\"errors\":[\"Ordenação inválida.\"]}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/products?sort=__proto__",
+   "status": 400,
+   "response": "{\"error\":\"Ordenação inválida.\",\"errors\":[\"Ordenação inválida.\"]}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/products?order=desc;DROP TABLE x",
+   "status": 400,
+   "response": "{\"error\":\"Direção de ordenação inválida.\",\"errors\":[\"Direção de ordenação inválida.\"]}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/products?order=ASC,(SELECT 1)",
+   "status": 400,
+   "response": "{\"error\":\"Direção de ordenação inválida.\",\"errors\":[\"Direção de ordenação inválida.\"]}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/products?categoria=' OR '1'='1&category=' OR '1'='1",
+   "status": 200,
+   "response": "{\"products\":[],\"page\":1,\"pageSize\":12,\"total\":0,\"totalPages\":1}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/products?tamanho=') OR 1=1 --&size=') OR 1=1 --",
+   "status": 200,
+   "response": "{\"products\":[],\"page\":1,\"pageSize\":12,\"total\":0,\"totalPages\":1}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/products?pagina=1 OR 1=1&page=1 OR 1=1",
+   "status": 400,
+   "response": "{\"error\":\"Página inválida.\",\"errors\":[\"Página inválida.\"]}"
+  },
+  {
+   "who": "visitante",
+   "method": "POST",
+   "path": "/api/products",
+   "body": {
+    "name": "Produto Teste 52if7u",
+    "description": "teste",
+    "category": "Teste",
+    "size": "M",
+    "priceCents": 1000,
+    "stock": 1
+   },
+   "status": 401,
+   "response": "{\"error\":\"Você precisa entrar para acessar esta página.\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "POST",
+   "path": "/api/products",
+   "body": {
+    "name": "Produto Teste 52if7u",
+    "description": "teste",
+    "category": "Teste",
+    "size": "M",
+    "priceCents": 1000,
+    "stock": 1
+   },
+   "status": 403,
+   "response": "{\"error\":\"Somente funcionários podem cadastrar ou alterar produtos.\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/products/9",
+   "body": {
+    "name": "Alterado por cliente",
+    "description": "x",
+    "category": "Teste",
+    "size": "M",
+    "priceCents": 100,
+    "stock": 1
+   },
+   "status": 403,
+   "response": "{\"error\":\"Somente funcionários podem cadastrar ou alterar produtos.\"}"
+  },
+  {
+   "who": "funcionario",
+   "method": "POST",
+   "path": "/api/products",
+   "body": {
+    "name": "<img src=x onerror=alert(1)>",
+    "description": "<script>alert(1)</script>",
+    "category": "Teste",
+    "size": "M",
+    "priceCents": 1000,
+    "stock": 5
+   },
+   "status": 201,
+   "response": "{\"product\":{\"id\":19,\"name\":\"<img src=x onerror=alert(1)>\",\"description\":\"<script>alert(1)</script>\",\"category\":\"Teste\",\"size\":\"M\",\"priceCents\":1000,\"stock\":5,\"createdAt\":\"2026-11-11T02:01:11.633Z\",\"updatedAt\":\"2026-11-11T02:01:11.633Z\"}}"
+  },
+  {
+   "who": "funcionario",
+   "method": "POST",
+   "path": "/api/products",
+   "body": {
+    "name": "Válido tsma2r",
+    "description": "controle",
+    "category": "Teste",
+    "size": "M",
+    "priceCents": 1000,
+    "stock": 1
+   },
+   "status": 201,
+   "response": "{\"product\":{\"id\":20,\"name\":\"Válido tsma2r\",\"description\":\"controle\",\"category\":\"Teste\",\"size\":\"M\",\"priceCents\":1000,\"stock\":1,\"createdAt\":\"2026-11-11T02:01:11.637Z\",\"updatedAt\":\"2026-11-11T02:01:11.637Z\"}}"
+  },
+  {
+   "who": "funcionario",
+   "method": "POST",
+   "path": "/api/products",
+   "body": {
+    "name": "Inválido fgy6tu",
+    "description": "x",
+    "category": "Teste",
+    "size": "M",
+    "priceCents": -100,
+    "stock": 1
+   },
+   "status": 400,
+   "response": "{\"error\":\"Verifique os dados do produto.\",\"fields\":{\"priceCents\":\"O preço não pode ser negativo (máximo R$ 100.000,00).\"}}"
+  },
+  {
+   "who": "funcionario",
+   "method": "POST",
+   "path": "/api/products",
+   "body": {
+    "name": "Inválido 8qt22c",
+    "description": "x",
+    "category": "Teste",
+    "size": "M",
+    "priceCents": 1000,
+    "stock": -1
+   },
+   "status": 400,
+   "response": "{\"error\":\"Verifique os dados do produto.\",\"fields\":{\"stock\":\"O estoque deve ser um número inteiro igual ou maior que zero.\"}}"
+  },
+  {
+   "who": "funcionario",
+   "method": "POST",
+   "path": "/api/products",
+   "body": {
+    "name": "Inválido z4r8v3",
+    "description": "x",
+    "category": "Teste",
+    "size": "M",
+    "priceCents": 1000,
+    "stock": 2.5
+   },
+   "status": 400,
+   "response": "{\"error\":\"Verifique os dados do produto.\",\"fields\":{\"stock\":\"O estoque deve ser um número inteiro igual ou maior que zero.\"}}"
+  },
+  {
+   "who": "funcionario",
+   "method": "POST",
+   "path": "/api/products",
+   "body": {
+    "name": "Inválido 92arv7",
+    "description": "x",
+    "category": "Teste",
+    "size": "M",
+    "priceCents": 1000,
+    "stock": "abc"
+   },
+   "status": 400,
+   "response": "{\"error\":\"Verifique os dados do produto.\",\"fields\":{\"stock\":\"O estoque deve ser um número inteiro igual ou maior que zero.\"}}"
+  },
+  {
+   "who": "funcionario",
+   "method": "POST",
+   "path": "/api/products",
+   "body": {
+    "name": "Inválido seu2zx",
+    "description": "x",
+    "category": "Teste",
+    "size": "M",
+    "priceCents": "abc",
+    "stock": 1
+   },
+   "status": 400,
+   "response": "{\"error\":\"Verifique os dados do produto.\",\"fields\":{\"priceCents\":\"O preço não pode ser negativo (máximo R$ 100.000,00).\"}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "POST",
+   "path": "/api/orders",
+   "body": {
+    "confirmShipping": true,
+    "items": [
+     {
+      "productId": 999999,
+      "quantity": 1
+     }
+    ]
+   },
+   "status": 400,
+   "response": "{\"error\":\"Produto nº 999999 não encontrado.\",\"errors\":[\"Produto nº 999999 não encontrado.\"]}"
+  },
+  {
+   "who": "clienteA",
+   "method": "POST",
+   "path": "/api/orders",
+   "body": {
+    "confirmShipping": true,
+    "items": [
+     {
+      "productId": null,
+      "quantity": 1
+     }
+    ]
+   },
+   "status": 400,
+   "response": "{\"error\":\"Item 1: selecione um produto do catálogo.\",\"errors\":[\"Item 1: selecione um produto do catálogo.\"]}"
+  },
+  {
+   "who": "clienteA",
+   "method": "POST",
+   "path": "/api/orders",
+   "body": {
+    "confirmShipping": true,
+    "items": [
+     {
+      "productId": "abc",
+      "quantity": 1
+     }
+    ]
+   },
+   "status": 400,
+   "response": "{\"error\":\"Item 1: selecione um produto do catálogo.\",\"errors\":[\"Item 1: selecione um produto do catálogo.\"]}"
+  },
+  {
+   "who": "clienteB",
+   "method": "GET",
+   "path": "/api/account",
+   "status": 200,
+   "response": "{\"user\":{\"id\":2,\"name\":\"Bruno Cliente (demo)\",\"email\":\"bruno@demo.vestebem\",\"role\":\"cliente\",\"cpf\":\"98765432100\",\"phone\":\"21900000002\"},\"address\":{\"recipient\":\"Bruno Cliente (demo)\",\"cep\":\"20000000\",\"street\":\"Avenida Imaginária\",\"number\":\"2000\",\"complement\":null,\"district\":\"Centro Demo\",\"city\":\"Rio de Janeiro\",\"state\":\"RJ\"}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/account/profile",
+   "body": {
+    "name": "Invasor",
+    "cpf": "52998224725",
+    "phone": "11911112222",
+    "id": 2,
+    "userId": 2,
+    "user_id": 2,
+    "usuarioId": 2,
+    "clienteId": 2,
+    "customerId": 2
+   },
+   "status": 200,
+   "response": "{\"user\":{\"id\":1,\"name\":\"Invasor\",\"email\":\"ana@demo.vestebem\",\"role\":\"cliente\",\"cpf\":\"52998224725\",\"phone\":\"11911112222\"},\"address\":{\"recipient\":\"Ana Cliente (demo)\",\"cep\":\"01000000\",\"street\":\"Rua Fictícia das Flores\",\"number\":\"100\",\"complement\":\"Apto 12\",\"district\":\"Jardim Exemplo\",\"city\":\"São Paulo\",\"state\":\"SP\"}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/account/address",
+   "body": {
+    "recipient": "Invasor",
+    "cep": "01001000",
+    "street": "Rua Invasora",
+    "number": "1",
+    "complement": "",
+    "district": "Centro",
+    "city": "São Paulo",
+    "state": "SP",
+    "id": 2,
+    "userId": 2,
+    "user_id": 2,
+    "usuarioId": 2
+   },
+   "status": 200,
+   "response": "{\"user\":{\"id\":1,\"name\":\"Invasor\",\"email\":\"ana@demo.vestebem\",\"role\":\"cliente\",\"cpf\":\"52998224725\",\"phone\":\"11911112222\"},\"address\":{\"recipient\":\"Invasor\",\"cep\":\"01001000\",\"street\":\"Rua Invasora\",\"number\":\"1\",\"complement\":null,\"district\":\"Centro\",\"city\":\"São Paulo\",\"state\":\"SP\"}}"
+  },
+  {
+   "who": "clienteB",
+   "method": "GET",
+   "path": "/api/account",
+   "status": 200,
+   "response": "{\"user\":{\"id\":2,\"name\":\"Bruno Cliente (demo)\",\"email\":\"bruno@demo.vestebem\",\"role\":\"cliente\",\"cpf\":\"98765432100\",\"phone\":\"21900000002\"},\"address\":{\"recipient\":\"Bruno Cliente (demo)\",\"cep\":\"20000000\",\"street\":\"Avenida Imaginária\",\"number\":\"2000\",\"complement\":null,\"district\":\"Centro Demo\",\"city\":\"Rio de Janeiro\",\"state\":\"RJ\"}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "GET",
+   "path": "/api/account?userId=2&id=2&user_id=2&clienteId=2",
+   "status": 200,
+   "response": "{\"user\":{\"id\":1,\"name\":\"Invasor\",\"email\":\"ana@demo.vestebem\",\"role\":\"cliente\",\"cpf\":\"52998224725\",\"phone\":\"11911112222\"},\"address\":{\"recipient\":\"Invasor\",\"cep\":\"01001000\",\"street\":\"Rua Invasora\",\"number\":\"1\",\"complement\":null,\"district\":\"Centro\",\"city\":\"São Paulo\",\"state\":\"SP\"}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/account/profile",
+   "body": {
+    "name": "Cliente A Teste",
+    "cpf": "52998224725",
+    "phone": "11988887777"
+   },
+   "status": 200,
+   "response": "{\"user\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"ana@demo.vestebem\",\"role\":\"cliente\",\"cpf\":\"52998224725\",\"phone\":\"11988887777\"},\"address\":{\"recipient\":\"Invasor\",\"cep\":\"01001000\",\"street\":\"Rua Invasora\",\"number\":\"1\",\"complement\":null,\"district\":\"Centro\",\"city\":\"São Paulo\",\"state\":\"SP\"}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/account/address",
+   "body": {
+    "recipient": "<img src=x onerror=alert(1)>",
+    "cep": "01001000",
+    "street": "Rua Teste",
+    "number": "10",
+    "complement": "<img src=x onerror=alert(1)>",
+    "district": "Centro",
+    "city": "São Paulo",
+    "state": "SP"
+   },
+   "status": 200,
+   "response": "{\"user\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"ana@demo.vestebem\",\"role\":\"cliente\",\"cpf\":\"52998224725\",\"phone\":\"11988887777\"},\"address\":{\"recipient\":\"<img src=x onerror=alert(1)>\",\"cep\":\"01001000\",\"street\":\"Rua Teste\",\"number\":\"10\",\"complement\":\"<img src=x onerror=alert(1)>\",\"district\":\"Centro\",\"city\":\"São Paulo\",\"state\":\"SP\"}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "POST",
+   "path": "/api/orders",
+   "body": {
+    "confirmShipping": true,
+    "items": [
+     {
+      "productId": 9,
+      "quantity": 1
+     }
+    ]
+   },
+   "status": 201,
+   "response": "{\"order\":{\"id\":8,\"status\":\"recebido\",\"totalCents\":8990,\"createdAt\":\"2026-11-11T02:01:11.669Z\",\"updatedAt\":\"2026-11-11T02:01:11.669Z\",\"itemCount\":1,\"customer\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"ana@demo.vestebem\"},\"items\":[{\"productId\":9,\"description\":\"Bermuda Sarja\",\"quantity\":1,\"unitPriceCents\":8990,\"subtotalCents\":8990}],\"shipping\":{\"recipient\":\"<img src=x onerror=alert(1)>\",\"phone\":\"11988887777\",\"cep\":\"01001000\",\"street\":\"Rua Teste\",\"number\":\"10\",\"complement\":\"<img src=x onerror=alert(1)>\",\"district\":\"Centro\",\"city\":\"São Paulo\",\"state\":\"SP\"}}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/account/address",
+   "body": {
+    "recipient": "Cliente A Teste",
+    "cep": "01001000",
+    "street": "Rua Teste",
+    "number": "10",
+    "complement": "",
+    "district": "Centro",
+    "city": "São Paulo",
+    "state": "SP"
+   },
+   "status": 200,
+   "response": "{\"user\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"ana@demo.vestebem\",\"role\":\"cliente\",\"cpf\":\"52998224725\",\"phone\":\"11988887777\"},\"address\":{\"recipient\":\"Cliente A Teste\",\"cep\":\"01001000\",\"street\":\"Rua Teste\",\"number\":\"10\",\"complement\":null,\"district\":\"Centro\",\"city\":\"São Paulo\",\"state\":\"SP\"}}"
+  },
+  {
+   "who": "funcionario",
+   "method": "GET",
+   "path": "/api/orders",
+   "status": 200,
+   "response": "{\"orders\":[{\"id\":8,\"status\":\"recebido\",\"totalCents\":8990,\"createdAt\":\"2026-11-11T02:01:11.669Z\",\"updatedAt\":\"2026-11-11T02:01:11.669Z\",\"itemCount\":1,\"customer\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"ana@demo.vestebem\"}},{\"id\":7,\"status\":\"recebido\",\"totalCents\":17980,\"createdAt\":\"2026-11-11T02:01:11.604Z\",\"updatedAt\":\"2026-11-11T02:01:11.604Z\",\"itemCount\":1,\"customer\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"ana@demo.vestebem\"}},{\"id\":6,\"status\":\"recebido\",\"totalCents\":8990,\"createdAt\":\"2026-11-11T02:01:11.592Z\",\"updatedAt\":\"2026-11-11T02:01:11.592Z\",\"itemCount\":1,\"customer\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"ana@demo.vestebem\"}},{\"id\":5,\"status\":\"recebido\",\"totalCents\":8990,\"createdAt\":\"2026-11-11T02:01:11.587Z\",\"updatedAt\":\"2026-11-11T02:01:11.587Z\",\"itemCount\":1,\"customer\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"ana@demo.vestebem\"}},{\"id\":2,\"status\":\"recebido\",\"totalCents\":18900,\"createdAt\":\"2026-10-20T15:30:00.000Z\",\"updatedAt\":\"2026-10-20T15:30:00.000Z\",\"itemCount\":1,\"customer\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"ana@demo.vestebem\"}},{\"id\":3,\"status\":\"em_preparacao\",\"totalCents\":27490,\"createdAt\":\"2026-10-10T10:15:00.000Z\",\"updatedAt\":\"2026-10-10T10:15:00.000Z\",\"itemCount\":2,\"customer\":{\"id\":2,\"name\":\"Bruno Cliente (demo)\",\"email\":\"bruno@demo.vestebem\"}},{\"id\":1,\"status\":\"enviado\",\"totalCents\":25970,\"createdAt\":\"2026-10-01T13:00:00.000Z\",\"updatedAt\":\"2026-10-01T13:00:00.000Z\",\"itemCount\":2,\"customer\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"ana@demo.vestebem\"}},{\"id\":4,\"status\":\"cancelado\",\"totalCents\":8990,\"createdAt\":\"2026-09-05T18:45:00.000Z\",\"updatedAt\":\"2026-09-05T18:45:00.000Z\",\"itemCount\":1,\"customer\":{\"id\":2,\"name\":\"Bruno Cliente (demo)\",\"email\":\"bruno@demo.vestebem\"}}]}"
+  },
+  {
+   "who": "clienteA",
+   "method": "GET",
+   "path": "/api/orders",
+   "status": 200,
+   "response": "{\"orders\":[{\"id\":8,\"status\":\"recebido\",\"totalCents\":8990,\"createdAt\":\"2026-11-11T02:01:11.669Z\",\"updatedAt\":\"2026-11-11T02:01:11.669Z\",\"itemCount\":1,\"customer\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"ana@demo.vestebem\"}},{\"id\":7,\"status\":\"recebido\",\"totalCents\":17980,\"createdAt\":\"2026-11-11T02:01:11.604Z\",\"updatedAt\":\"2026-11-11T02:01:11.604Z\",\"itemCount\":1,\"customer\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"ana@demo.vestebem\"}},{\"id\":6,\"status\":\"recebido\",\"totalCents\":8990,\"createdAt\":\"2026-11-11T02:01:11.592Z\",\"updatedAt\":\"2026-11-11T02:01:11.592Z\",\"itemCount\":1,\"customer\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"ana@demo.vestebem\"}},{\"id\":5,\"status\":\"recebido\",\"totalCents\":8990,\"createdAt\":\"2026-11-11T02:01:11.587Z\",\"updatedAt\":\"2026-11-11T02:01:11.587Z\",\"itemCount\":1,\"customer\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"ana@demo.vestebem\"}},{\"id\":2,\"status\":\"recebido\",\"totalCents\":18900,\"createdAt\":\"2026-10-20T15:30:00.000Z\",\"updatedAt\":\"2026-10-20T15:30:00.000Z\",\"itemCount\":1,\"customer\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"ana@demo.vestebem\"}},{\"id\":1,\"status\":\"enviado\",\"totalCents\":25970,\"createdAt\":\"2026-10-01T13:00:00.000Z\",\"updatedAt\":\"2026-10-01T13:00:00.000Z\",\"itemCount\":2,\"customer\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"ana@demo.vestebem\"}}]}"
+  },
+  {
+   "who": "funcionario",
+   "method": "GET",
+   "path": "/api/orders/8",
+   "status": 200,
+   "response": "{\"order\":{\"id\":8,\"status\":\"recebido\",\"totalCents\":8990,\"createdAt\":\"2026-11-11T02:01:11.669Z\",\"updatedAt\":\"2026-11-11T02:01:11.669Z\",\"itemCount\":1,\"customer\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"ana@demo.vestebem\"},\"items\":[{\"productId\":9,\"description\":\"Bermuda Sarja\",\"quantity\":1,\"unitPriceCents\":8990,\"subtotalCents\":8990}],\"shipping\":{\"recipient\":\"<img src=x onerror=alert(1)>\",\"phone\":\"11988887777\",\"cep\":\"01001000\",\"street\":\"Rua Teste\",\"number\":\"10\",\"complement\":\"<img src=x onerror=alert(1)>\",\"district\":\"Centro\",\"city\":\"São Paulo\",\"state\":\"SP\"}}}"
+  },
+  {
+   "who": "funcionario",
+   "method": "GET",
+   "path": "/api/orders/7",
+   "status": 200,
+   "response": "{\"order\":{\"id\":7,\"status\":\"recebido\",\"totalCents\":17980,\"createdAt\":\"2026-11-11T02:01:11.604Z\",\"updatedAt\":\"2026-11-11T02:01:11.604Z\",\"itemCount\":1,\"customer\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"ana@demo.vestebem\"},\"items\":[{\"productId\":9,\"description\":\"Bermuda Sarja\",\"quantity\":2,\"unitPriceCents\":8990,\"subtotalCents\":17980}],\"shipping\":{\"recipient\":\"Ana Cliente (demo)\",\"phone\":\"11988887777\",\"cep\":\"01000000\",\"street\":\"Rua Fictícia das Flores\",\"number\":\"100\",\"complement\":\"Apto 12\",\"district\":\"Jardim Exemplo\",\"city\":\"São Paulo\",\"state\":\"SP\"}}}"
+  },
+  {
+   "who": "funcionario",
+   "method": "GET",
+   "path": "/api/orders/6",
+   "status": 200,
+   "response": "{\"order\":{\"id\":6,\"status\":\"recebido\",\"totalCents\":8990,\"createdAt\":\"2026-11-11T02:01:11.592Z\",\"updatedAt\":\"2026-11-11T02:01:11.592Z\",\"itemCount\":1,\"customer\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"ana@demo.vestebem\"},\"items\":[{\"productId\":9,\"description\":\"Bermuda Sarja\",\"quantity\":1,\"unitPriceCents\":8990,\"subtotalCents\":8990}],\"shipping\":{\"recipient\":\"Ana Cliente (demo)\",\"phone\":\"11988887777\",\"cep\":\"01000000\",\"street\":\"Rua Fictícia das Flores\",\"number\":\"100\",\"complement\":\"Apto 12\",\"district\":\"Jardim Exemplo\",\"city\":\"São Paulo\",\"state\":\"SP\"}}}"
+  },
+  {
+   "who": "funcionario",
+   "method": "GET",
+   "path": "/api/orders/5",
+   "status": 200,
+   "response": "{\"order\":{\"id\":5,\"status\":\"recebido\",\"totalCents\":8990,\"createdAt\":\"2026-11-11T02:01:11.587Z\",\"updatedAt\":\"2026-11-11T02:01:11.587Z\",\"itemCount\":1,\"customer\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"ana@demo.vestebem\"},\"items\":[{\"productId\":9,\"description\":\"Bermuda Sarja\",\"quantity\":1,\"unitPriceCents\":8990,\"subtotalCents\":8990}],\"shipping\":{\"recipient\":\"Ana Cliente (demo)\",\"phone\":\"11988887777\",\"cep\":\"01000000\",\"street\":\"Rua Fictícia das Flores\",\"number\":\"100\",\"complement\":\"Apto 12\",\"district\":\"Jardim Exemplo\",\"city\":\"São Paulo\",\"state\":\"SP\"}}}"
+  },
+  {
+   "who": "funcionario",
+   "method": "GET",
+   "path": "/api/orders/2",
+   "status": 200,
+   "response": "{\"order\":{\"id\":2,\"status\":\"recebido\",\"totalCents\":18900,\"createdAt\":\"2026-10-20T15:30:00.000Z\",\"updatedAt\":\"2026-10-20T15:30:00.000Z\",\"itemCount\":1,\"customer\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"ana@demo.vestebem\"},\"items\":[{\"productId\":11,\"description\":\"Vestido Midi Floral\",\"quantity\":1,\"unitPriceCents\":18900,\"subtotalCents\":18900}],\"shipping\":{\"recipient\":\"Ana Cliente (demo)\",\"phone\":\"11900000001\",\"cep\":\"01000000\",\"street\":\"Rua Fictícia das Flores\",\"number\":\"100\",\"complement\":\"Apto 12\",\"district\":\"Jardim Exemplo\",\"city\":\"São Paulo\",\"state\":\"SP\"}}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/account/profile",
+   "body": {
+    "name": "Cliente A Teste",
+    "cpf": "52998224725",
+    "phone": "11988887777"
+   },
+   "status": 200,
+   "response": "{\"user\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"ana@demo.vestebem\",\"role\":\"cliente\",\"cpf\":\"52998224725\",\"phone\":\"11988887777\"},\"address\":{\"recipient\":\"Cliente A Teste\",\"cep\":\"01001000\",\"street\":\"Rua Teste\",\"number\":\"10\",\"complement\":null,\"district\":\"Centro\",\"city\":\"São Paulo\",\"state\":\"SP\"}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/account/address",
+   "body": {
+    "recipient": "Cliente A Teste",
+    "cep": "01001000",
+    "street": "Rua Teste",
+    "number": "10",
+    "complement": "",
+    "district": "Centro",
+    "city": "São Paulo",
+    "state": "SP"
+   },
+   "status": 200,
+   "response": "{\"user\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"ana@demo.vestebem\",\"role\":\"cliente\",\"cpf\":\"52998224725\",\"phone\":\"11988887777\"},\"address\":{\"recipient\":\"Cliente A Teste\",\"cep\":\"01001000\",\"street\":\"Rua Teste\",\"number\":\"10\",\"complement\":null,\"district\":\"Centro\",\"city\":\"São Paulo\",\"state\":\"SP\"}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/account/profile",
+   "body": {
+    "name": "Cliente A Teste",
+    "cpf": "abc",
+    "phone": "11988887777"
+   },
+   "status": 200,
+   "response": "{\"user\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"ana@demo.vestebem\",\"role\":\"cliente\",\"cpf\":null,\"phone\":\"11988887777\"},\"address\":{\"recipient\":\"Cliente A Teste\",\"cep\":\"01001000\",\"street\":\"Rua Teste\",\"number\":\"10\",\"complement\":null,\"district\":\"Centro\",\"city\":\"São Paulo\",\"state\":\"SP\"}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/account/address",
+   "body": {
+    "recipient": "A",
+    "cep": "123",
+    "street": "Rua",
+    "number": "1",
+    "complement": "",
+    "district": "B",
+    "city": "C",
+    "state": "SP"
+   },
+   "status": 400,
+   "response": "{\"error\":\"Verifique o endereço informado.\",\"fields\":{\"cep\":\"O CEP deve ter 8 dígitos.\"}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/account/address",
+   "body": {
+    "recipient": "A",
+    "cep": "01001000",
+    "street": "Rua",
+    "number": "1",
+    "complement": "",
+    "district": "B",
+    "city": "C",
+    "state": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+   },
+   "status": 400,
+   "response": "{\"error\":\"Verifique o endereço informado.\",\"fields\":{\"state\":\"Selecione um estado válido.\"}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/account/profile",
+   "body": {
+    "name": "Cliente A Teste",
+    "cpf": "52998224725",
+    "phone": "11988887777"
+   },
+   "status": 200,
+   "response": "{\"user\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"ana@demo.vestebem\",\"role\":\"cliente\",\"cpf\":\"52998224725\",\"phone\":\"11988887777\"},\"address\":{\"recipient\":\"Cliente A Teste\",\"cep\":\"01001000\",\"street\":\"Rua Teste\",\"number\":\"10\",\"complement\":null,\"district\":\"Centro\",\"city\":\"São Paulo\",\"state\":\"SP\"}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/account/address",
+   "body": {
+    "recipient": "Cliente A Teste",
+    "cep": "01001000",
+    "street": "Rua Teste",
+    "number": "10",
+    "complement": "",
+    "district": "Centro",
+    "city": "São Paulo",
+    "state": "SP"
+   },
+   "status": 200,
+   "response": "{\"user\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"ana@demo.vestebem\",\"role\":\"cliente\",\"cpf\":\"52998224725\",\"phone\":\"11988887777\"},\"address\":{\"recipient\":\"Cliente A Teste\",\"cep\":\"01001000\",\"street\":\"Rua Teste\",\"number\":\"10\",\"complement\":null,\"district\":\"Centro\",\"city\":\"São Paulo\",\"state\":\"SP\"}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/account/password",
+   "body": {
+    "currentPassword": "senha-errada-123",
+    "newPassword": "NovaSenhaTeste123"
+   },
+   "status": 400,
+   "response": "{\"error\":\"A senha atual está incorreta.\",\"fields\":{\"currentPassword\":\"Senha atual incorreta.\"}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/account/password",
+   "body": {
+    "currentPassword": "",
+    "newPassword": "NovaSenhaTeste123"
+   },
+   "status": 400,
+   "response": "{\"error\":\"A senha atual está incorreta.\",\"fields\":{\"currentPassword\":\"Senha atual incorreta.\"}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/account/password",
+   "body": {
+    "newPassword": "NovaSenhaTeste123"
+   },
+   "status": 400,
+   "response": "{\"error\":\"A senha atual está incorreta.\",\"fields\":{\"currentPassword\":\"Senha atual incorreta.\"}}"
+  },
+  {
+   "who": "clienteA-confere",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "ana@demo.vestebem",
+    "password": "demo1234"
+   },
+   "status": 200,
+   "response": "{\"user\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"ana@demo.vestebem\",\"role\":\"cliente\"}}"
+  },
+  {
+   "who": "clienteA-sessao1",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "ana@demo.vestebem",
+    "password": "demo1234"
+   },
+   "status": 200,
+   "response": "{\"user\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"ana@demo.vestebem\",\"role\":\"cliente\"}}"
+  },
+  {
+   "who": "clienteA-sessao2",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "ana@demo.vestebem",
+    "password": "demo1234"
+   },
+   "status": 200,
+   "response": "{\"user\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"ana@demo.vestebem\",\"role\":\"cliente\"}}"
+  },
+  {
+   "who": "clienteA-sessao1",
+   "method": "PUT",
+   "path": "/api/account/password",
+   "body": {
+    "currentPassword": "demo1234",
+    "newPassword": "NovaSenhaTeste123"
+   },
+   "status": 204,
+   "response": ""
+  },
+  {
+   "who": "clienteA-sessao2",
+   "method": "GET",
+   "path": "/api/account",
+   "status": 401,
+   "response": "{\"error\":\"Você precisa entrar para acessar esta página.\"}"
+  },
+  {
+   "who": "login-senha-antiga",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "ana@demo.vestebem",
+    "password": "demo1234"
+   },
+   "status": 401,
+   "response": "{\"error\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "login-senha-nova",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "ana@demo.vestebem",
+    "password": "NovaSenhaTeste123"
+   },
+   "status": 200,
+   "response": "{\"user\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"ana@demo.vestebem\",\"role\":\"cliente\"}}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "bruno@demo.vestebem",
+    "password": "errada0"
+   },
+   "status": 401,
+   "response": "{\"error\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "bruno@demo.vestebem",
+    "password": "errada1"
+   },
+   "status": 401,
+   "response": "{\"error\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "bruno@demo.vestebem",
+    "password": "errada2"
+   },
+   "status": 401,
+   "response": "{\"error\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "bruno@demo.vestebem",
+    "password": "errada3"
+   },
+   "status": 401,
+   "response": "{\"error\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "bruno@demo.vestebem",
+    "password": "errada4"
+   },
+   "status": 401,
+   "response": "{\"error\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "bruno@demo.vestebem",
+    "password": "errada5"
+   },
+   "status": 401,
+   "response": "{\"error\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "bruno@demo.vestebem",
+    "password": "errada6"
+   },
+   "status": 401,
+   "response": "{\"error\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "bruno@demo.vestebem",
+    "password": "errada7"
+   },
+   "status": 401,
+   "response": "{\"error\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "bruno@demo.vestebem",
+    "password": "errada8"
+   },
+   "status": 401,
+   "response": "{\"error\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "bruno@demo.vestebem",
+    "password": "errada9"
+   },
+   "status": 401,
+   "response": "{\"error\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "bruno@demo.vestebem",
+    "password": "errada10"
+   },
+   "status": 401,
+   "response": "{\"error\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "bruno@demo.vestebem",
+    "password": "errada11"
+   },
+   "status": 401,
+   "response": "{\"error\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "bruno@demo.vestebem",
+    "password": "errada12"
+   },
+   "status": 401,
+   "response": "{\"error\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "bruno@demo.vestebem",
+    "password": "errada13"
+   },
+   "status": 401,
+   "response": "{\"error\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "bruno@demo.vestebem",
+    "password": "errada14"
+   },
+   "status": 401,
+   "response": "{\"error\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "bruno@demo.vestebem",
+    "password": "errada15"
+   },
+   "status": 401,
+   "response": "{\"error\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "bruno@demo.vestebem",
+    "password": "errada16"
+   },
+   "status": 401,
+   "response": "{\"error\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "bruno@demo.vestebem",
+    "password": "errada17"
+   },
+   "status": 401,
+   "response": "{\"error\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "bruno@demo.vestebem",
+    "password": "errada18"
+   },
+   "status": 401,
+   "response": "{\"error\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "bruno@demo.vestebem",
+    "password": "errada19"
+   },
+   "status": 401,
+   "response": "{\"error\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "bruno@demo.vestebem",
+    "password": "errada20"
+   },
+   "status": 401,
+   "response": "{\"error\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "bruno@demo.vestebem",
+    "password": "errada21"
+   },
+   "status": 401,
+   "response": "{\"error\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "bruno@demo.vestebem",
+    "password": "errada22"
+   },
+   "status": 401,
+   "response": "{\"error\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "bruno@demo.vestebem",
+    "password": "errada23"
+   },
+   "status": 401,
+   "response": "{\"error\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "bruno@demo.vestebem",
+    "password": "errada24"
+   },
+   "status": 401,
+   "response": "{\"error\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "bruno@demo.vestebem",
+    "password": "errada25"
+   },
+   "status": 401,
+   "response": "{\"error\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "bruno@demo.vestebem",
+    "password": "errada26"
+   },
+   "status": 401,
+   "response": "{\"error\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "bruno@demo.vestebem",
+    "password": "errada27"
+   },
+   "status": 401,
+   "response": "{\"error\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "bruno@demo.vestebem",
+    "password": "errada28"
+   },
+   "status": 401,
+   "response": "{\"error\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "bruno@demo.vestebem",
+    "password": "errada29"
+   },
+   "status": 401,
+   "response": "{\"error\":\"E-mail ou senha incorretos.\"}"
+  }
+ ]
+}

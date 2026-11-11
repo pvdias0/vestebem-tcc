@@ -1,0 +1,6 @@
+Banco inicializado e migrations aplicadas.
+(node:156) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:163) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+Demonstração preparada. Senha inicial das três contas: VesteBem2026!

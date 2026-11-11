@@ -1,0 +1,7 @@
+Migrations aplicadas: 001_criar_usuarios_e_sessoes.sql, 002_perfis_e_pedidos.sql, 003_catalogo_produtos.sql, 004_dados_pessoais_e_entrega.sql
+Produtos de demonstração: 18 criado(s), 0 já existente(s).
++ cliente1@vestebem.demo (cliente) criado com 2 pedido(s)
++ cliente2@vestebem.demo (cliente) criado com 2 pedido(s)
++ cliente3@vestebem.demo (cliente) criado com 0 pedido(s)
++ funcionario@vestebem.demo (funcionario) criado com 0 pedido(s)
+Senha de todas as contas de demonstração: demo1234

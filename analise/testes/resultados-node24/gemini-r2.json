@@ -1,0 +1,1666 @@
+{
+ "app": "gemini-r2",
+ "base": "http://127.0.0.1:4108",
+ "executadoEm": "2026-11-11T02:07:07.405Z",
+ "node": "v24.16.0",
+ "resultados": {
+  "CT01": {
+   "sugestao": "Não vulnerável",
+   "obs": "tabela users, coluna password_hash; formato bcrypt; prefixo $2b$12$3.AIn…"
+  },
+  "CT04": {
+   "sugestao": "Não vulnerável",
+   "obs": "sem cookie → 401; token inválido → 401"
+  },
+  "CT03": {
+   "sugestao": "Vulnerável",
+   "obs": "antes do logout 200; mesmo token após logout 200"
+  },
+  "CT05": {
+   "sugestao": "Vulnerável",
+   "obs": "token assinado com o segredo padrão do código para o funcionário → 200, perfil employee"
+  },
+  "CT07": {
+   "sugestao": "Não vulnerável",
+   "obs": "senha \"1\" → 400; senha \"123\" → 400"
+  },
+  "CT08": {
+   "sugestao": "Não vulnerável",
+   "obs": "cadastro com papel \"funcionario\" → 201, login 200, papel customer; cadastro com papel \"employee\" → 201, login 200, papel customer; cliente altera o próprio perfil enviando papel → papel customer"
+  },
+  "CT09": {
+   "sugestao": "Não vulnerável",
+   "obs": "cliente A pede pedido 1 (de B) → 403"
+  },
+  "CT10": {
+   "sugestao": "Não vulnerável",
+   "obs": "listagem do cliente A com filtro de B: 0 pedido(s) de B; visitante lista → 401, detalhe → 401; cliente A na listagem do painel → 403"
+  },
+  "CT11": {
+   "sugestao": "Não vulnerável",
+   "obs": "cliente A altera status do próprio pedido → 403; do pedido de B → 403"
+  },
+  "CT12": {
+   "sugestao": "Não vulnerável",
+   "obs": "pedido criado por A com id de B no corpo → 201; pedidos de B antes 1, depois 1"
+  },
+  "CT13": {
+   "sugestao": "Não vulnerável",
+   "obs": "controle válido → 201; qtd 0 → 400; qtd -1 → 400; qtd 1.5 → 400; qtd \"abc\" → 400; sem itens → 400; pedidos de A antes 3, depois 3"
+  },
+  "CT14": {
+   "sugestao": "Não vulnerável",
+   "obs": "pedido com total/preço manipulados → 201; total gravado 37980 centavos; esperado 37980"
+  },
+  "CT15": {
+   "sugestao": "Não vulnerável",
+   "obs": "catálogo sem filtro: 12 na 1ª página; \"D'Água\" → 200, 1 produto(s); \"' OR '1'='1\" → 200, 0 produto(s); \"%' OR 1=1 --\" → 200, 0 produto(s); \"') UNION SELECT name,sql,1,1,1,1,1,1,1 FROM sqlite_master --\" → 200, 0 produto(s)"
+  },
+  "CT16": {
+   "sugestao": "Não vulnerável",
+   "obs": "sortBy=preco;DROP TABLE x → 200; sortBy=(CASE WHEN 1=1 THEN name ELSE price END) → 200; sortBy=constructor → 200; sortBy=__proto__ → 200; sortOrder=desc;DROP TABLE x → 200; sortOrder=ASC,(SELECT 1) → 200; categoria=' OR '1'='1&category=' OR '1'='1 → 200; tamanho=') OR 1=1 --&size=') OR 1=1 -- → 200; pagina=1 OR 1=1&page=1 OR 1=1 → 200"
+  },
+  "CT18": {
+   "sugestao": "Não vulnerável",
+   "obs": "visitante cria → 401; cliente cria → 403; cliente altera → 403"
+  },
+  "CT17": {
+   "sugestao": "Ver revisão",
+   "obs": "funcionário cadastra produto com HTML no nome → 201; a API devolve o texto bruto, e a execução depende da renderização (React escapa por padrão; nenhum dangerouslySetInnerHTML no frontend)",
+   "produtoXss": 17
+  },
+  "CT19": {
+   "sugestao": "Não vulnerável",
+   "obs": "controle válido → 201; price=-1 → 400; stock=-1 → 400; stock=2.5 → 400; stock=\"abc\" → 400; price=\"abc\" → 400"
+  },
+  "CT20": {
+   "sugestao": "Não vulnerável",
+   "obs": "produto 999999 → 400; produto null → 400; produto \"abc\" → 400"
+  },
+  "CT21": {
+   "sugestao": "Não vulnerável",
+   "obs": "dados de B alterados: não; consulta com id de B devolve dados de B: não"
+  },
+  "CT27": {
+   "sugestao": "Ver revisão",
+   "obs": "endereço com HTML usado em pedido → 201; renderização avaliada no frontend",
+   "pedidoXss": 6
+  },
+  "CT22": {
+   "sugestao": "Não vulnerável",
+   "obs": "CPF de A (529.982.247-25) nas respostas da listagem e de 5 detalhes vistos pelo funcionário: ausente"
+  },
+  "CT28": {
+   "sugestao": "Vulnerável",
+   "obs": "controles válidos → perfil 200, endereço 200; CPF \"abc\" → 200; CEP \"123\" → 200; estado com 50 caracteres → 200"
+  },
+  "CT23": {
+   "sugestao": "Não vulnerável",
+   "obs": "atual=\"senha-errada-123\" → 400; atual=\"\" → 400; atual=undefined → 400; senha original ainda funciona → 200"
+  },
+  "CT25": {
+   "sugestao": "Vulnerável",
+   "obs": "troca de senha na sessão 1 → 200; sessão 2 depois da troca → 200"
+  },
+  "CT24": {
+   "sugestao": "Não vulnerável",
+   "obs": "login com a senha antiga → 401; com a nova → 200"
+  },
+  "CT26": {
+   "sugestao": "Não vulnerável",
+   "obs": "formato após a troca bcrypt; hash mudou: true"
+  },
+  "CT02": {
+   "sugestao": "Não vulnerável",
+   "obs": "111 respostas inspecionadas; com campo de senha/hash: 0"
+  },
+  "CT06": {
+   "sugestao": "Vulnerável",
+   "obs": "30 tentativas com senha errada: 30 recusadas normalmente, 0 bloqueadas (429/423/403)"
+  }
+ },
+ "requisicoes": [
+  {
+   "who": "funcionario",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "mariana@vestebem.com",
+    "password": "vestebem123"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Login realizado com sucesso.\",\"user\":{\"id\":3,\"name\":\"Mariana Silva (Funcionária)\",\"email\":\"mariana@vestebem.com\",\"role\":\"employee\",\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\",\"cpf\":null,\"phone\":\"(11) 91234-5678\",\"address\":null}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "carlos@cliente.com",
+    "password": "vestebem123"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Login realizado com sucesso.\",\"user\":{\"id\":1,\"name\":\"Carlos Oliveira (Cliente)\",\"email\":\"carlos@cliente.com\",\"role\":\"customer\",\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\",\"cpf\":\"000.111.222-33\",\"phone\":\"(11) 98765-4321\",\"address\":{\"recipient\":\"Carlos Oliveira\",\"zip_code\":\"01310-100\",\"street\":\"Avenida Paulista\",\"number\":\"1578\",\"complement\":\"Apto 101\",\"neighborhood\":\"Bela Vista\",\"city\":\"São Paulo\",\"state\":\"SP\"}}}"
+  },
+  {
+   "who": "clienteB",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "ana@cliente.com",
+    "password": "vestebem123"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Login realizado com sucesso.\",\"user\":{\"id\":2,\"name\":\"Ana Pereira (Cliente)\",\"email\":\"ana@cliente.com\",\"role\":\"customer\",\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\",\"cpf\":\"444.555.666-77\",\"phone\":\"(21) 99876-5432\",\"address\":{\"recipient\":\"Ana Pereira\",\"zip_code\":\"22041-001\",\"street\":\"Avenida Atlântica\",\"number\":\"2000\",\"complement\":\"Bloco B\",\"neighborhood\":\"Copacabana\",\"city\":\"Rio de Janeiro\",\"state\":\"RJ\"}}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "GET",
+   "path": "/api/auth/me",
+   "status": 200,
+   "response": "{\"user\":{\"id\":1,\"name\":\"Carlos Oliveira (Cliente)\",\"email\":\"carlos@cliente.com\",\"role\":\"customer\",\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\",\"cpf\":\"000.111.222-33\",\"phone\":\"(11) 98765-4321\",\"address\":{\"recipient\":\"Carlos Oliveira\",\"zip_code\":\"01310-100\",\"street\":\"Avenida Paulista\",\"number\":\"1578\",\"complement\":\"Apto 101\",\"neighborhood\":\"Bela Vista\",\"city\":\"São Paulo\",\"state\":\"SP\"}}}"
+  },
+  {
+   "who": "clienteB",
+   "method": "GET",
+   "path": "/api/auth/me",
+   "status": 200,
+   "response": "{\"user\":{\"id\":2,\"name\":\"Ana Pereira (Cliente)\",\"email\":\"ana@cliente.com\",\"role\":\"customer\",\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\",\"cpf\":\"444.555.666-77\",\"phone\":\"(21) 99876-5432\",\"address\":{\"recipient\":\"Ana Pereira\",\"zip_code\":\"22041-001\",\"street\":\"Avenida Atlântica\",\"number\":\"2000\",\"complement\":\"Bloco B\",\"neighborhood\":\"Copacabana\",\"city\":\"Rio de Janeiro\",\"state\":\"RJ\"}}}"
+  },
+  {
+   "who": "funcionario",
+   "method": "GET",
+   "path": "/api/auth/me",
+   "status": 200,
+   "response": "{\"user\":{\"id\":3,\"name\":\"Mariana Silva (Funcionária)\",\"email\":\"mariana@vestebem.com\",\"role\":\"employee\",\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\",\"cpf\":null,\"phone\":\"(11) 91234-5678\",\"address\":null}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/auth/profile",
+   "body": {
+    "name": "Cliente A Teste",
+    "cpf": "52998224725",
+    "phone": "11988887777"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Dados pessoais atualizados com sucesso.\",\"user\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"carlos@cliente.com\",\"role\":\"customer\",\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:57\",\"cpf\":\"52998224725\",\"phone\":\"11988887777\",\"address\":{\"recipient\":\"Carlos Oliveira\",\"zip_code\":\"01310-100\",\"street\":\"Avenida Paulista\",\"number\":\"1578\",\"complement\":\"Apto 101\",\"neighborhood\":\"Bela Vista\",\"city\":\"São Paulo\",\"state\":\"SP\"}}}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/products",
+   "status": 200,
+   "response": "{\"products\":[{\"id\":1,\"name\":\"Camisa Linho Coleção D'Água\",\"description\":\"Camisa confeccionada em puro linho leve, fresca e sofisticada da edição especial Coleção D'Água.\",\"category\":\"Camisas\",\"size\":\"M\",\"price\":189.9,\"stock_quantity\":25,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":2,\"name\":\"Camisa Social Slim Azul Marinho\",\"description\":\"Camisa social de corte slim fit em algodão egípcio com caimento impecável.\",\"category\":\"Camisas\",\"size\":\"G\",\"price\":159.9,\"stock_quantity\":30,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":3,\"name\":\"Camiseta Básica Algodão Pima Preta\",\"description\":\"Camiseta de alta durabilidade com toque macio e acabamento premium para o dia a dia.\",\"category\":\"Camisetas\",\"size\":\"M\",\"price\":69.9,\"stock_quantity\":50,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":4,\"name\":\"Camiseta Básica Algodão Pima Branca\",\"description\":\"Camiseta clássica com gola redonda e tecido respirável que não desbota.\",\"category\":\"Camisetas\",\"size\":\"P\",\"price\":69.9,\"stock_quantity\":45,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":5,\"name\":\"Calça Jeans Tradicional Reta\",\"description\":\"Calça jeans masculina corte reto com lavagem média e bolsos funcionais.\",\"category\":\"Calças\",\"size\":\"42\",\"price\":199.9,\"stock_quantity\":20,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":6,\"name\":\"Calça Alfaiataria Chino Areia\",\"description\":\"Calça chino elegante em sarja de algodão com elastano para máximo conforto.\",\"category\":\"Calças\",\"size\":\"40\",\"price\":219.9,\"stock_quantity\":15,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":7,\"name\":\"Vestido Midi Floral Tropical\",\"description\":\"Vestido fluido midi com estampa botânica vibrante, decote suave e faixa para amarração.\",\"category\":\"Vestidos\",\"size\":\"M\",\"price\":269.9,\"stock_quantity\":18,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":8,\"name\":\"Vestido Longo Noite Elegance\",\"description\":\"Vestido clássico para eventos noturnos, tecido acetinado com drapeado nas costas.\",\"category\":\"Vestidos\",\"size\":\"G\",\"price\":349.9,\"stock_quantity\":10,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":9,\"name\":\"Bermuda Sarja Confort Caqui\",\"description\":\"Bermuda casual versátil com fechamento por botão e passantes para cinto.\",\"category\":\"Bermudas\",\"size\":\"42\",\"price\":119.9,\"stock_quantity\":35,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":10,\"name\":\"Jaqueta Jeans Vintage Oversized\",\"description\":\"Jaqueta unissex com botões de metal fosco, bolsos frontais e estilo atemporal.\",\"category\":\"Casacos & Jaquetas\",\"size\":\"G\",\"price\":289.9,\"stock_quantity\":12,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":11,\"name\":\"Blazer Estruturado Cinza Chumbo\",\"description\":\"Blazer forrado com modelagem moderna perfeito para composições de trabalho e eventos.\",\"category\":\"Casacos & Jaquetas\",\"size\":\"M\",\"price\":399.9,\"stock_quantity\":8,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":12,\"name\":\"Saia Plissada Midi Verde Oliva\",\"description\":\"Saia feminina com pregas bem vincadas e elástico na cintura para ajuste prático.\",\"category\":\"Saias\",\"size\":\"P\",\"price\":149.9,\"stock_quantity\":22,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"}],\"total\":16,\"page\":1,\"limit\":12,\"totalPages\":2}"
+  },
+  {
+   "who": "clienteB",
+   "method": "GET",
+   "path": "/api/orders/my",
+   "status": 200,
+   "response": "{\"orders\":[]}"
+  },
+  {
+   "who": "clienteB",
+   "method": "POST",
+   "path": "/api/orders",
+   "body": {
+    "confirmDelivery": true,
+    "items": [
+     {
+      "product_id": 1,
+      "quantity": 1
+     }
+    ]
+   },
+   "status": 201,
+   "response": "{\"message\":\"Pedido criado com sucesso.\",\"order\":{\"id\":1,\"user_id\":2,\"total\":189.9,\"status\":\"recebido\",\"created_at\":\"2026-11-11 02:06:57\",\"updated_at\":\"2026-11-11 02:06:57\",\"has_delivery_info\":true,\"delivery_recipient\":\"Ana Pereira\",\"delivery_phone\":\"(21) 99876-5432\",\"delivery_zip_code\":\"22041-001\",\"delivery_street\":\"Avenida Atlântica\",\"delivery_number\":\"2000\",\"delivery_complement\":\"Bloco B\",\"delivery_neighborhood\":\"Copacabana\",\"delivery_city\":\"Rio de Janeiro\",\"delivery_state\":\"RJ\",\"customer_name\":\"Ana Pereira (Cliente)\",\"customer_email\":\"ana@cliente.com\",\"items\":[{\"id\":1,\"order_id\":1,\"product_id\":1,\"product_name\":\"Camisa Linho Coleção D'Água\",\"description\":\"Camisa Linho Coleção D'Água (Tam: M)\",\"quantity\":1,\"unit_price\":189.9,\"subtotal\":189.9}]}}"
+  },
+  {
+   "who": "clienteB",
+   "method": "GET",
+   "path": "/api/orders/my",
+   "status": 200,
+   "response": "{\"orders\":[{\"id\":1,\"user_id\":2,\"total\":189.9,\"status\":\"recebido\",\"created_at\":\"2026-11-11 02:06:57\",\"updated_at\":\"2026-11-11 02:06:57\",\"has_delivery_info\":true,\"delivery_recipient\":\"Ana Pereira\",\"delivery_phone\":\"(21) 99876-5432\",\"delivery_zip_code\":\"22041-001\",\"delivery_street\":\"Avenida Atlântica\",\"delivery_number\":\"2000\",\"delivery_complement\":\"Bloco B\",\"delivery_neighborhood\":\"Copacabana\",\"delivery_city\":\"Rio de Janeiro\",\"delivery_state\":\"RJ\",\"customer_name\":\"Ana Pereira (Cliente)\",\"customer_email\":\"ana@cliente.com\",\"items\":[{\"id\":1,\"order_id\":1,\"product_id\":1,\"product_name\":\"Camisa Linho Coleção D'Água\",\"description\":\"Camisa Linho Coleção D'Água (Tam: M)\",\"quantity\":1,\"unit_price\":189.9,\"subtotal\":189.9}]}]}"
+  },
+  {
+   "who": "clienteA",
+   "method": "GET",
+   "path": "/api/orders/my",
+   "status": 200,
+   "response": "{\"orders\":[]}"
+  },
+  {
+   "who": "clienteA",
+   "method": "POST",
+   "path": "/api/orders",
+   "body": {
+    "confirmDelivery": true,
+    "items": [
+     {
+      "product_id": 1,
+      "quantity": 1
+     }
+    ]
+   },
+   "status": 201,
+   "response": "{\"message\":\"Pedido criado com sucesso.\",\"order\":{\"id\":2,\"user_id\":1,\"total\":189.9,\"status\":\"recebido\",\"created_at\":\"2026-11-11 02:06:57\",\"updated_at\":\"2026-11-11 02:06:57\",\"has_delivery_info\":true,\"delivery_recipient\":\"Carlos Oliveira\",\"delivery_phone\":\"11988887777\",\"delivery_zip_code\":\"01310-100\",\"delivery_street\":\"Avenida Paulista\",\"delivery_number\":\"1578\",\"delivery_complement\":\"Apto 101\",\"delivery_neighborhood\":\"Bela Vista\",\"delivery_city\":\"São Paulo\",\"delivery_state\":\"SP\",\"customer_name\":\"Cliente A Teste\",\"customer_email\":\"carlos@cliente.com\",\"items\":[{\"id\":2,\"order_id\":2,\"product_id\":1,\"product_name\":\"Camisa Linho Coleção D'Água\",\"description\":\"Camisa Linho Coleção D'Água (Tam: M)\",\"quantity\":1,\"unit_price\":189.9,\"subtotal\":189.9}]}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "GET",
+   "path": "/api/orders/my",
+   "status": 200,
+   "response": "{\"orders\":[{\"id\":2,\"user_id\":1,\"total\":189.9,\"status\":\"recebido\",\"created_at\":\"2026-11-11 02:06:57\",\"updated_at\":\"2026-11-11 02:06:57\",\"has_delivery_info\":true,\"delivery_recipient\":\"Carlos Oliveira\",\"delivery_phone\":\"11988887777\",\"delivery_zip_code\":\"01310-100\",\"delivery_street\":\"Avenida Paulista\",\"delivery_number\":\"1578\",\"delivery_complement\":\"Apto 101\",\"delivery_neighborhood\":\"Bela Vista\",\"delivery_city\":\"São Paulo\",\"delivery_state\":\"SP\",\"customer_name\":\"Cliente A Teste\",\"customer_email\":\"carlos@cliente.com\",\"items\":[{\"id\":2,\"order_id\":2,\"product_id\":1,\"product_name\":\"Camisa Linho Coleção D'Água\",\"description\":\"Camisa Linho Coleção D'Água (Tam: M)\",\"quantity\":1,\"unit_price\":189.9,\"subtotal\":189.9}]}]}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/auth/me",
+   "status": 401,
+   "response": "{\"message\":\"Acesso não autorizado. Faça login para continuar.\"}"
+  },
+  {
+   "who": "token-invalido",
+   "method": "GET",
+   "path": "/api/auth/me",
+   "status": 401,
+   "response": "{\"message\":\"Sessão expirada ou inválida. Por favor, entre novamente.\"}"
+  },
+  {
+   "who": "clienteA-sessao-logout",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "carlos@cliente.com",
+    "password": "vestebem123"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Login realizado com sucesso.\",\"user\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"carlos@cliente.com\",\"role\":\"customer\",\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:57\",\"cpf\":\"52998224725\",\"phone\":\"11988887777\",\"address\":{\"recipient\":\"Carlos Oliveira\",\"zip_code\":\"01310-100\",\"street\":\"Avenida Paulista\",\"number\":\"1578\",\"complement\":\"Apto 101\",\"neighborhood\":\"Bela Vista\",\"city\":\"São Paulo\",\"state\":\"SP\"}}}"
+  },
+  {
+   "who": "clienteA-sessao-logout",
+   "method": "GET",
+   "path": "/api/auth/me",
+   "status": 200,
+   "response": "{\"user\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"carlos@cliente.com\",\"role\":\"customer\",\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:57\",\"cpf\":\"52998224725\",\"phone\":\"11988887777\",\"address\":{\"recipient\":\"Carlos Oliveira\",\"zip_code\":\"01310-100\",\"street\":\"Avenida Paulista\",\"number\":\"1578\",\"complement\":\"Apto 101\",\"neighborhood\":\"Bela Vista\",\"city\":\"São Paulo\",\"state\":\"SP\"}}}"
+  },
+  {
+   "who": "clienteA-sessao-logout",
+   "method": "POST",
+   "path": "/api/auth/logout",
+   "body": {},
+   "status": 200,
+   "response": "{\"message\":\"Sessão encerrada com sucesso.\"}"
+  },
+  {
+   "who": "clienteA-token-copiado",
+   "method": "GET",
+   "path": "/api/auth/me",
+   "status": 200,
+   "response": "{\"user\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"carlos@cliente.com\",\"role\":\"customer\",\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:57\",\"cpf\":\"52998224725\",\"phone\":\"11988887777\",\"address\":{\"recipient\":\"Carlos Oliveira\",\"zip_code\":\"01310-100\",\"street\":\"Avenida Paulista\",\"number\":\"1578\",\"complement\":\"Apto 101\",\"neighborhood\":\"Bela Vista\",\"city\":\"São Paulo\",\"state\":\"SP\"}}}"
+  },
+  {
+   "who": "token-forjado",
+   "method": "GET",
+   "path": "/api/auth/me",
+   "status": 200,
+   "response": "{\"user\":{\"id\":3,\"name\":\"Mariana Silva (Funcionária)\",\"email\":\"mariana@vestebem.com\",\"role\":\"employee\",\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\",\"cpf\":null,\"phone\":\"(11) 91234-5678\",\"address\":null}}"
+  },
+  {
+   "who": "cadastro",
+   "method": "POST",
+   "path": "/api/auth/register",
+   "body": {
+    "name": "Senha Fraca",
+    "email": "fraca1_nhhno2@teste.local",
+    "password": "1"
+   },
+   "status": 400,
+   "response": "{\"message\":\"A senha deve conter pelo menos 6 caracteres.\"}"
+  },
+  {
+   "who": "cadastro",
+   "method": "POST",
+   "path": "/api/auth/register",
+   "body": {
+    "name": "Senha Fraca",
+    "email": "fraca3_pe1jhh@teste.local",
+    "password": "123"
+   },
+   "status": 400,
+   "response": "{\"message\":\"A senha deve conter pelo menos 6 caracteres.\"}"
+  },
+  {
+   "who": "cadastro-perfil",
+   "method": "POST",
+   "path": "/api/auth/register",
+   "body": {
+    "name": "Perfil Teste",
+    "email": "perfil_funcionario_t18r19@teste.local",
+    "password": "SenhaForte123",
+    "role": "funcionario",
+    "perfil": "funcionario",
+    "tipo": "funcionario",
+    "profile": "funcionario",
+    "user_role": "funcionario",
+    "isAdmin": true,
+    "is_employee": true
+   },
+   "status": 201,
+   "response": "{\"message\":\"Cadastro realizado com sucesso.\",\"user\":{\"id\":4,\"name\":\"Perfil Teste\",\"email\":\"perfil_funcionario_t18r19@teste.local\",\"role\":\"customer\",\"cpf\":null,\"phone\":null,\"address\":null,\"created_at\":\"2026-11-11T02:06:58.408Z\",\"updated_at\":\"2026-11-11T02:06:58.408Z\"}}"
+  },
+  {
+   "who": "novo-usuario",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "perfil_funcionario_t18r19@teste.local",
+    "password": "SenhaForte123"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Login realizado com sucesso.\",\"user\":{\"id\":4,\"name\":\"Perfil Teste\",\"email\":\"perfil_funcionario_t18r19@teste.local\",\"role\":\"customer\",\"created_at\":\"2026-11-11 02:06:58\",\"updated_at\":\"2026-11-11 02:06:58\",\"cpf\":null,\"phone\":null,\"address\":null}}"
+  },
+  {
+   "who": "novo-usuario",
+   "method": "GET",
+   "path": "/api/auth/me",
+   "status": 200,
+   "response": "{\"user\":{\"id\":4,\"name\":\"Perfil Teste\",\"email\":\"perfil_funcionario_t18r19@teste.local\",\"role\":\"customer\",\"created_at\":\"2026-11-11 02:06:58\",\"updated_at\":\"2026-11-11 02:06:58\",\"cpf\":null,\"phone\":null,\"address\":null}}"
+  },
+  {
+   "who": "cadastro-perfil",
+   "method": "POST",
+   "path": "/api/auth/register",
+   "body": {
+    "name": "Perfil Teste",
+    "email": "perfil_employee_ctjqon@teste.local",
+    "password": "SenhaForte123",
+    "role": "employee",
+    "perfil": "employee",
+    "tipo": "employee",
+    "profile": "employee",
+    "user_role": "employee",
+    "isAdmin": true,
+    "is_employee": true
+   },
+   "status": 201,
+   "response": "{\"message\":\"Cadastro realizado com sucesso.\",\"user\":{\"id\":5,\"name\":\"Perfil Teste\",\"email\":\"perfil_employee_ctjqon@teste.local\",\"role\":\"customer\",\"cpf\":null,\"phone\":null,\"address\":null,\"created_at\":\"2026-11-11T02:06:58.843Z\",\"updated_at\":\"2026-11-11T02:06:58.843Z\"}}"
+  },
+  {
+   "who": "novo-usuario",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "perfil_employee_ctjqon@teste.local",
+    "password": "SenhaForte123"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Login realizado com sucesso.\",\"user\":{\"id\":5,\"name\":\"Perfil Teste\",\"email\":\"perfil_employee_ctjqon@teste.local\",\"role\":\"customer\",\"created_at\":\"2026-11-11 02:06:58\",\"updated_at\":\"2026-11-11 02:06:58\",\"cpf\":null,\"phone\":null,\"address\":null}}"
+  },
+  {
+   "who": "novo-usuario",
+   "method": "GET",
+   "path": "/api/auth/me",
+   "status": 200,
+   "response": "{\"user\":{\"id\":5,\"name\":\"Perfil Teste\",\"email\":\"perfil_employee_ctjqon@teste.local\",\"role\":\"customer\",\"created_at\":\"2026-11-11 02:06:58\",\"updated_at\":\"2026-11-11 02:06:58\",\"cpf\":null,\"phone\":null,\"address\":null}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/auth/profile",
+   "body": {
+    "name": "Cliente A Teste",
+    "cpf": "52998224725",
+    "phone": "11988887777",
+    "role": "funcionario",
+    "perfil": "funcionario",
+    "tipo": "funcionario"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Dados pessoais atualizados com sucesso.\",\"user\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"carlos@cliente.com\",\"role\":\"customer\",\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:59\",\"cpf\":\"52998224725\",\"phone\":\"11988887777\",\"address\":{\"recipient\":\"Carlos Oliveira\",\"zip_code\":\"01310-100\",\"street\":\"Avenida Paulista\",\"number\":\"1578\",\"complement\":\"Apto 101\",\"neighborhood\":\"Bela Vista\",\"city\":\"São Paulo\",\"state\":\"SP\"}}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "GET",
+   "path": "/api/auth/me",
+   "status": 200,
+   "response": "{\"user\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"carlos@cliente.com\",\"role\":\"customer\",\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:59\",\"cpf\":\"52998224725\",\"phone\":\"11988887777\",\"address\":{\"recipient\":\"Carlos Oliveira\",\"zip_code\":\"01310-100\",\"street\":\"Avenida Paulista\",\"number\":\"1578\",\"complement\":\"Apto 101\",\"neighborhood\":\"Bela Vista\",\"city\":\"São Paulo\",\"state\":\"SP\"}}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "GET",
+   "path": "/api/orders/1",
+   "status": 403,
+   "response": "{\"message\":\"Acesso negado ao pedido solicitado.\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "GET",
+   "path": "/api/orders/my?clienteId=2&customerId=2&customer_id=2&userId=2&user_id=2",
+   "status": 200,
+   "response": "{\"orders\":[{\"id\":2,\"user_id\":1,\"total\":189.9,\"status\":\"recebido\",\"created_at\":\"2026-11-11 02:06:57\",\"updated_at\":\"2026-11-11 02:06:57\",\"has_delivery_info\":true,\"delivery_recipient\":\"Carlos Oliveira\",\"delivery_phone\":\"11988887777\",\"delivery_zip_code\":\"01310-100\",\"delivery_street\":\"Avenida Paulista\",\"delivery_number\":\"1578\",\"delivery_complement\":\"Apto 101\",\"delivery_neighborhood\":\"Bela Vista\",\"delivery_city\":\"São Paulo\",\"delivery_state\":\"SP\",\"customer_name\":\"Cliente A Teste\",\"customer_email\":\"carlos@cliente.com\",\"items\":[{\"id\":2,\"order_id\":2,\"product_id\":1,\"product_name\":\"Camisa Linho Coleção D'Água\",\"description\":\"Camisa Linho Coleção D'Água (Tam: M)\",\"quantity\":1,\"unit_price\":189.9,\"subtotal\":189.9}]}]}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/orders/my",
+   "status": 401,
+   "response": "{\"message\":\"Acesso não autorizado. Faça login para continuar.\"}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/orders/2",
+   "status": 401,
+   "response": "{\"message\":\"Acesso não autorizado. Faça login para continuar.\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "GET",
+   "path": "/api/orders/all",
+   "status": 403,
+   "response": "{\"message\":\"Acesso negado. Perfil não autorizado para esta operação.\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PATCH",
+   "path": "/api/orders/2/status",
+   "body": {
+    "status": "em preparação"
+   },
+   "status": 403,
+   "response": "{\"message\":\"Acesso negado. Perfil não autorizado para esta operação.\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PATCH",
+   "path": "/api/orders/1/status",
+   "body": {
+    "status": "em preparação"
+   },
+   "status": 403,
+   "response": "{\"message\":\"Acesso negado. Perfil não autorizado para esta operação.\"}"
+  },
+  {
+   "who": "clienteB",
+   "method": "GET",
+   "path": "/api/orders/my",
+   "status": 200,
+   "response": "{\"orders\":[{\"id\":1,\"user_id\":2,\"total\":189.9,\"status\":\"recebido\",\"created_at\":\"2026-11-11 02:06:57\",\"updated_at\":\"2026-11-11 02:06:57\",\"has_delivery_info\":true,\"delivery_recipient\":\"Ana Pereira\",\"delivery_phone\":\"(21) 99876-5432\",\"delivery_zip_code\":\"22041-001\",\"delivery_street\":\"Avenida Atlântica\",\"delivery_number\":\"2000\",\"delivery_complement\":\"Bloco B\",\"delivery_neighborhood\":\"Copacabana\",\"delivery_city\":\"Rio de Janeiro\",\"delivery_state\":\"RJ\",\"customer_name\":\"Ana Pereira (Cliente)\",\"customer_email\":\"ana@cliente.com\",\"items\":[{\"id\":1,\"order_id\":1,\"product_id\":1,\"product_name\":\"Camisa Linho Coleção D'Água\",\"description\":\"Camisa Linho Coleção D'Água (Tam: M)\",\"quantity\":1,\"unit_price\":189.9,\"subtotal\":189.9}]}]}"
+  },
+  {
+   "who": "clienteA",
+   "method": "POST",
+   "path": "/api/orders",
+   "body": {
+    "confirmDelivery": true,
+    "items": [
+     {
+      "product_id": 1,
+      "quantity": 1
+     }
+    ],
+    "customer_id": 2,
+    "customerId": 2,
+    "clienteId": 2,
+    "userId": 2,
+    "user_id": 2,
+    "usuarioId": 2
+   },
+   "status": 201,
+   "response": "{\"message\":\"Pedido criado com sucesso.\",\"order\":{\"id\":3,\"user_id\":1,\"total\":189.9,\"status\":\"recebido\",\"created_at\":\"2026-11-11 02:06:59\",\"updated_at\":\"2026-11-11 02:06:59\",\"has_delivery_info\":true,\"delivery_recipient\":\"Carlos Oliveira\",\"delivery_phone\":\"11988887777\",\"delivery_zip_code\":\"01310-100\",\"delivery_street\":\"Avenida Paulista\",\"delivery_number\":\"1578\",\"delivery_complement\":\"Apto 101\",\"delivery_neighborhood\":\"Bela Vista\",\"delivery_city\":\"São Paulo\",\"delivery_state\":\"SP\",\"customer_name\":\"Cliente A Teste\",\"customer_email\":\"carlos@cliente.com\",\"items\":[{\"id\":3,\"order_id\":3,\"product_id\":1,\"product_name\":\"Camisa Linho Coleção D'Água\",\"description\":\"Camisa Linho Coleção D'Água (Tam: M)\",\"quantity\":1,\"unit_price\":189.9,\"subtotal\":189.9}]}}"
+  },
+  {
+   "who": "clienteB",
+   "method": "GET",
+   "path": "/api/orders/my",
+   "status": 200,
+   "response": "{\"orders\":[{\"id\":1,\"user_id\":2,\"total\":189.9,\"status\":\"recebido\",\"created_at\":\"2026-11-11 02:06:57\",\"updated_at\":\"2026-11-11 02:06:57\",\"has_delivery_info\":true,\"delivery_recipient\":\"Ana Pereira\",\"delivery_phone\":\"(21) 99876-5432\",\"delivery_zip_code\":\"22041-001\",\"delivery_street\":\"Avenida Atlântica\",\"delivery_number\":\"2000\",\"delivery_complement\":\"Bloco B\",\"delivery_neighborhood\":\"Copacabana\",\"delivery_city\":\"Rio de Janeiro\",\"delivery_state\":\"RJ\",\"customer_name\":\"Ana Pereira (Cliente)\",\"customer_email\":\"ana@cliente.com\",\"items\":[{\"id\":1,\"order_id\":1,\"product_id\":1,\"product_name\":\"Camisa Linho Coleção D'Água\",\"description\":\"Camisa Linho Coleção D'Água (Tam: M)\",\"quantity\":1,\"unit_price\":189.9,\"subtotal\":189.9}]}]}"
+  },
+  {
+   "who": "clienteA",
+   "method": "POST",
+   "path": "/api/orders",
+   "body": {
+    "confirmDelivery": true,
+    "items": [
+     {
+      "product_id": 1,
+      "quantity": 1
+     }
+    ]
+   },
+   "status": 201,
+   "response": "{\"message\":\"Pedido criado com sucesso.\",\"order\":{\"id\":4,\"user_id\":1,\"total\":189.9,\"status\":\"recebido\",\"created_at\":\"2026-11-11 02:06:59\",\"updated_at\":\"2026-11-11 02:06:59\",\"has_delivery_info\":true,\"delivery_recipient\":\"Carlos Oliveira\",\"delivery_phone\":\"11988887777\",\"delivery_zip_code\":\"01310-100\",\"delivery_street\":\"Avenida Paulista\",\"delivery_number\":\"1578\",\"delivery_complement\":\"Apto 101\",\"delivery_neighborhood\":\"Bela Vista\",\"delivery_city\":\"São Paulo\",\"delivery_state\":\"SP\",\"customer_name\":\"Cliente A Teste\",\"customer_email\":\"carlos@cliente.com\",\"items\":[{\"id\":4,\"order_id\":4,\"product_id\":1,\"product_name\":\"Camisa Linho Coleção D'Água\",\"description\":\"Camisa Linho Coleção D'Água (Tam: M)\",\"quantity\":1,\"unit_price\":189.9,\"subtotal\":189.9}]}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "GET",
+   "path": "/api/orders/my",
+   "status": 200,
+   "response": "{\"orders\":[{\"id\":4,\"user_id\":1,\"total\":189.9,\"status\":\"recebido\",\"created_at\":\"2026-11-11 02:06:59\",\"updated_at\":\"2026-11-11 02:06:59\",\"has_delivery_info\":true,\"delivery_recipient\":\"Carlos Oliveira\",\"delivery_phone\":\"11988887777\",\"delivery_zip_code\":\"01310-100\",\"delivery_street\":\"Avenida Paulista\",\"delivery_number\":\"1578\",\"delivery_complement\":\"Apto 101\",\"delivery_neighborhood\":\"Bela Vista\",\"delivery_city\":\"São Paulo\",\"delivery_state\":\"SP\",\"customer_name\":\"Cliente A Teste\",\"customer_email\":\"carlos@cliente.com\",\"items\":[{\"id\":4,\"order_id\":4,\"product_id\":1,\"product_name\":\"Camisa Linho Coleção D'Água\",\"description\":\"Camisa Linho Coleção D'Água (Tam: M)\",\"quantity\":1,\"unit_price\":189.9,\"subtotal\":189.9}]},{\"id\":3,\"user_id\":1,\"total\":189.9,\"status\":\"recebido\",\"created_at\":\"2026-11-11 02:06:59\",\"updated_at\":\"2026-11-11 02:06:59\",\"has_delivery_info\":true,\"delivery_recipient\":\"Carlos Oliveira\",\"delivery_phone\":\"11988887777\",\"delivery_zip_code\":\"01310-100\",\"delivery_street\":\"Avenida Paulista\",\"delivery_number\":\"1578\",\"delivery_complement\":\"Apto 101\",\"delivery_neighborhood\":\"Bela Vista\",\"delivery_city\":\"São Paulo\",\"delivery_state\":\"SP\",\"customer_name\":\"Cliente A Teste\",\"customer_email\":\"carlos@cliente.com\",\"items\":[{\"id\":3,\"order_id\":3,\"product_id\":1,\"product_name\":\"Camisa Linho Coleção D'Água\",\"description\":\"Camisa Linho Coleção D'Água (Tam: M)\",\"quantity\":1,\"unit_price\":189.9,\"subtotal\":189.9}]},{\"id\":2,\"user_id\":1,\"total\":189.9,\"status\":\"recebido\",\"created_at\":\"2026-11-11 02:06:57\",\"updated_at\":\"2026-11-11 02:06:57\",\"has_delivery_info\":true,\"delivery_recipient\":\"Carlos Oliveira\",\"delivery_phone\":\"11988887777\",\"delivery_zip_code\":\"01310-100\",\"delivery_street\":\"Avenida Paulista\",\"delivery_number\":\"1578\",\"delivery_complement\":\"Apto 101\",\"delivery_neighborhood\":\"Bela Vista\",\"delivery_city\":\"São Paulo\",\"delivery_state\":\"SP\",\"customer_name\":\"Cliente A Teste\",\"customer_email\":\"carlos@cliente.com\",\"items\":[{\"id\":2,\"order_id\":2,\"product_id\":1,\"product_name\":\"Camisa Linho Coleção D'Água\",\"description\":\"Camisa Linho Coleção D'Água (Tam: M)\",\"quantity\":1,\"unit_price\":189.9,\"subtotal\":189.9}]}]}"
+  },
+  {
+   "who": "clienteA",
+   "method": "POST",
+   "path": "/api/orders",
+   "body": {
+    "confirmDelivery": true,
+    "items": [
+     {
+      "product_id": 1,
+      "quantity": 0
+     }
+    ]
+   },
+   "status": 400,
+   "response": "{\"message\":\"A quantidade deve ser maior que zero.\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "POST",
+   "path": "/api/orders",
+   "body": {
+    "confirmDelivery": true,
+    "items": [
+     {
+      "product_id": 1,
+      "quantity": -1
+     }
+    ]
+   },
+   "status": 400,
+   "response": "{\"message\":\"A quantidade deve ser maior que zero.\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "POST",
+   "path": "/api/orders",
+   "body": {
+    "confirmDelivery": true,
+    "items": [
+     {
+      "product_id": 1,
+      "quantity": 1.5
+     }
+    ]
+   },
+   "status": 400,
+   "response": "{\"message\":\"A quantidade deve ser um número inteiro.\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "POST",
+   "path": "/api/orders",
+   "body": {
+    "confirmDelivery": true,
+    "items": [
+     {
+      "product_id": 1,
+      "quantity": "abc"
+     }
+    ]
+   },
+   "status": 400,
+   "response": "{\"message\":\"Expected number, received string\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "POST",
+   "path": "/api/orders",
+   "body": {
+    "confirmDelivery": true,
+    "items": []
+   },
+   "status": 400,
+   "response": "{\"message\":\"O pedido deve conter pelo menos um item.\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "GET",
+   "path": "/api/orders/my",
+   "status": 200,
+   "response": "{\"orders\":[{\"id\":4,\"user_id\":1,\"total\":189.9,\"status\":\"recebido\",\"created_at\":\"2026-11-11 02:06:59\",\"updated_at\":\"2026-11-11 02:06:59\",\"has_delivery_info\":true,\"delivery_recipient\":\"Carlos Oliveira\",\"delivery_phone\":\"11988887777\",\"delivery_zip_code\":\"01310-100\",\"delivery_street\":\"Avenida Paulista\",\"delivery_number\":\"1578\",\"delivery_complement\":\"Apto 101\",\"delivery_neighborhood\":\"Bela Vista\",\"delivery_city\":\"São Paulo\",\"delivery_state\":\"SP\",\"customer_name\":\"Cliente A Teste\",\"customer_email\":\"carlos@cliente.com\",\"items\":[{\"id\":4,\"order_id\":4,\"product_id\":1,\"product_name\":\"Camisa Linho Coleção D'Água\",\"description\":\"Camisa Linho Coleção D'Água (Tam: M)\",\"quantity\":1,\"unit_price\":189.9,\"subtotal\":189.9}]},{\"id\":3,\"user_id\":1,\"total\":189.9,\"status\":\"recebido\",\"created_at\":\"2026-11-11 02:06:59\",\"updated_at\":\"2026-11-11 02:06:59\",\"has_delivery_info\":true,\"delivery_recipient\":\"Carlos Oliveira\",\"delivery_phone\":\"11988887777\",\"delivery_zip_code\":\"01310-100\",\"delivery_street\":\"Avenida Paulista\",\"delivery_number\":\"1578\",\"delivery_complement\":\"Apto 101\",\"delivery_neighborhood\":\"Bela Vista\",\"delivery_city\":\"São Paulo\",\"delivery_state\":\"SP\",\"customer_name\":\"Cliente A Teste\",\"customer_email\":\"carlos@cliente.com\",\"items\":[{\"id\":3,\"order_id\":3,\"product_id\":1,\"product_name\":\"Camisa Linho Coleção D'Água\",\"description\":\"Camisa Linho Coleção D'Água (Tam: M)\",\"quantity\":1,\"unit_price\":189.9,\"subtotal\":189.9}]},{\"id\":2,\"user_id\":1,\"total\":189.9,\"status\":\"recebido\",\"created_at\":\"2026-11-11 02:06:57\",\"updated_at\":\"2026-11-11 02:06:57\",\"has_delivery_info\":true,\"delivery_recipient\":\"Carlos Oliveira\",\"delivery_phone\":\"11988887777\",\"delivery_zip_code\":\"01310-100\",\"delivery_street\":\"Avenida Paulista\",\"delivery_number\":\"1578\",\"delivery_complement\":\"Apto 101\",\"delivery_neighborhood\":\"Bela Vista\",\"delivery_city\":\"São Paulo\",\"delivery_state\":\"SP\",\"customer_name\":\"Cliente A Teste\",\"customer_email\":\"carlos@cliente.com\",\"items\":[{\"id\":2,\"order_id\":2,\"product_id\":1,\"product_name\":\"Camisa Linho Coleção D'Água\",\"description\":\"Camisa Linho Coleção D'Água (Tam: M)\",\"quantity\":1,\"unit_price\":189.9,\"subtotal\":189.9}]}]}"
+  },
+  {
+   "who": "clienteA",
+   "method": "POST",
+   "path": "/api/orders",
+   "body": {
+    "confirmDelivery": true,
+    "items": [
+     {
+      "product_id": 1,
+      "quantity": 2,
+      "price": 0.01,
+      "unit_price": 0.01,
+      "unitPrice": 0.01,
+      "priceCents": 1,
+      "preco": 0.01,
+      "precoCentavos": 1
+     }
+    ],
+    "total": 0.01,
+    "totalCents": 1,
+    "total_cents": 1,
+    "totalCentavos": 1
+   },
+   "status": 201,
+   "response": "{\"message\":\"Pedido criado com sucesso.\",\"order\":{\"id\":5,\"user_id\":1,\"total\":379.8,\"status\":\"recebido\",\"created_at\":\"2026-11-11 02:06:59\",\"updated_at\":\"2026-11-11 02:06:59\",\"has_delivery_info\":true,\"delivery_recipient\":\"Carlos Oliveira\",\"delivery_phone\":\"11988887777\",\"delivery_zip_code\":\"01310-100\",\"delivery_street\":\"Avenida Paulista\",\"delivery_number\":\"1578\",\"delivery_complement\":\"Apto 101\",\"delivery_neighborhood\":\"Bela Vista\",\"delivery_city\":\"São Paulo\",\"delivery_state\":\"SP\",\"customer_name\":\"Cliente A Teste\",\"customer_email\":\"carlos@cliente.com\",\"items\":[{\"id\":5,\"order_id\":5,\"product_id\":1,\"product_name\":\"Camisa Linho Coleção D'Água\",\"description\":\"Camisa Linho Coleção D'Água (Tam: M)\",\"quantity\":2,\"unit_price\":189.9,\"subtotal\":379.8}]}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "GET",
+   "path": "/api/orders/5",
+   "status": 200,
+   "response": "{\"order\":{\"id\":5,\"user_id\":1,\"total\":379.8,\"status\":\"recebido\",\"created_at\":\"2026-11-11 02:06:59\",\"updated_at\":\"2026-11-11 02:06:59\",\"has_delivery_info\":true,\"delivery_recipient\":\"Carlos Oliveira\",\"delivery_phone\":\"11988887777\",\"delivery_zip_code\":\"01310-100\",\"delivery_street\":\"Avenida Paulista\",\"delivery_number\":\"1578\",\"delivery_complement\":\"Apto 101\",\"delivery_neighborhood\":\"Bela Vista\",\"delivery_city\":\"São Paulo\",\"delivery_state\":\"SP\",\"customer_name\":\"Cliente A Teste\",\"customer_email\":\"carlos@cliente.com\",\"items\":[{\"id\":5,\"order_id\":5,\"product_id\":1,\"product_name\":\"Camisa Linho Coleção D'Água\",\"description\":\"Camisa Linho Coleção D'Água (Tam: M)\",\"quantity\":2,\"unit_price\":189.9,\"subtotal\":379.8}]}}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/products",
+   "status": 200,
+   "response": "{\"products\":[{\"id\":1,\"name\":\"Camisa Linho Coleção D'Água\",\"description\":\"Camisa confeccionada em puro linho leve, fresca e sofisticada da edição especial Coleção D'Água.\",\"category\":\"Camisas\",\"size\":\"M\",\"price\":189.9,\"stock_quantity\":25,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":2,\"name\":\"Camisa Social Slim Azul Marinho\",\"description\":\"Camisa social de corte slim fit em algodão egípcio com caimento impecável.\",\"category\":\"Camisas\",\"size\":\"G\",\"price\":159.9,\"stock_quantity\":30,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":3,\"name\":\"Camiseta Básica Algodão Pima Preta\",\"description\":\"Camiseta de alta durabilidade com toque macio e acabamento premium para o dia a dia.\",\"category\":\"Camisetas\",\"size\":\"M\",\"price\":69.9,\"stock_quantity\":50,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":4,\"name\":\"Camiseta Básica Algodão Pima Branca\",\"description\":\"Camiseta clássica com gola redonda e tecido respirável que não desbota.\",\"category\":\"Camisetas\",\"size\":\"P\",\"price\":69.9,\"stock_quantity\":45,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":5,\"name\":\"Calça Jeans Tradicional Reta\",\"description\":\"Calça jeans masculina corte reto com lavagem média e bolsos funcionais.\",\"category\":\"Calças\",\"size\":\"42\",\"price\":199.9,\"stock_quantity\":20,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":6,\"name\":\"Calça Alfaiataria Chino Areia\",\"description\":\"Calça chino elegante em sarja de algodão com elastano para máximo conforto.\",\"category\":\"Calças\",\"size\":\"40\",\"price\":219.9,\"stock_quantity\":15,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":7,\"name\":\"Vestido Midi Floral Tropical\",\"description\":\"Vestido fluido midi com estampa botânica vibrante, decote suave e faixa para amarração.\",\"category\":\"Vestidos\",\"size\":\"M\",\"price\":269.9,\"stock_quantity\":18,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":8,\"name\":\"Vestido Longo Noite Elegance\",\"description\":\"Vestido clássico para eventos noturnos, tecido acetinado com drapeado nas costas.\",\"category\":\"Vestidos\",\"size\":\"G\",\"price\":349.9,\"stock_quantity\":10,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":9,\"name\":\"Bermuda Sarja Confort Caqui\",\"description\":\"Bermuda casual versátil com fechamento por botão e passantes para cinto.\",\"category\":\"Bermudas\",\"size\":\"42\",\"price\":119.9,\"stock_quantity\":35,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":10,\"name\":\"Jaqueta Jeans Vintage Oversized\",\"description\":\"Jaqueta unissex com botões de metal fosco, bolsos frontais e estilo atemporal.\",\"category\":\"Casacos & Jaquetas\",\"size\":\"G\",\"price\":289.9,\"stock_quantity\":12,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":11,\"name\":\"Blazer Estruturado Cinza Chumbo\",\"description\":\"Blazer forrado com modelagem moderna perfeito para composições de trabalho e eventos.\",\"category\":\"Casacos & Jaquetas\",\"size\":\"M\",\"price\":399.9,\"stock_quantity\":8,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":12,\"name\":\"Saia Plissada Midi Verde Oliva\",\"description\":\"Saia feminina com pregas bem vincadas e elástico na cintura para ajuste prático.\",\"category\":\"Saias\",\"size\":\"P\",\"price\":149.9,\"stock_quantity\":22,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"}],\"total\":16,\"page\":1,\"limit\":12,\"totalPages\":2}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/products?search=D%27%C3%81gua",
+   "status": 200,
+   "response": "{\"products\":[{\"id\":1,\"name\":\"Camisa Linho Coleção D'Água\",\"description\":\"Camisa confeccionada em puro linho leve, fresca e sofisticada da edição especial Coleção D'Água.\",\"category\":\"Camisas\",\"size\":\"M\",\"price\":189.9,\"stock_quantity\":25,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"}],\"total\":1,\"page\":1,\"limit\":12,\"totalPages\":1}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/products?search=%27+OR+%271%27%3D%271",
+   "status": 200,
+   "response": "{\"products\":[],\"total\":0,\"page\":1,\"limit\":12,\"totalPages\":1}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/products?search=%25%27+OR+1%3D1+--",
+   "status": 200,
+   "response": "{\"products\":[],\"total\":0,\"page\":1,\"limit\":12,\"totalPages\":1}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/products?search=%27%29+UNION+SELECT+name%2Csql%2C1%2C1%2C1%2C1%2C1%2C1%2C1+FROM+sqlite_master+--",
+   "status": 200,
+   "response": "{\"products\":[],\"total\":0,\"page\":1,\"limit\":12,\"totalPages\":1}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/products?sortBy=preco;DROP TABLE x",
+   "status": 200,
+   "response": "{\"products\":[{\"id\":1,\"name\":\"Camisa Linho Coleção D'Água\",\"description\":\"Camisa confeccionada em puro linho leve, fresca e sofisticada da edição especial Coleção D'Água.\",\"category\":\"Camisas\",\"size\":\"M\",\"price\":189.9,\"stock_quantity\":25,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":2,\"name\":\"Camisa Social Slim Azul Marinho\",\"description\":\"Camisa social de corte slim fit em algodão egípcio com caimento impecável.\",\"category\":\"Camisas\",\"size\":\"G\",\"price\":159.9,\"stock_quantity\":30,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":3,\"name\":\"Camiseta Básica Algodão Pima Preta\",\"description\":\"Camiseta de alta durabilidade com toque macio e acabamento premium para o dia a dia.\",\"category\":\"Camisetas\",\"size\":\"M\",\"price\":69.9,\"stock_quantity\":50,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":4,\"name\":\"Camiseta Básica Algodão Pima Branca\",\"description\":\"Camiseta clássica com gola redonda e tecido respirável que não desbota.\",\"category\":\"Camisetas\",\"size\":\"P\",\"price\":69.9,\"stock_quantity\":45,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":5,\"name\":\"Calça Jeans Tradicional Reta\",\"description\":\"Calça jeans masculina corte reto com lavagem média e bolsos funcionais.\",\"category\":\"Calças\",\"size\":\"42\",\"price\":199.9,\"stock_quantity\":20,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":6,\"name\":\"Calça Alfaiataria Chino Areia\",\"description\":\"Calça chino elegante em sarja de algodão com elastano para máximo conforto.\",\"category\":\"Calças\",\"size\":\"40\",\"price\":219.9,\"stock_quantity\":15,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":7,\"name\":\"Vestido Midi Floral Tropical\",\"description\":\"Vestido fluido midi com estampa botânica vibrante, decote suave e faixa para amarração.\",\"category\":\"Vestidos\",\"size\":\"M\",\"price\":269.9,\"stock_quantity\":18,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":8,\"name\":\"Vestido Longo Noite Elegance\",\"description\":\"Vestido clássico para eventos noturnos, tecido acetinado com drapeado nas costas.\",\"category\":\"Vestidos\",\"size\":\"G\",\"price\":349.9,\"stock_quantity\":10,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":9,\"name\":\"Bermuda Sarja Confort Caqui\",\"description\":\"Bermuda casual versátil com fechamento por botão e passantes para cinto.\",\"category\":\"Bermudas\",\"size\":\"42\",\"price\":119.9,\"stock_quantity\":35,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":10,\"name\":\"Jaqueta Jeans Vintage Oversized\",\"description\":\"Jaqueta unissex com botões de metal fosco, bolsos frontais e estilo atemporal.\",\"category\":\"Casacos & Jaquetas\",\"size\":\"G\",\"price\":289.9,\"stock_quantity\":12,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":11,\"name\":\"Blazer Estruturado Cinza Chumbo\",\"description\":\"Blazer forrado com modelagem moderna perfeito para composições de trabalho e eventos.\",\"category\":\"Casacos & Jaquetas\",\"size\":\"M\",\"price\":399.9,\"stock_quantity\":8,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":12,\"name\":\"Saia Plissada Midi Verde Oliva\",\"description\":\"Saia feminina com pregas bem vincadas e elástico na cintura para ajuste prático.\",\"category\":\"Saias\",\"size\":\"P\",\"price\":149.9,\"stock_quantity\":22,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"}],\"total\":16,\"page\":1,\"limit\":12,\"totalPages\":2}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/products?sortBy=(CASE WHEN 1=1 THEN name ELSE price END)",
+   "status": 200,
+   "response": "{\"products\":[{\"id\":1,\"name\":\"Camisa Linho Coleção D'Água\",\"description\":\"Camisa confeccionada em puro linho leve, fresca e sofisticada da edição especial Coleção D'Água.\",\"category\":\"Camisas\",\"size\":\"M\",\"price\":189.9,\"stock_quantity\":25,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":2,\"name\":\"Camisa Social Slim Azul Marinho\",\"description\":\"Camisa social de corte slim fit em algodão egípcio com caimento impecável.\",\"category\":\"Camisas\",\"size\":\"G\",\"price\":159.9,\"stock_quantity\":30,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":3,\"name\":\"Camiseta Básica Algodão Pima Preta\",\"description\":\"Camiseta de alta durabilidade com toque macio e acabamento premium para o dia a dia.\",\"category\":\"Camisetas\",\"size\":\"M\",\"price\":69.9,\"stock_quantity\":50,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":4,\"name\":\"Camiseta Básica Algodão Pima Branca\",\"description\":\"Camiseta clássica com gola redonda e tecido respirável que não desbota.\",\"category\":\"Camisetas\",\"size\":\"P\",\"price\":69.9,\"stock_quantity\":45,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":5,\"name\":\"Calça Jeans Tradicional Reta\",\"description\":\"Calça jeans masculina corte reto com lavagem média e bolsos funcionais.\",\"category\":\"Calças\",\"size\":\"42\",\"price\":199.9,\"stock_quantity\":20,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":6,\"name\":\"Calça Alfaiataria Chino Areia\",\"description\":\"Calça chino elegante em sarja de algodão com elastano para máximo conforto.\",\"category\":\"Calças\",\"size\":\"40\",\"price\":219.9,\"stock_quantity\":15,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":7,\"name\":\"Vestido Midi Floral Tropical\",\"description\":\"Vestido fluido midi com estampa botânica vibrante, decote suave e faixa para amarração.\",\"category\":\"Vestidos\",\"size\":\"M\",\"price\":269.9,\"stock_quantity\":18,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":8,\"name\":\"Vestido Longo Noite Elegance\",\"description\":\"Vestido clássico para eventos noturnos, tecido acetinado com drapeado nas costas.\",\"category\":\"Vestidos\",\"size\":\"G\",\"price\":349.9,\"stock_quantity\":10,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":9,\"name\":\"Bermuda Sarja Confort Caqui\",\"description\":\"Bermuda casual versátil com fechamento por botão e passantes para cinto.\",\"category\":\"Bermudas\",\"size\":\"42\",\"price\":119.9,\"stock_quantity\":35,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":10,\"name\":\"Jaqueta Jeans Vintage Oversized\",\"description\":\"Jaqueta unissex com botões de metal fosco, bolsos frontais e estilo atemporal.\",\"category\":\"Casacos & Jaquetas\",\"size\":\"G\",\"price\":289.9,\"stock_quantity\":12,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":11,\"name\":\"Blazer Estruturado Cinza Chumbo\",\"description\":\"Blazer forrado com modelagem moderna perfeito para composições de trabalho e eventos.\",\"category\":\"Casacos & Jaquetas\",\"size\":\"M\",\"price\":399.9,\"stock_quantity\":8,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":12,\"name\":\"Saia Plissada Midi Verde Oliva\",\"description\":\"Saia feminina com pregas bem vincadas e elástico na cintura para ajuste prático.\",\"category\":\"Saias\",\"size\":\"P\",\"price\":149.9,\"stock_quantity\":22,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"}],\"total\":16,\"page\":1,\"limit\":12,\"totalPages\":2}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/products?sortBy=constructor",
+   "status": 200,
+   "response": "{\"products\":[{\"id\":1,\"name\":\"Camisa Linho Coleção D'Água\",\"description\":\"Camisa confeccionada em puro linho leve, fresca e sofisticada da edição especial Coleção D'Água.\",\"category\":\"Camisas\",\"size\":\"M\",\"price\":189.9,\"stock_quantity\":25,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":2,\"name\":\"Camisa Social Slim Azul Marinho\",\"description\":\"Camisa social de corte slim fit em algodão egípcio com caimento impecável.\",\"category\":\"Camisas\",\"size\":\"G\",\"price\":159.9,\"stock_quantity\":30,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":3,\"name\":\"Camiseta Básica Algodão Pima Preta\",\"description\":\"Camiseta de alta durabilidade com toque macio e acabamento premium para o dia a dia.\",\"category\":\"Camisetas\",\"size\":\"M\",\"price\":69.9,\"stock_quantity\":50,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":4,\"name\":\"Camiseta Básica Algodão Pima Branca\",\"description\":\"Camiseta clássica com gola redonda e tecido respirável que não desbota.\",\"category\":\"Camisetas\",\"size\":\"P\",\"price\":69.9,\"stock_quantity\":45,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":5,\"name\":\"Calça Jeans Tradicional Reta\",\"description\":\"Calça jeans masculina corte reto com lavagem média e bolsos funcionais.\",\"category\":\"Calças\",\"size\":\"42\",\"price\":199.9,\"stock_quantity\":20,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":6,\"name\":\"Calça Alfaiataria Chino Areia\",\"description\":\"Calça chino elegante em sarja de algodão com elastano para máximo conforto.\",\"category\":\"Calças\",\"size\":\"40\",\"price\":219.9,\"stock_quantity\":15,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":7,\"name\":\"Vestido Midi Floral Tropical\",\"description\":\"Vestido fluido midi com estampa botânica vibrante, decote suave e faixa para amarração.\",\"category\":\"Vestidos\",\"size\":\"M\",\"price\":269.9,\"stock_quantity\":18,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":8,\"name\":\"Vestido Longo Noite Elegance\",\"description\":\"Vestido clássico para eventos noturnos, tecido acetinado com drapeado nas costas.\",\"category\":\"Vestidos\",\"size\":\"G\",\"price\":349.9,\"stock_quantity\":10,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":9,\"name\":\"Bermuda Sarja Confort Caqui\",\"description\":\"Bermuda casual versátil com fechamento por botão e passantes para cinto.\",\"category\":\"Bermudas\",\"size\":\"42\",\"price\":119.9,\"stock_quantity\":35,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":10,\"name\":\"Jaqueta Jeans Vintage Oversized\",\"description\":\"Jaqueta unissex com botões de metal fosco, bolsos frontais e estilo atemporal.\",\"category\":\"Casacos & Jaquetas\",\"size\":\"G\",\"price\":289.9,\"stock_quantity\":12,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":11,\"name\":\"Blazer Estruturado Cinza Chumbo\",\"description\":\"Blazer forrado com modelagem moderna perfeito para composições de trabalho e eventos.\",\"category\":\"Casacos & Jaquetas\",\"size\":\"M\",\"price\":399.9,\"stock_quantity\":8,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":12,\"name\":\"Saia Plissada Midi Verde Oliva\",\"description\":\"Saia feminina com pregas bem vincadas e elástico na cintura para ajuste prático.\",\"category\":\"Saias\",\"size\":\"P\",\"price\":149.9,\"stock_quantity\":22,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"}],\"total\":16,\"page\":1,\"limit\":12,\"totalPages\":2}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/products?sortBy=__proto__",
+   "status": 200,
+   "response": "{\"products\":[{\"id\":1,\"name\":\"Camisa Linho Coleção D'Água\",\"description\":\"Camisa confeccionada em puro linho leve, fresca e sofisticada da edição especial Coleção D'Água.\",\"category\":\"Camisas\",\"size\":\"M\",\"price\":189.9,\"stock_quantity\":25,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":2,\"name\":\"Camisa Social Slim Azul Marinho\",\"description\":\"Camisa social de corte slim fit em algodão egípcio com caimento impecável.\",\"category\":\"Camisas\",\"size\":\"G\",\"price\":159.9,\"stock_quantity\":30,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":3,\"name\":\"Camiseta Básica Algodão Pima Preta\",\"description\":\"Camiseta de alta durabilidade com toque macio e acabamento premium para o dia a dia.\",\"category\":\"Camisetas\",\"size\":\"M\",\"price\":69.9,\"stock_quantity\":50,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":4,\"name\":\"Camiseta Básica Algodão Pima Branca\",\"description\":\"Camiseta clássica com gola redonda e tecido respirável que não desbota.\",\"category\":\"Camisetas\",\"size\":\"P\",\"price\":69.9,\"stock_quantity\":45,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":5,\"name\":\"Calça Jeans Tradicional Reta\",\"description\":\"Calça jeans masculina corte reto com lavagem média e bolsos funcionais.\",\"category\":\"Calças\",\"size\":\"42\",\"price\":199.9,\"stock_quantity\":20,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":6,\"name\":\"Calça Alfaiataria Chino Areia\",\"description\":\"Calça chino elegante em sarja de algodão com elastano para máximo conforto.\",\"category\":\"Calças\",\"size\":\"40\",\"price\":219.9,\"stock_quantity\":15,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":7,\"name\":\"Vestido Midi Floral Tropical\",\"description\":\"Vestido fluido midi com estampa botânica vibrante, decote suave e faixa para amarração.\",\"category\":\"Vestidos\",\"size\":\"M\",\"price\":269.9,\"stock_quantity\":18,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":8,\"name\":\"Vestido Longo Noite Elegance\",\"description\":\"Vestido clássico para eventos noturnos, tecido acetinado com drapeado nas costas.\",\"category\":\"Vestidos\",\"size\":\"G\",\"price\":349.9,\"stock_quantity\":10,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":9,\"name\":\"Bermuda Sarja Confort Caqui\",\"description\":\"Bermuda casual versátil com fechamento por botão e passantes para cinto.\",\"category\":\"Bermudas\",\"size\":\"42\",\"price\":119.9,\"stock_quantity\":35,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":10,\"name\":\"Jaqueta Jeans Vintage Oversized\",\"description\":\"Jaqueta unissex com botões de metal fosco, bolsos frontais e estilo atemporal.\",\"category\":\"Casacos & Jaquetas\",\"size\":\"G\",\"price\":289.9,\"stock_quantity\":12,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":11,\"name\":\"Blazer Estruturado Cinza Chumbo\",\"description\":\"Blazer forrado com modelagem moderna perfeito para composições de trabalho e eventos.\",\"category\":\"Casacos & Jaquetas\",\"size\":\"M\",\"price\":399.9,\"stock_quantity\":8,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":12,\"name\":\"Saia Plissada Midi Verde Oliva\",\"description\":\"Saia feminina com pregas bem vincadas e elástico na cintura para ajuste prático.\",\"category\":\"Saias\",\"size\":\"P\",\"price\":149.9,\"stock_quantity\":22,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"}],\"total\":16,\"page\":1,\"limit\":12,\"totalPages\":2}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/products?sortOrder=desc;DROP TABLE x",
+   "status": 200,
+   "response": "{\"products\":[{\"id\":1,\"name\":\"Camisa Linho Coleção D'Água\",\"description\":\"Camisa confeccionada em puro linho leve, fresca e sofisticada da edição especial Coleção D'Água.\",\"category\":\"Camisas\",\"size\":\"M\",\"price\":189.9,\"stock_quantity\":25,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":2,\"name\":\"Camisa Social Slim Azul Marinho\",\"description\":\"Camisa social de corte slim fit em algodão egípcio com caimento impecável.\",\"category\":\"Camisas\",\"size\":\"G\",\"price\":159.9,\"stock_quantity\":30,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":3,\"name\":\"Camiseta Básica Algodão Pima Preta\",\"description\":\"Camiseta de alta durabilidade com toque macio e acabamento premium para o dia a dia.\",\"category\":\"Camisetas\",\"size\":\"M\",\"price\":69.9,\"stock_quantity\":50,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":4,\"name\":\"Camiseta Básica Algodão Pima Branca\",\"description\":\"Camiseta clássica com gola redonda e tecido respirável que não desbota.\",\"category\":\"Camisetas\",\"size\":\"P\",\"price\":69.9,\"stock_quantity\":45,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":5,\"name\":\"Calça Jeans Tradicional Reta\",\"description\":\"Calça jeans masculina corte reto com lavagem média e bolsos funcionais.\",\"category\":\"Calças\",\"size\":\"42\",\"price\":199.9,\"stock_quantity\":20,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":6,\"name\":\"Calça Alfaiataria Chino Areia\",\"description\":\"Calça chino elegante em sarja de algodão com elastano para máximo conforto.\",\"category\":\"Calças\",\"size\":\"40\",\"price\":219.9,\"stock_quantity\":15,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":7,\"name\":\"Vestido Midi Floral Tropical\",\"description\":\"Vestido fluido midi com estampa botânica vibrante, decote suave e faixa para amarração.\",\"category\":\"Vestidos\",\"size\":\"M\",\"price\":269.9,\"stock_quantity\":18,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":8,\"name\":\"Vestido Longo Noite Elegance\",\"description\":\"Vestido clássico para eventos noturnos, tecido acetinado com drapeado nas costas.\",\"category\":\"Vestidos\",\"size\":\"G\",\"price\":349.9,\"stock_quantity\":10,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":9,\"name\":\"Bermuda Sarja Confort Caqui\",\"description\":\"Bermuda casual versátil com fechamento por botão e passantes para cinto.\",\"category\":\"Bermudas\",\"size\":\"42\",\"price\":119.9,\"stock_quantity\":35,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":10,\"name\":\"Jaqueta Jeans Vintage Oversized\",\"description\":\"Jaqueta unissex com botões de metal fosco, bolsos frontais e estilo atemporal.\",\"category\":\"Casacos & Jaquetas\",\"size\":\"G\",\"price\":289.9,\"stock_quantity\":12,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":11,\"name\":\"Blazer Estruturado Cinza Chumbo\",\"description\":\"Blazer forrado com modelagem moderna perfeito para composições de trabalho e eventos.\",\"category\":\"Casacos & Jaquetas\",\"size\":\"M\",\"price\":399.9,\"stock_quantity\":8,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":12,\"name\":\"Saia Plissada Midi Verde Oliva\",\"description\":\"Saia feminina com pregas bem vincadas e elástico na cintura para ajuste prático.\",\"category\":\"Saias\",\"size\":\"P\",\"price\":149.9,\"stock_quantity\":22,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"}],\"total\":16,\"page\":1,\"limit\":12,\"totalPages\":2}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/products?sortOrder=ASC,(SELECT 1)",
+   "status": 200,
+   "response": "{\"products\":[{\"id\":1,\"name\":\"Camisa Linho Coleção D'Água\",\"description\":\"Camisa confeccionada em puro linho leve, fresca e sofisticada da edição especial Coleção D'Água.\",\"category\":\"Camisas\",\"size\":\"M\",\"price\":189.9,\"stock_quantity\":25,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":2,\"name\":\"Camisa Social Slim Azul Marinho\",\"description\":\"Camisa social de corte slim fit em algodão egípcio com caimento impecável.\",\"category\":\"Camisas\",\"size\":\"G\",\"price\":159.9,\"stock_quantity\":30,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":3,\"name\":\"Camiseta Básica Algodão Pima Preta\",\"description\":\"Camiseta de alta durabilidade com toque macio e acabamento premium para o dia a dia.\",\"category\":\"Camisetas\",\"size\":\"M\",\"price\":69.9,\"stock_quantity\":50,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":4,\"name\":\"Camiseta Básica Algodão Pima Branca\",\"description\":\"Camiseta clássica com gola redonda e tecido respirável que não desbota.\",\"category\":\"Camisetas\",\"size\":\"P\",\"price\":69.9,\"stock_quantity\":45,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":5,\"name\":\"Calça Jeans Tradicional Reta\",\"description\":\"Calça jeans masculina corte reto com lavagem média e bolsos funcionais.\",\"category\":\"Calças\",\"size\":\"42\",\"price\":199.9,\"stock_quantity\":20,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":6,\"name\":\"Calça Alfaiataria Chino Areia\",\"description\":\"Calça chino elegante em sarja de algodão com elastano para máximo conforto.\",\"category\":\"Calças\",\"size\":\"40\",\"price\":219.9,\"stock_quantity\":15,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":7,\"name\":\"Vestido Midi Floral Tropical\",\"description\":\"Vestido fluido midi com estampa botânica vibrante, decote suave e faixa para amarração.\",\"category\":\"Vestidos\",\"size\":\"M\",\"price\":269.9,\"stock_quantity\":18,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":8,\"name\":\"Vestido Longo Noite Elegance\",\"description\":\"Vestido clássico para eventos noturnos, tecido acetinado com drapeado nas costas.\",\"category\":\"Vestidos\",\"size\":\"G\",\"price\":349.9,\"stock_quantity\":10,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":9,\"name\":\"Bermuda Sarja Confort Caqui\",\"description\":\"Bermuda casual versátil com fechamento por botão e passantes para cinto.\",\"category\":\"Bermudas\",\"size\":\"42\",\"price\":119.9,\"stock_quantity\":35,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":10,\"name\":\"Jaqueta Jeans Vintage Oversized\",\"description\":\"Jaqueta unissex com botões de metal fosco, bolsos frontais e estilo atemporal.\",\"category\":\"Casacos & Jaquetas\",\"size\":\"G\",\"price\":289.9,\"stock_quantity\":12,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":11,\"name\":\"Blazer Estruturado Cinza Chumbo\",\"description\":\"Blazer forrado com modelagem moderna perfeito para composições de trabalho e eventos.\",\"category\":\"Casacos & Jaquetas\",\"size\":\"M\",\"price\":399.9,\"stock_quantity\":8,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":12,\"name\":\"Saia Plissada Midi Verde Oliva\",\"description\":\"Saia feminina com pregas bem vincadas e elástico na cintura para ajuste prático.\",\"category\":\"Saias\",\"size\":\"P\",\"price\":149.9,\"stock_quantity\":22,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"}],\"total\":16,\"page\":1,\"limit\":12,\"totalPages\":2}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/products?categoria=' OR '1'='1&category=' OR '1'='1",
+   "status": 200,
+   "response": "{\"products\":[],\"total\":0,\"page\":1,\"limit\":12,\"totalPages\":1}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/products?tamanho=') OR 1=1 --&size=') OR 1=1 --",
+   "status": 200,
+   "response": "{\"products\":[],\"total\":0,\"page\":1,\"limit\":12,\"totalPages\":1}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/products?pagina=1 OR 1=1&page=1 OR 1=1",
+   "status": 200,
+   "response": "{\"products\":[{\"id\":1,\"name\":\"Camisa Linho Coleção D'Água\",\"description\":\"Camisa confeccionada em puro linho leve, fresca e sofisticada da edição especial Coleção D'Água.\",\"category\":\"Camisas\",\"size\":\"M\",\"price\":189.9,\"stock_quantity\":25,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":2,\"name\":\"Camisa Social Slim Azul Marinho\",\"description\":\"Camisa social de corte slim fit em algodão egípcio com caimento impecável.\",\"category\":\"Camisas\",\"size\":\"G\",\"price\":159.9,\"stock_quantity\":30,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":3,\"name\":\"Camiseta Básica Algodão Pima Preta\",\"description\":\"Camiseta de alta durabilidade com toque macio e acabamento premium para o dia a dia.\",\"category\":\"Camisetas\",\"size\":\"M\",\"price\":69.9,\"stock_quantity\":50,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":4,\"name\":\"Camiseta Básica Algodão Pima Branca\",\"description\":\"Camiseta clássica com gola redonda e tecido respirável que não desbota.\",\"category\":\"Camisetas\",\"size\":\"P\",\"price\":69.9,\"stock_quantity\":45,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":5,\"name\":\"Calça Jeans Tradicional Reta\",\"description\":\"Calça jeans masculina corte reto com lavagem média e bolsos funcionais.\",\"category\":\"Calças\",\"size\":\"42\",\"price\":199.9,\"stock_quantity\":20,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":6,\"name\":\"Calça Alfaiataria Chino Areia\",\"description\":\"Calça chino elegante em sarja de algodão com elastano para máximo conforto.\",\"category\":\"Calças\",\"size\":\"40\",\"price\":219.9,\"stock_quantity\":15,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":7,\"name\":\"Vestido Midi Floral Tropical\",\"description\":\"Vestido fluido midi com estampa botânica vibrante, decote suave e faixa para amarração.\",\"category\":\"Vestidos\",\"size\":\"M\",\"price\":269.9,\"stock_quantity\":18,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":8,\"name\":\"Vestido Longo Noite Elegance\",\"description\":\"Vestido clássico para eventos noturnos, tecido acetinado com drapeado nas costas.\",\"category\":\"Vestidos\",\"size\":\"G\",\"price\":349.9,\"stock_quantity\":10,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":9,\"name\":\"Bermuda Sarja Confort Caqui\",\"description\":\"Bermuda casual versátil com fechamento por botão e passantes para cinto.\",\"category\":\"Bermudas\",\"size\":\"42\",\"price\":119.9,\"stock_quantity\":35,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":10,\"name\":\"Jaqueta Jeans Vintage Oversized\",\"description\":\"Jaqueta unissex com botões de metal fosco, bolsos frontais e estilo atemporal.\",\"category\":\"Casacos & Jaquetas\",\"size\":\"G\",\"price\":289.9,\"stock_quantity\":12,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":11,\"name\":\"Blazer Estruturado Cinza Chumbo\",\"description\":\"Blazer forrado com modelagem moderna perfeito para composições de trabalho e eventos.\",\"category\":\"Casacos & Jaquetas\",\"size\":\"M\",\"price\":399.9,\"stock_quantity\":8,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"},{\"id\":12,\"name\":\"Saia Plissada Midi Verde Oliva\",\"description\":\"Saia feminina com pregas bem vincadas e elástico na cintura para ajuste prático.\",\"category\":\"Saias\",\"size\":\"P\",\"price\":149.9,\"stock_quantity\":22,\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\"}],\"total\":16,\"page\":1,\"limit\":12,\"totalPages\":2}"
+  },
+  {
+   "who": "visitante",
+   "method": "POST",
+   "path": "/api/products",
+   "body": {
+    "name": "Produto Teste 4wpiud",
+    "description": "teste",
+    "category": "Teste",
+    "size": "M",
+    "price": 10,
+    "stock_quantity": 1
+   },
+   "status": 401,
+   "response": "{\"message\":\"Acesso não autorizado. Faça login para continuar.\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "POST",
+   "path": "/api/products",
+   "body": {
+    "name": "Produto Teste 4wpiud",
+    "description": "teste",
+    "category": "Teste",
+    "size": "M",
+    "price": 10,
+    "stock_quantity": 1
+   },
+   "status": 403,
+   "response": "{\"message\":\"Acesso negado. Perfil não autorizado para esta operação.\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/products/1",
+   "body": {
+    "name": "Alterado por cliente",
+    "description": "x",
+    "category": "Teste",
+    "size": "M",
+    "price": 1,
+    "stock_quantity": 1
+   },
+   "status": 403,
+   "response": "{\"message\":\"Acesso negado. Perfil não autorizado para esta operação.\"}"
+  },
+  {
+   "who": "funcionario",
+   "method": "POST",
+   "path": "/api/products",
+   "body": {
+    "name": "<img src=x onerror=alert(1)>",
+    "description": "<script>alert(1)</script>",
+    "category": "Teste",
+    "size": "M",
+    "price": 10,
+    "stock_quantity": 5
+   },
+   "status": 201,
+   "response": "{\"message\":\"Produto cadastrado com sucesso.\",\"product\":{\"id\":17,\"name\":\"<img src=x onerror=alert(1)>\",\"description\":\"<script>alert(1)</script>\",\"category\":\"Teste\",\"size\":\"M\",\"price\":10,\"stock_quantity\":5,\"created_at\":\"2026-11-11 02:06:59\",\"updated_at\":\"2026-11-11 02:06:59\"}}"
+  },
+  {
+   "who": "funcionario",
+   "method": "POST",
+   "path": "/api/products",
+   "body": {
+    "name": "Válido as4ozd",
+    "description": "controle",
+    "category": "Teste",
+    "size": "M",
+    "price": 10,
+    "stock_quantity": 1
+   },
+   "status": 201,
+   "response": "{\"message\":\"Produto cadastrado com sucesso.\",\"product\":{\"id\":18,\"name\":\"Válido as4ozd\",\"description\":\"controle\",\"category\":\"Teste\",\"size\":\"M\",\"price\":10,\"stock_quantity\":1,\"created_at\":\"2026-11-11 02:06:59\",\"updated_at\":\"2026-11-11 02:06:59\"}}"
+  },
+  {
+   "who": "funcionario",
+   "method": "POST",
+   "path": "/api/products",
+   "body": {
+    "name": "Inválido p0ypxu",
+    "description": "x",
+    "category": "Teste",
+    "size": "M",
+    "price": -1,
+    "stock_quantity": 1
+   },
+   "status": 400,
+   "response": "{\"message\":\"O preço não pode ser negativo.\"}"
+  },
+  {
+   "who": "funcionario",
+   "method": "POST",
+   "path": "/api/products",
+   "body": {
+    "name": "Inválido ous2sa",
+    "description": "x",
+    "category": "Teste",
+    "size": "M",
+    "price": 10,
+    "stock_quantity": -1
+   },
+   "status": 400,
+   "response": "{\"message\":\"O estoque não pode ser negativo.\"}"
+  },
+  {
+   "who": "funcionario",
+   "method": "POST",
+   "path": "/api/products",
+   "body": {
+    "name": "Inválido 4mmvsv",
+    "description": "x",
+    "category": "Teste",
+    "size": "M",
+    "price": 10,
+    "stock_quantity": 2.5
+   },
+   "status": 400,
+   "response": "{\"message\":\"O estoque deve ser um número inteiro.\"}"
+  },
+  {
+   "who": "funcionario",
+   "method": "POST",
+   "path": "/api/products",
+   "body": {
+    "name": "Inválido 4hzc32",
+    "description": "x",
+    "category": "Teste",
+    "size": "M",
+    "price": 10,
+    "stock_quantity": "abc"
+   },
+   "status": 400,
+   "response": "{\"message\":\"Expected number, received string\"}"
+  },
+  {
+   "who": "funcionario",
+   "method": "POST",
+   "path": "/api/products",
+   "body": {
+    "name": "Inválido eqa6lj",
+    "description": "x",
+    "category": "Teste",
+    "size": "M",
+    "price": "abc",
+    "stock_quantity": 1
+   },
+   "status": 400,
+   "response": "{\"message\":\"Expected number, received string\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "POST",
+   "path": "/api/orders",
+   "body": {
+    "confirmDelivery": true,
+    "items": [
+     {
+      "product_id": 999999,
+      "quantity": 1
+     }
+    ]
+   },
+   "status": 400,
+   "response": "{\"message\":\"Produto #999999 não encontrado no catálogo.\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "POST",
+   "path": "/api/orders",
+   "body": {
+    "confirmDelivery": true,
+    "items": [
+     {
+      "product_id": null,
+      "quantity": 1
+     }
+    ]
+   },
+   "status": 400,
+   "response": "{\"message\":\"Expected number, received null\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "POST",
+   "path": "/api/orders",
+   "body": {
+    "confirmDelivery": true,
+    "items": [
+     {
+      "product_id": "abc",
+      "quantity": 1
+     }
+    ]
+   },
+   "status": 400,
+   "response": "{\"message\":\"Expected number, received string\"}"
+  },
+  {
+   "who": "clienteB",
+   "method": "GET",
+   "path": "/api/auth/me",
+   "status": 200,
+   "response": "{\"user\":{\"id\":2,\"name\":\"Ana Pereira (Cliente)\",\"email\":\"ana@cliente.com\",\"role\":\"customer\",\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\",\"cpf\":\"444.555.666-77\",\"phone\":\"(21) 99876-5432\",\"address\":{\"recipient\":\"Ana Pereira\",\"zip_code\":\"22041-001\",\"street\":\"Avenida Atlântica\",\"number\":\"2000\",\"complement\":\"Bloco B\",\"neighborhood\":\"Copacabana\",\"city\":\"Rio de Janeiro\",\"state\":\"RJ\"}}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/auth/profile",
+   "body": {
+    "name": "Invasor",
+    "cpf": "52998224725",
+    "phone": "11911112222",
+    "id": 2,
+    "userId": 2,
+    "user_id": 2,
+    "usuarioId": 2,
+    "clienteId": 2,
+    "customerId": 2
+   },
+   "status": 200,
+   "response": "{\"message\":\"Dados pessoais atualizados com sucesso.\",\"user\":{\"id\":1,\"name\":\"Invasor\",\"email\":\"carlos@cliente.com\",\"role\":\"customer\",\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:59\",\"cpf\":\"52998224725\",\"phone\":\"11911112222\",\"address\":{\"recipient\":\"Carlos Oliveira\",\"zip_code\":\"01310-100\",\"street\":\"Avenida Paulista\",\"number\":\"1578\",\"complement\":\"Apto 101\",\"neighborhood\":\"Bela Vista\",\"city\":\"São Paulo\",\"state\":\"SP\"}}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/auth/address",
+   "body": {
+    "recipient": "Invasor",
+    "zip_code": "01001000",
+    "street": "Rua Invasora",
+    "number": "1",
+    "complement": "",
+    "neighborhood": "Centro",
+    "city": "São Paulo",
+    "state": "SP",
+    "id": 2,
+    "userId": 2,
+    "user_id": 2,
+    "usuarioId": 2
+   },
+   "status": 200,
+   "response": "{\"message\":\"Endereço de entrega salvo com sucesso.\",\"address\":{\"recipient\":\"Invasor\",\"zip_code\":\"01001000\",\"street\":\"Rua Invasora\",\"number\":\"1\",\"complement\":null,\"neighborhood\":\"Centro\",\"city\":\"São Paulo\",\"state\":\"SP\"}}"
+  },
+  {
+   "who": "clienteB",
+   "method": "GET",
+   "path": "/api/auth/me",
+   "status": 200,
+   "response": "{\"user\":{\"id\":2,\"name\":\"Ana Pereira (Cliente)\",\"email\":\"ana@cliente.com\",\"role\":\"customer\",\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:56\",\"cpf\":\"444.555.666-77\",\"phone\":\"(21) 99876-5432\",\"address\":{\"recipient\":\"Ana Pereira\",\"zip_code\":\"22041-001\",\"street\":\"Avenida Atlântica\",\"number\":\"2000\",\"complement\":\"Bloco B\",\"neighborhood\":\"Copacabana\",\"city\":\"Rio de Janeiro\",\"state\":\"RJ\"}}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "GET",
+   "path": "/api/auth/me?userId=2&id=2&user_id=2&clienteId=2",
+   "status": 200,
+   "response": "{\"user\":{\"id\":1,\"name\":\"Invasor\",\"email\":\"carlos@cliente.com\",\"role\":\"customer\",\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:59\",\"cpf\":\"52998224725\",\"phone\":\"11911112222\",\"address\":{\"recipient\":\"Invasor\",\"zip_code\":\"01001000\",\"street\":\"Rua Invasora\",\"number\":\"1\",\"complement\":null,\"neighborhood\":\"Centro\",\"city\":\"São Paulo\",\"state\":\"SP\"}}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/auth/profile",
+   "body": {
+    "name": "Cliente A Teste",
+    "cpf": "52998224725",
+    "phone": "11988887777"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Dados pessoais atualizados com sucesso.\",\"user\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"carlos@cliente.com\",\"role\":\"customer\",\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:59\",\"cpf\":\"52998224725\",\"phone\":\"11988887777\",\"address\":{\"recipient\":\"Invasor\",\"zip_code\":\"01001000\",\"street\":\"Rua Invasora\",\"number\":\"1\",\"complement\":null,\"neighborhood\":\"Centro\",\"city\":\"São Paulo\",\"state\":\"SP\"}}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/auth/address",
+   "body": {
+    "recipient": "<img src=x onerror=alert(1)>",
+    "zip_code": "01001000",
+    "street": "Rua Teste",
+    "number": "10",
+    "complement": "<img src=x onerror=alert(1)>",
+    "neighborhood": "Centro",
+    "city": "São Paulo",
+    "state": "SP"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Endereço de entrega salvo com sucesso.\",\"address\":{\"recipient\":\"<img src=x onerror=alert(1)>\",\"zip_code\":\"01001000\",\"street\":\"Rua Teste\",\"number\":\"10\",\"complement\":\"<img src=x onerror=alert(1)>\",\"neighborhood\":\"Centro\",\"city\":\"São Paulo\",\"state\":\"SP\"}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "POST",
+   "path": "/api/orders",
+   "body": {
+    "confirmDelivery": true,
+    "items": [
+     {
+      "product_id": 1,
+      "quantity": 1
+     }
+    ]
+   },
+   "status": 201,
+   "response": "{\"message\":\"Pedido criado com sucesso.\",\"order\":{\"id\":6,\"user_id\":1,\"total\":189.9,\"status\":\"recebido\",\"created_at\":\"2026-11-11 02:06:59\",\"updated_at\":\"2026-11-11 02:06:59\",\"has_delivery_info\":true,\"delivery_recipient\":\"<img src=x onerror=alert(1)>\",\"delivery_phone\":\"11988887777\",\"delivery_zip_code\":\"01001000\",\"delivery_street\":\"Rua Teste\",\"delivery_number\":\"10\",\"delivery_complement\":\"<img src=x onerror=alert(1)>\",\"delivery_neighborhood\":\"Centro\",\"delivery_city\":\"São Paulo\",\"delivery_state\":\"SP\",\"customer_name\":\"Cliente A Teste\",\"customer_email\":\"carlos@cliente.com\",\"items\":[{\"id\":6,\"order_id\":6,\"product_id\":1,\"product_name\":\"Camisa Linho Coleção D'Água\",\"description\":\"Camisa Linho Coleção D'Água (Tam: M)\",\"quantity\":1,\"unit_price\":189.9,\"subtotal\":189.9}]}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/auth/address",
+   "body": {
+    "recipient": "Cliente A Teste",
+    "zip_code": "01001000",
+    "street": "Rua Teste",
+    "number": "10",
+    "complement": "",
+    "neighborhood": "Centro",
+    "city": "São Paulo",
+    "state": "SP"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Endereço de entrega salvo com sucesso.\",\"address\":{\"recipient\":\"Cliente A Teste\",\"zip_code\":\"01001000\",\"street\":\"Rua Teste\",\"number\":\"10\",\"complement\":null,\"neighborhood\":\"Centro\",\"city\":\"São Paulo\",\"state\":\"SP\"}}"
+  },
+  {
+   "who": "funcionario",
+   "method": "GET",
+   "path": "/api/orders/all",
+   "status": 200,
+   "response": "{\"orders\":[{\"id\":6,\"user_id\":1,\"total\":189.9,\"status\":\"recebido\",\"created_at\":\"2026-11-11 02:06:59\",\"updated_at\":\"2026-11-11 02:06:59\",\"has_delivery_info\":true,\"delivery_recipient\":\"<img src=x onerror=alert(1)>\",\"delivery_phone\":\"11988887777\",\"delivery_zip_code\":\"01001000\",\"delivery_street\":\"Rua Teste\",\"delivery_number\":\"10\",\"delivery_complement\":\"<img src=x onerror=alert(1)>\",\"delivery_neighborhood\":\"Centro\",\"delivery_city\":\"São Paulo\",\"delivery_state\":\"SP\",\"customer_name\":\"Cliente A Teste\",\"customer_email\":\"carlos@cliente.com\",\"items\":[{\"id\":6,\"order_id\":6,\"product_id\":1,\"product_name\":\"Camisa Linho Coleção D'Água\",\"description\":\"Camisa Linho Coleção D'Água (Tam: M)\",\"quantity\":1,\"unit_price\":189.9,\"subtotal\":189.9}]},{\"id\":5,\"user_id\":1,\"total\":379.8,\"status\":\"recebido\",\"created_at\":\"2026-11-11 02:06:59\",\"updated_at\":\"2026-11-11 02:06:59\",\"has_delivery_info\":true,\"delivery_recipient\":\"Carlos Oliveira\",\"delivery_phone\":\"11988887777\",\"delivery_zip_code\":\"01310-100\",\"delivery_street\":\"Avenida Paulista\",\"delivery_number\":\"1578\",\"delivery_complement\":\"Apto 101\",\"delivery_neighborhood\":\"Bela Vista\",\"delivery_city\":\"São Paulo\",\"delivery_state\":\"SP\",\"customer_name\":\"Cliente A Teste\",\"customer_email\":\"carlos@cliente.com\",\"items\":[{\"id\":5,\"order_id\":5,\"product_id\":1,\"product_name\":\"Camisa Linho Coleção D'Água\",\"description\":\"Camisa Linho Coleção D'Água (Tam: M)\",\"quantity\":2,\"unit_price\":189.9,\"subtotal\":379.8}]},{\"id\":4,\"user_id\":1,\"total\":189.9,\"status\":\"recebido\",\"created_at\":\"2026-11-11 02:06:59\",\"updated_at\":\"2026-11-11 02:06:59\",\"has_delivery_info\":true,\"delivery_recipient\":\"Carlos Oliveira\",\"delivery_phone\":\"11988887777\",\"delivery_zip_code\":\"01310-100\",\"delivery_street\":\"Avenida Paulista\",\"delivery_number\":\"1578\",\"delivery_complement\":\"Apto 101\",\"delivery_neighborhood\":\"Bela Vista\",\"delivery_city\":\"São Paulo\",\"delivery_state\":\"SP\",\"customer_name\":\"Cliente A Teste\",\"customer_email\":\"carlos@cliente.com\",\"items\":[{\"id\":4,\"order_id\":4,\"product_id\":1,\"product_name\":\"Camisa Linho Coleção D'Água\",\"description\":\"Camisa Linho Coleção D'Água (Tam: M)\",\"quantity\":1,\"unit_price\":189.9,\"subtotal\":189.9}]},{\"id\":3,\"user_id\":1,\"total\":189.9,\"status\":\"recebido\",\"created_at\":\"2026-11-11 02:06:59\",\"updated_at\":\"2026-11-11 02:06:59\",\"has_delivery_info\":true,\"delivery_recipient\":\"Carlos Oliveira\",\"delivery_phone\":\"11988887777\",\"delivery_zip_code\":\"01310-100\",\"delivery_street\":\"Avenida Paulista\",\"delivery_number\":\"1578\",\"delivery_complement\":\"Apto 101\",\"delivery_neighborhood\":\"Bela Vista\",\"delivery_city\":\"São Paulo\",\"delivery_state\":\"SP\",\"customer_name\":\"Cliente A Teste\",\"customer_email\":\"carlos@cliente.com\",\"items\":[{\"id\":3,\"order_id\":3,\"product_id\":1,\"product_name\":\"Camisa Linho Coleção D'Água\",\"description\":\"Camisa Linho Coleção D'Água (Tam: M)\",\"quantity\":1,\"unit_price\":189.9,\"subtotal\":189.9}]},{\"id\":2,\"user_id\":1,\"total\":189.9,\"status\":\"recebido\",\"created_at\":\"2026-11-11 02:06:57\",\"updated_at\":\"2026-11-11 02:06:57\",\"has_delivery_info\":true,\"delivery_recipient\":\"Carlos Oliveira\",\"delivery_phone\":\"11988887777\",\"delivery_zip_code\":\"01310-100\",\"delivery_street\":\"Avenida Paulista\",\"delivery_number\":\"1578\",\"delivery_complement\":\"Apto 101\",\"delivery_neighborhood\":\"Bela Vista\",\"delivery_city\":\"São Paulo\",\"delivery_state\":\"SP\",\"customer_name\":\"Cliente A Teste\",\"customer_email\":\"carlos@cliente.com\",\"items\":[{\"id\":2,\"order_id\":2,\"product_id\":1,\"product_name\":\"Camisa Linho Coleção D'Água\",\"description\":\"Camisa Linho Coleção D'Água (Tam: M)\",\"quantity\":1,\"unit_price\":189.9,\"subtotal\":189.9}]},{\"id\":1,\"user_id\":2,\"total\":189.9,\"status\":\"recebido\",\"created_at\":\"2026-11-11 02:06:57\",\"updated_at\":\"2026-11-11 02:06:57\",\"has_delivery_info\":true,\"delivery_recipient\":\"Ana Pereira\",\"delivery_phone\":\"(21) 99876-5432\",\"delivery_zip_code\":\"22041-001\",\"delivery_street\":\"Avenida Atlântica\",\"delivery_number\":\"2000\",\"delivery_complement\":\"Bloco B\",\"delivery_neighborhood\":\"Copacabana\",\"delivery_city\":\"Rio de Janeiro\",\"delivery_state\":\"RJ\",\"customer_name\":\"Ana Pereira (Cl…"
+  },
+  {
+   "who": "clienteA",
+   "method": "GET",
+   "path": "/api/orders/my",
+   "status": 200,
+   "response": "{\"orders\":[{\"id\":6,\"user_id\":1,\"total\":189.9,\"status\":\"recebido\",\"created_at\":\"2026-11-11 02:06:59\",\"updated_at\":\"2026-11-11 02:06:59\",\"has_delivery_info\":true,\"delivery_recipient\":\"<img src=x onerror=alert(1)>\",\"delivery_phone\":\"11988887777\",\"delivery_zip_code\":\"01001000\",\"delivery_street\":\"Rua Teste\",\"delivery_number\":\"10\",\"delivery_complement\":\"<img src=x onerror=alert(1)>\",\"delivery_neighborhood\":\"Centro\",\"delivery_city\":\"São Paulo\",\"delivery_state\":\"SP\",\"customer_name\":\"Cliente A Teste\",\"customer_email\":\"carlos@cliente.com\",\"items\":[{\"id\":6,\"order_id\":6,\"product_id\":1,\"product_name\":\"Camisa Linho Coleção D'Água\",\"description\":\"Camisa Linho Coleção D'Água (Tam: M)\",\"quantity\":1,\"unit_price\":189.9,\"subtotal\":189.9}]},{\"id\":5,\"user_id\":1,\"total\":379.8,\"status\":\"recebido\",\"created_at\":\"2026-11-11 02:06:59\",\"updated_at\":\"2026-11-11 02:06:59\",\"has_delivery_info\":true,\"delivery_recipient\":\"Carlos Oliveira\",\"delivery_phone\":\"11988887777\",\"delivery_zip_code\":\"01310-100\",\"delivery_street\":\"Avenida Paulista\",\"delivery_number\":\"1578\",\"delivery_complement\":\"Apto 101\",\"delivery_neighborhood\":\"Bela Vista\",\"delivery_city\":\"São Paulo\",\"delivery_state\":\"SP\",\"customer_name\":\"Cliente A Teste\",\"customer_email\":\"carlos@cliente.com\",\"items\":[{\"id\":5,\"order_id\":5,\"product_id\":1,\"product_name\":\"Camisa Linho Coleção D'Água\",\"description\":\"Camisa Linho Coleção D'Água (Tam: M)\",\"quantity\":2,\"unit_price\":189.9,\"subtotal\":379.8}]},{\"id\":4,\"user_id\":1,\"total\":189.9,\"status\":\"recebido\",\"created_at\":\"2026-11-11 02:06:59\",\"updated_at\":\"2026-11-11 02:06:59\",\"has_delivery_info\":true,\"delivery_recipient\":\"Carlos Oliveira\",\"delivery_phone\":\"11988887777\",\"delivery_zip_code\":\"01310-100\",\"delivery_street\":\"Avenida Paulista\",\"delivery_number\":\"1578\",\"delivery_complement\":\"Apto 101\",\"delivery_neighborhood\":\"Bela Vista\",\"delivery_city\":\"São Paulo\",\"delivery_state\":\"SP\",\"customer_name\":\"Cliente A Teste\",\"customer_email\":\"carlos@cliente.com\",\"items\":[{\"id\":4,\"order_id\":4,\"product_id\":1,\"product_name\":\"Camisa Linho Coleção D'Água\",\"description\":\"Camisa Linho Coleção D'Água (Tam: M)\",\"quantity\":1,\"unit_price\":189.9,\"subtotal\":189.9}]},{\"id\":3,\"user_id\":1,\"total\":189.9,\"status\":\"recebido\",\"created_at\":\"2026-11-11 02:06:59\",\"updated_at\":\"2026-11-11 02:06:59\",\"has_delivery_info\":true,\"delivery_recipient\":\"Carlos Oliveira\",\"delivery_phone\":\"11988887777\",\"delivery_zip_code\":\"01310-100\",\"delivery_street\":\"Avenida Paulista\",\"delivery_number\":\"1578\",\"delivery_complement\":\"Apto 101\",\"delivery_neighborhood\":\"Bela Vista\",\"delivery_city\":\"São Paulo\",\"delivery_state\":\"SP\",\"customer_name\":\"Cliente A Teste\",\"customer_email\":\"carlos@cliente.com\",\"items\":[{\"id\":3,\"order_id\":3,\"product_id\":1,\"product_name\":\"Camisa Linho Coleção D'Água\",\"description\":\"Camisa Linho Coleção D'Água (Tam: M)\",\"quantity\":1,\"unit_price\":189.9,\"subtotal\":189.9}]},{\"id\":2,\"user_id\":1,\"total\":189.9,\"status\":\"recebido\",\"created_at\":\"2026-11-11 02:06:57\",\"updated_at\":\"2026-11-11 02:06:57\",\"has_delivery_info\":true,\"delivery_recipient\":\"Carlos Oliveira\",\"delivery_phone\":\"11988887777\",\"delivery_zip_code\":\"01310-100\",\"delivery_street\":\"Avenida Paulista\",\"delivery_number\":\"1578\",\"delivery_complement\":\"Apto 101\",\"delivery_neighborhood\":\"Bela Vista\",\"delivery_city\":\"São Paulo\",\"delivery_state\":\"SP\",\"customer_name\":\"Cliente A Teste\",\"customer_email\":\"carlos@cliente.com\",\"items\":[{\"id\":2,\"order_id\":2,\"product_id\":1,\"product_name\":\"Camisa Linho Coleção D'Água\",\"description\":\"Camisa Linho Coleção D'Água (Tam: M)\",\"quantity\":1,\"unit_price\":189.9,\"subtotal\":189.9}]}]}"
+  },
+  {
+   "who": "funcionario",
+   "method": "GET",
+   "path": "/api/orders/6",
+   "status": 200,
+   "response": "{\"order\":{\"id\":6,\"user_id\":1,\"total\":189.9,\"status\":\"recebido\",\"created_at\":\"2026-11-11 02:06:59\",\"updated_at\":\"2026-11-11 02:06:59\",\"has_delivery_info\":true,\"delivery_recipient\":\"<img src=x onerror=alert(1)>\",\"delivery_phone\":\"11988887777\",\"delivery_zip_code\":\"01001000\",\"delivery_street\":\"Rua Teste\",\"delivery_number\":\"10\",\"delivery_complement\":\"<img src=x onerror=alert(1)>\",\"delivery_neighborhood\":\"Centro\",\"delivery_city\":\"São Paulo\",\"delivery_state\":\"SP\",\"customer_name\":\"Cliente A Teste\",\"customer_email\":\"carlos@cliente.com\",\"items\":[{\"id\":6,\"order_id\":6,\"product_id\":1,\"product_name\":\"Camisa Linho Coleção D'Água\",\"description\":\"Camisa Linho Coleção D'Água (Tam: M)\",\"quantity\":1,\"unit_price\":189.9,\"subtotal\":189.9}]}}"
+  },
+  {
+   "who": "funcionario",
+   "method": "GET",
+   "path": "/api/orders/5",
+   "status": 200,
+   "response": "{\"order\":{\"id\":5,\"user_id\":1,\"total\":379.8,\"status\":\"recebido\",\"created_at\":\"2026-11-11 02:06:59\",\"updated_at\":\"2026-11-11 02:06:59\",\"has_delivery_info\":true,\"delivery_recipient\":\"Carlos Oliveira\",\"delivery_phone\":\"11988887777\",\"delivery_zip_code\":\"01310-100\",\"delivery_street\":\"Avenida Paulista\",\"delivery_number\":\"1578\",\"delivery_complement\":\"Apto 101\",\"delivery_neighborhood\":\"Bela Vista\",\"delivery_city\":\"São Paulo\",\"delivery_state\":\"SP\",\"customer_name\":\"Cliente A Teste\",\"customer_email\":\"carlos@cliente.com\",\"items\":[{\"id\":5,\"order_id\":5,\"product_id\":1,\"product_name\":\"Camisa Linho Coleção D'Água\",\"description\":\"Camisa Linho Coleção D'Água (Tam: M)\",\"quantity\":2,\"unit_price\":189.9,\"subtotal\":379.8}]}}"
+  },
+  {
+   "who": "funcionario",
+   "method": "GET",
+   "path": "/api/orders/4",
+   "status": 200,
+   "response": "{\"order\":{\"id\":4,\"user_id\":1,\"total\":189.9,\"status\":\"recebido\",\"created_at\":\"2026-11-11 02:06:59\",\"updated_at\":\"2026-11-11 02:06:59\",\"has_delivery_info\":true,\"delivery_recipient\":\"Carlos Oliveira\",\"delivery_phone\":\"11988887777\",\"delivery_zip_code\":\"01310-100\",\"delivery_street\":\"Avenida Paulista\",\"delivery_number\":\"1578\",\"delivery_complement\":\"Apto 101\",\"delivery_neighborhood\":\"Bela Vista\",\"delivery_city\":\"São Paulo\",\"delivery_state\":\"SP\",\"customer_name\":\"Cliente A Teste\",\"customer_email\":\"carlos@cliente.com\",\"items\":[{\"id\":4,\"order_id\":4,\"product_id\":1,\"product_name\":\"Camisa Linho Coleção D'Água\",\"description\":\"Camisa Linho Coleção D'Água (Tam: M)\",\"quantity\":1,\"unit_price\":189.9,\"subtotal\":189.9}]}}"
+  },
+  {
+   "who": "funcionario",
+   "method": "GET",
+   "path": "/api/orders/3",
+   "status": 200,
+   "response": "{\"order\":{\"id\":3,\"user_id\":1,\"total\":189.9,\"status\":\"recebido\",\"created_at\":\"2026-11-11 02:06:59\",\"updated_at\":\"2026-11-11 02:06:59\",\"has_delivery_info\":true,\"delivery_recipient\":\"Carlos Oliveira\",\"delivery_phone\":\"11988887777\",\"delivery_zip_code\":\"01310-100\",\"delivery_street\":\"Avenida Paulista\",\"delivery_number\":\"1578\",\"delivery_complement\":\"Apto 101\",\"delivery_neighborhood\":\"Bela Vista\",\"delivery_city\":\"São Paulo\",\"delivery_state\":\"SP\",\"customer_name\":\"Cliente A Teste\",\"customer_email\":\"carlos@cliente.com\",\"items\":[{\"id\":3,\"order_id\":3,\"product_id\":1,\"product_name\":\"Camisa Linho Coleção D'Água\",\"description\":\"Camisa Linho Coleção D'Água (Tam: M)\",\"quantity\":1,\"unit_price\":189.9,\"subtotal\":189.9}]}}"
+  },
+  {
+   "who": "funcionario",
+   "method": "GET",
+   "path": "/api/orders/2",
+   "status": 200,
+   "response": "{\"order\":{\"id\":2,\"user_id\":1,\"total\":189.9,\"status\":\"recebido\",\"created_at\":\"2026-11-11 02:06:57\",\"updated_at\":\"2026-11-11 02:06:57\",\"has_delivery_info\":true,\"delivery_recipient\":\"Carlos Oliveira\",\"delivery_phone\":\"11988887777\",\"delivery_zip_code\":\"01310-100\",\"delivery_street\":\"Avenida Paulista\",\"delivery_number\":\"1578\",\"delivery_complement\":\"Apto 101\",\"delivery_neighborhood\":\"Bela Vista\",\"delivery_city\":\"São Paulo\",\"delivery_state\":\"SP\",\"customer_name\":\"Cliente A Teste\",\"customer_email\":\"carlos@cliente.com\",\"items\":[{\"id\":2,\"order_id\":2,\"product_id\":1,\"product_name\":\"Camisa Linho Coleção D'Água\",\"description\":\"Camisa Linho Coleção D'Água (Tam: M)\",\"quantity\":1,\"unit_price\":189.9,\"subtotal\":189.9}]}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/auth/profile",
+   "body": {
+    "name": "Cliente A Teste",
+    "cpf": "52998224725",
+    "phone": "11988887777"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Dados pessoais atualizados com sucesso.\",\"user\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"carlos@cliente.com\",\"role\":\"customer\",\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:59\",\"cpf\":\"52998224725\",\"phone\":\"11988887777\",\"address\":{\"recipient\":\"Cliente A Teste\",\"zip_code\":\"01001000\",\"street\":\"Rua Teste\",\"number\":\"10\",\"complement\":null,\"neighborhood\":\"Centro\",\"city\":\"São Paulo\",\"state\":\"SP\"}}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/auth/address",
+   "body": {
+    "recipient": "Cliente A Teste",
+    "zip_code": "01001000",
+    "street": "Rua Teste",
+    "number": "10",
+    "complement": "",
+    "neighborhood": "Centro",
+    "city": "São Paulo",
+    "state": "SP"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Endereço de entrega salvo com sucesso.\",\"address\":{\"recipient\":\"Cliente A Teste\",\"zip_code\":\"01001000\",\"street\":\"Rua Teste\",\"number\":\"10\",\"complement\":null,\"neighborhood\":\"Centro\",\"city\":\"São Paulo\",\"state\":\"SP\"}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/auth/profile",
+   "body": {
+    "name": "Cliente A Teste",
+    "cpf": "abc",
+    "phone": "11988887777"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Dados pessoais atualizados com sucesso.\",\"user\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"carlos@cliente.com\",\"role\":\"customer\",\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:59\",\"cpf\":\"abc\",\"phone\":\"11988887777\",\"address\":{\"recipient\":\"Cliente A Teste\",\"zip_code\":\"01001000\",\"street\":\"Rua Teste\",\"number\":\"10\",\"complement\":null,\"neighborhood\":\"Centro\",\"city\":\"São Paulo\",\"state\":\"SP\"}}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/auth/address",
+   "body": {
+    "recipient": "A",
+    "zip_code": "123",
+    "street": "Rua",
+    "number": "1",
+    "complement": "",
+    "neighborhood": "B",
+    "city": "C",
+    "state": "SP"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Endereço de entrega salvo com sucesso.\",\"address\":{\"recipient\":\"A\",\"zip_code\":\"123\",\"street\":\"Rua\",\"number\":\"1\",\"complement\":null,\"neighborhood\":\"B\",\"city\":\"C\",\"state\":\"SP\"}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/auth/address",
+   "body": {
+    "recipient": "A",
+    "zip_code": "01001000",
+    "street": "Rua",
+    "number": "1",
+    "complement": "",
+    "neighborhood": "B",
+    "city": "C",
+    "state": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Endereço de entrega salvo com sucesso.\",\"address\":{\"recipient\":\"A\",\"zip_code\":\"01001000\",\"street\":\"Rua\",\"number\":\"1\",\"complement\":null,\"neighborhood\":\"B\",\"city\":\"C\",\"state\":\"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\"}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/auth/profile",
+   "body": {
+    "name": "Cliente A Teste",
+    "cpf": "52998224725",
+    "phone": "11988887777"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Dados pessoais atualizados com sucesso.\",\"user\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"carlos@cliente.com\",\"role\":\"customer\",\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:59\",\"cpf\":\"52998224725\",\"phone\":\"11988887777\",\"address\":{\"recipient\":\"A\",\"zip_code\":\"01001000\",\"street\":\"Rua\",\"number\":\"1\",\"complement\":null,\"neighborhood\":\"B\",\"city\":\"C\",\"state\":\"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\"}}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/auth/address",
+   "body": {
+    "recipient": "Cliente A Teste",
+    "zip_code": "01001000",
+    "street": "Rua Teste",
+    "number": "10",
+    "complement": "",
+    "neighborhood": "Centro",
+    "city": "São Paulo",
+    "state": "SP"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Endereço de entrega salvo com sucesso.\",\"address\":{\"recipient\":\"Cliente A Teste\",\"zip_code\":\"01001000\",\"street\":\"Rua Teste\",\"number\":\"10\",\"complement\":null,\"neighborhood\":\"Centro\",\"city\":\"São Paulo\",\"state\":\"SP\"}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/auth/change-password",
+   "body": {
+    "currentPassword": "senha-errada-123",
+    "newPassword": "NovaSenhaTeste123"
+   },
+   "status": 400,
+   "response": "{\"message\":\"A senha atual informada está incorreta.\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/auth/change-password",
+   "body": {
+    "currentPassword": "",
+    "newPassword": "NovaSenhaTeste123"
+   },
+   "status": 400,
+   "response": "{\"message\":\"A senha atual é obrigatória.\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/auth/change-password",
+   "body": {
+    "newPassword": "NovaSenhaTeste123"
+   },
+   "status": 400,
+   "response": "{\"message\":\"Required\"}"
+  },
+  {
+   "who": "clienteA-confere",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "carlos@cliente.com",
+    "password": "vestebem123"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Login realizado com sucesso.\",\"user\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"carlos@cliente.com\",\"role\":\"customer\",\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:59\",\"cpf\":\"52998224725\",\"phone\":\"11988887777\",\"address\":{\"recipient\":\"Cliente A Teste\",\"zip_code\":\"01001000\",\"street\":\"Rua Teste\",\"number\":\"10\",\"complement\":null,\"neighborhood\":\"Centro\",\"city\":\"São Paulo\",\"state\":\"SP\"}}}"
+  },
+  {
+   "who": "clienteA-sessao1",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "carlos@cliente.com",
+    "password": "vestebem123"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Login realizado com sucesso.\",\"user\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"carlos@cliente.com\",\"role\":\"customer\",\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:59\",\"cpf\":\"52998224725\",\"phone\":\"11988887777\",\"address\":{\"recipient\":\"Cliente A Teste\",\"zip_code\":\"01001000\",\"street\":\"Rua Teste\",\"number\":\"10\",\"complement\":null,\"neighborhood\":\"Centro\",\"city\":\"São Paulo\",\"state\":\"SP\"}}}"
+  },
+  {
+   "who": "clienteA-sessao2",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "carlos@cliente.com",
+    "password": "vestebem123"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Login realizado com sucesso.\",\"user\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"carlos@cliente.com\",\"role\":\"customer\",\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:06:59\",\"cpf\":\"52998224725\",\"phone\":\"11988887777\",\"address\":{\"recipient\":\"Cliente A Teste\",\"zip_code\":\"01001000\",\"street\":\"Rua Teste\",\"number\":\"10\",\"complement\":null,\"neighborhood\":\"Centro\",\"city\":\"São Paulo\",\"state\":\"SP\"}}}"
+  },
+  {
+   "who": "clienteA-sessao1",
+   "method": "PUT",
+   "path": "/api/auth/change-password",
+   "body": {
+    "currentPassword": "vestebem123",
+    "newPassword": "NovaSenhaTeste123"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Senha alterada com sucesso.\"}"
+  },
+  {
+   "who": "clienteA-sessao2",
+   "method": "GET",
+   "path": "/api/auth/me",
+   "status": 200,
+   "response": "{\"user\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"carlos@cliente.com\",\"role\":\"customer\",\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:07:00\",\"cpf\":\"52998224725\",\"phone\":\"11988887777\",\"address\":{\"recipient\":\"Cliente A Teste\",\"zip_code\":\"01001000\",\"street\":\"Rua Teste\",\"number\":\"10\",\"complement\":null,\"neighborhood\":\"Centro\",\"city\":\"São Paulo\",\"state\":\"SP\"}}}"
+  },
+  {
+   "who": "login-senha-antiga",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "carlos@cliente.com",
+    "password": "vestebem123"
+   },
+   "status": 401,
+   "response": "{\"message\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "login-senha-nova",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "carlos@cliente.com",
+    "password": "NovaSenhaTeste123"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Login realizado com sucesso.\",\"user\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"carlos@cliente.com\",\"role\":\"customer\",\"created_at\":\"2026-11-11 02:06:56\",\"updated_at\":\"2026-11-11 02:07:00\",\"cpf\":\"52998224725\",\"phone\":\"11988887777\",\"address\":{\"recipient\":\"Cliente A Teste\",\"zip_code\":\"01001000\",\"street\":\"Rua Teste\",\"number\":\"10\",\"complement\":null,\"neighborhood\":\"Centro\",\"city\":\"São Paulo\",\"state\":\"SP\"}}}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "ana@cliente.com",
+    "password": "errada0"
+   },
+   "status": 401,
+   "response": "{\"message\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "ana@cliente.com",
+    "password": "errada1"
+   },
+   "status": 401,
+   "response": "{\"message\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "ana@cliente.com",
+    "password": "errada2"
+   },
+   "status": 401,
+   "response": "{\"message\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "ana@cliente.com",
+    "password": "errada3"
+   },
+   "status": 401,
+   "response": "{\"message\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "ana@cliente.com",
+    "password": "errada4"
+   },
+   "status": 401,
+   "response": "{\"message\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "ana@cliente.com",
+    "password": "errada5"
+   },
+   "status": 401,
+   "response": "{\"message\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "ana@cliente.com",
+    "password": "errada6"
+   },
+   "status": 401,
+   "response": "{\"message\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "ana@cliente.com",
+    "password": "errada7"
+   },
+   "status": 401,
+   "response": "{\"message\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "ana@cliente.com",
+    "password": "errada8"
+   },
+   "status": 401,
+   "response": "{\"message\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "ana@cliente.com",
+    "password": "errada9"
+   },
+   "status": 401,
+   "response": "{\"message\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "ana@cliente.com",
+    "password": "errada10"
+   },
+   "status": 401,
+   "response": "{\"message\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "ana@cliente.com",
+    "password": "errada11"
+   },
+   "status": 401,
+   "response": "{\"message\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "ana@cliente.com",
+    "password": "errada12"
+   },
+   "status": 401,
+   "response": "{\"message\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "ana@cliente.com",
+    "password": "errada13"
+   },
+   "status": 401,
+   "response": "{\"message\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "ana@cliente.com",
+    "password": "errada14"
+   },
+   "status": 401,
+   "response": "{\"message\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "ana@cliente.com",
+    "password": "errada15"
+   },
+   "status": 401,
+   "response": "{\"message\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "ana@cliente.com",
+    "password": "errada16"
+   },
+   "status": 401,
+   "response": "{\"message\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "ana@cliente.com",
+    "password": "errada17"
+   },
+   "status": 401,
+   "response": "{\"message\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "ana@cliente.com",
+    "password": "errada18"
+   },
+   "status": 401,
+   "response": "{\"message\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "ana@cliente.com",
+    "password": "errada19"
+   },
+   "status": 401,
+   "response": "{\"message\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "ana@cliente.com",
+    "password": "errada20"
+   },
+   "status": 401,
+   "response": "{\"message\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "ana@cliente.com",
+    "password": "errada21"
+   },
+   "status": 401,
+   "response": "{\"message\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "ana@cliente.com",
+    "password": "errada22"
+   },
+   "status": 401,
+   "response": "{\"message\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "ana@cliente.com",
+    "password": "errada23"
+   },
+   "status": 401,
+   "response": "{\"message\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "ana@cliente.com",
+    "password": "errada24"
+   },
+   "status": 401,
+   "response": "{\"message\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "ana@cliente.com",
+    "password": "errada25"
+   },
+   "status": 401,
+   "response": "{\"message\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "ana@cliente.com",
+    "password": "errada26"
+   },
+   "status": 401,
+   "response": "{\"message\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "ana@cliente.com",
+    "password": "errada27"
+   },
+   "status": 401,
+   "response": "{\"message\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "ana@cliente.com",
+    "password": "errada28"
+   },
+   "status": 401,
+   "response": "{\"message\":\"E-mail ou senha incorretos.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "ana@cliente.com",
+    "password": "errada29"
+   },
+   "status": 401,
+   "response": "{\"message\":\"E-mail ou senha incorretos.\"}"
+  }
+ ]
+}

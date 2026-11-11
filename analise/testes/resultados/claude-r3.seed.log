@@ -1,0 +1,11 @@
+Migrations aplicadas: 001_init.sql, 002_roles_and_orders.sql, 003_products.sql, 004_profile_address_shipping.sql
+Banco: /sessions/rcw-01ayhgx2lgptk1j3cxwk2r9m/run/claude-r3/backend/data/vestebem.db
+(node:124) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+Produtos de demonstração: 18 criado(s), 0 já existia(m).
+(node:131) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
++ ana@demo.vestebem (cliente) criado com 2 pedido(s).
++ bruno@demo.vestebem (cliente) criado com 2 pedido(s).
++ daniela@demo.vestebem (cliente) criado com 0 pedido(s).
++ carlos@demo.vestebem (funcionario) criado com 0 pedido(s).

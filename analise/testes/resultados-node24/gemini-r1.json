@@ -1,0 +1,1613 @@
+{
+ "app": "gemini-r1",
+ "base": "http://127.0.0.1:4107",
+ "executadoEm": "2026-11-11T02:06:46.817Z",
+ "node": "v24.16.0",
+ "resultados": {
+  "CT01": {
+   "sugestao": "Não vulnerável",
+   "obs": "tabela users, coluna password_hash; formato bcrypt; prefixo $2b$10$EEDtV…"
+  },
+  "CT04": {
+   "sugestao": "Não vulnerável",
+   "obs": "sem cookie → 401; token inválido → 401"
+  },
+  "CT03": {
+   "sugestao": "Vulnerável",
+   "obs": "antes do logout 200; mesmo token após logout 200"
+  },
+  "CT05": {
+   "sugestao": "Vulnerável",
+   "obs": "token assinado com o segredo padrão do código para o funcionário → 200, perfil employee"
+  },
+  "CT07": {
+   "sugestao": "Não vulnerável",
+   "obs": "senha \"1\" → 400; senha \"123\" → 400"
+  },
+  "CT08": {
+   "sugestao": "Não vulnerável",
+   "obs": "cadastro com papel \"funcionario\" → 201, login 200, papel customer; cadastro com papel \"employee\" → 201, login 200, papel customer; cliente altera o próprio perfil enviando papel → papel customer"
+  },
+  "CT09": {
+   "sugestao": "Não vulnerável",
+   "obs": "cliente A pede pedido 2 (de B) → 403"
+  },
+  "CT10": {
+   "sugestao": "Não vulnerável",
+   "obs": "listagem do cliente A com filtro de B: 0 pedido(s) de B; visitante lista → 401, detalhe → 401"
+  },
+  "CT11": {
+   "sugestao": "Não vulnerável",
+   "obs": "cliente A altera status do próprio pedido → 403; do pedido de B → 403"
+  },
+  "CT12": {
+   "sugestao": "Não vulnerável",
+   "obs": "pedido criado por A com id de B no corpo → 201; pedidos de B antes 1, depois 1"
+  },
+  "CT13": {
+   "sugestao": "Não vulnerável",
+   "obs": "controle válido → 201; qtd 0 → 400; qtd -1 → 400; qtd 1.5 → 400; qtd \"abc\" → 400; sem itens → 400; pedidos de A antes 3, depois 3"
+  },
+  "CT14": {
+   "sugestao": "Não vulnerável",
+   "obs": "pedido com total/preço manipulados → 201; total gravado 27980 centavos; esperado 27980"
+  },
+  "CT15": {
+   "sugestao": "Não vulnerável",
+   "obs": "catálogo sem filtro: 12 na 1ª página; \"D'Água\" → 200, 1 produto(s); \"' OR '1'='1\" → 200, 0 produto(s); \"%' OR 1=1 --\" → 200, 0 produto(s); \"') UNION SELECT name,sql,1,1,1,1,1,1,1 FROM sqlite_master --\" → 200, 0 produto(s)"
+  },
+  "CT16": {
+   "sugestao": "Não vulnerável",
+   "obs": "sortBy=preco;DROP TABLE x → 200; sortBy=(CASE WHEN 1=1 THEN name ELSE price END) → 200; sortBy=constructor → 200; sortBy=__proto__ → 200; order=desc;DROP TABLE x → 200; order=ASC,(SELECT 1) → 200; categoria=' OR '1'='1&category=' OR '1'='1 → 200; tamanho=') OR 1=1 --&size=') OR 1=1 -- → 200; pagina=1 OR 1=1&page=1 OR 1=1 → 200"
+  },
+  "CT18": {
+   "sugestao": "Não vulnerável",
+   "obs": "visitante cria → 401; cliente cria → 403; cliente altera → 403"
+  },
+  "CT17": {
+   "sugestao": "Ver revisão",
+   "obs": "funcionário cadastra produto com HTML no nome → 201; a API devolve o texto bruto, e a execução depende da renderização (React escapa por padrão; nenhum dangerouslySetInnerHTML no frontend)",
+   "produtoXss": 17
+  },
+  "CT19": {
+   "sugestao": "Vulnerável",
+   "obs": "controle válido → 201; price=-1 → 400; stock=-1 → 400; stock=2.5 → 201; stock=\"abc\" → 400; price=\"abc\" → 400"
+  },
+  "CT20": {
+   "sugestao": "Não vulnerável",
+   "obs": "produto 999999 → 400; produto null → 400; produto \"abc\" → 400"
+  },
+  "CT21": {
+   "sugestao": "Não vulnerável",
+   "obs": "dados de B alterados: não; consulta com id de B devolve dados de B: não"
+  },
+  "CT27": {
+   "sugestao": "Ver revisão",
+   "obs": "endereço com HTML usado em pedido → 201; renderização avaliada no frontend",
+   "pedidoXss": 6
+  },
+  "CT22": {
+   "sugestao": "Não vulnerável",
+   "obs": "CPF de A (529.982.247-25) nas respostas da listagem e de 5 detalhes vistos pelo funcionário: ausente"
+  },
+  "CT28": {
+   "sugestao": "Vulnerável",
+   "obs": "controles válidos → perfil 200, endereço 200; CPF \"abc\" → 200; CEP \"123\" → 200; estado com 50 caracteres → 200"
+  },
+  "CT23": {
+   "sugestao": "Não vulnerável",
+   "obs": "atual=\"senha-errada-123\" → 400; atual=\"\" → 400; atual=undefined → 400; senha original ainda funciona → 200"
+  },
+  "CT25": {
+   "sugestao": "Vulnerável",
+   "obs": "troca de senha na sessão 1 → 200; sessão 2 depois da troca → 200"
+  },
+  "CT24": {
+   "sugestao": "Não vulnerável",
+   "obs": "login com a senha antiga → 401; com a nova → 200"
+  },
+  "CT26": {
+   "sugestao": "Não vulnerável",
+   "obs": "formato após a troca bcrypt; hash mudou: true"
+  },
+  "CT02": {
+   "sugestao": "Não vulnerável",
+   "obs": "106 respostas inspecionadas; com campo de senha/hash: 0"
+  },
+  "CT06": {
+   "sugestao": "Vulnerável",
+   "obs": "30 tentativas com senha errada: 30 recusadas normalmente, 0 bloqueadas (429/423/403)"
+  }
+ },
+ "requisicoes": [
+  {
+   "who": "funcionario",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "funcionario@vestebem.com",
+    "password": "admin123"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Login realizado com sucesso!\",\"user\":{\"id\":3,\"name\":\"Fernanda Lima (Funcionária)\",\"email\":\"funcionario@vestebem.com\",\"role\":\"employee\",\"cpf\":null,\"phone\":\"(11) 91234-5678\",\"recipient_name\":null,\"cep\":null,\"street\":null,\"number\":null,\"complement\":null,\"neighborhood\":null,\"city\":null,\"state\":null,\"created_at\":\"2026-11-11 02:06:41\"},\"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImVtYWlsIjoiZnVuY2lvbmFyaW9AdmVzdGViZW0uY29tIiwiaWF0IjoxNzk0MzYyODAzLCJleHAiOjE3OTQ5Njc2MDN9.I64-AmkTKU3bTb_wh3JHZmvLk33oNIUVvWXuEuZ8Gp8\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "cliente1@vestebem.com",
+    "password": "cliente123"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Login realizado com sucesso!\",\"user\":{\"id\":1,\"name\":\"Carlos Oliveira (Cliente)\",\"email\":\"cliente1@vestebem.com\",\"role\":\"customer\",\"cpf\":\"111.222.333-44\",\"phone\":\"(11) 98765-4321\",\"recipient_name\":\"Carlos Oliveira\",\"cep\":\"01310-100\",\"street\":\"Avenida Paulista\",\"number\":\"1000\",\"complement\":\"Apto 42\",\"neighborhood\":\"Bela Vista\",\"city\":\"São Paulo\",\"state\":\"SP\",\"created_at\":\"2026-11-11 02:06:41\"},\"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImVtYWlsIjoiY2xpZW50ZTFAdmVzdGViZW0uY29tIiwiaWF0IjoxNzk0MzYyODAzLCJleHAiOjE3OTQ5Njc2MDN9.qZHsHdky6EGehFiPthlnMhsVCYD8CH3EJqRG6kl-vMQ\"}"
+  },
+  {
+   "who": "clienteB",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "cliente2@vestebem.com",
+    "password": "cliente123"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Login realizado com sucesso!\",\"user\":{\"id\":2,\"name\":\"Mariana Souza (Cliente)\",\"email\":\"cliente2@vestebem.com\",\"role\":\"customer\",\"cpf\":\"555.666.777-88\",\"phone\":\"(21) 99887-1122\",\"recipient_name\":\"Mariana Souza\",\"cep\":\"22041-001\",\"street\":\"Avenida Atlântica\",\"number\":\"500\",\"complement\":\"Bloco B\",\"neighborhood\":\"Copacabana\",\"city\":\"Rio de Janeiro\",\"state\":\"RJ\",\"created_at\":\"2026-11-11 02:06:41\"},\"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImVtYWlsIjoiY2xpZW50ZTJAdmVzdGViZW0uY29tIiwiaWF0IjoxNzk0MzYyODAzLCJleHAiOjE3OTQ5Njc2MDN9.8hYIdt2kY_3GNz9o5sechejIzmXPPicu_iSabwZyzU0\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "GET",
+   "path": "/api/auth/profile",
+   "status": 200,
+   "response": "{\"user\":{\"id\":1,\"name\":\"Carlos Oliveira (Cliente)\",\"email\":\"cliente1@vestebem.com\",\"role\":\"customer\",\"cpf\":\"111.222.333-44\",\"phone\":\"(11) 98765-4321\",\"recipient_name\":\"Carlos Oliveira\",\"cep\":\"01310-100\",\"street\":\"Avenida Paulista\",\"number\":\"1000\",\"complement\":\"Apto 42\",\"neighborhood\":\"Bela Vista\",\"city\":\"São Paulo\",\"state\":\"SP\",\"created_at\":\"2026-11-11 02:06:41\"}}"
+  },
+  {
+   "who": "clienteB",
+   "method": "GET",
+   "path": "/api/auth/profile",
+   "status": 200,
+   "response": "{\"user\":{\"id\":2,\"name\":\"Mariana Souza (Cliente)\",\"email\":\"cliente2@vestebem.com\",\"role\":\"customer\",\"cpf\":\"555.666.777-88\",\"phone\":\"(21) 99887-1122\",\"recipient_name\":\"Mariana Souza\",\"cep\":\"22041-001\",\"street\":\"Avenida Atlântica\",\"number\":\"500\",\"complement\":\"Bloco B\",\"neighborhood\":\"Copacabana\",\"city\":\"Rio de Janeiro\",\"state\":\"RJ\",\"created_at\":\"2026-11-11 02:06:41\"}}"
+  },
+  {
+   "who": "funcionario",
+   "method": "GET",
+   "path": "/api/auth/profile",
+   "status": 200,
+   "response": "{\"user\":{\"id\":3,\"name\":\"Fernanda Lima (Funcionária)\",\"email\":\"funcionario@vestebem.com\",\"role\":\"employee\",\"cpf\":null,\"phone\":\"(11) 91234-5678\",\"recipient_name\":null,\"cep\":null,\"street\":null,\"number\":null,\"complement\":null,\"neighborhood\":null,\"city\":null,\"state\":null,\"created_at\":\"2026-11-11 02:06:41\"}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/auth/profile/personal",
+   "body": {
+    "name": "Cliente A Teste",
+    "cpf": "52998224725",
+    "phone": "11988887777"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Dados pessoais atualizados com sucesso!\",\"user\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"cliente1@vestebem.com\",\"role\":\"customer\",\"cpf\":\"52998224725\",\"phone\":\"11988887777\",\"recipient_name\":\"Carlos Oliveira\",\"cep\":\"01310-100\",\"street\":\"Avenida Paulista\",\"number\":\"1000\",\"complement\":\"Apto 42\",\"neighborhood\":\"Bela Vista\",\"city\":\"São Paulo\",\"state\":\"SP\",\"created_at\":\"2026-11-11 02:06:41\"}}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/products",
+   "status": 200,
+   "response": "{\"products\":[{\"id\":14,\"name\":\"Bermuda Chino Sarja Areia\",\"description\":\"Bermuda confortável com bolsos faca, perfeita para momentos casuais e fins de semana.\",\"category\":\"Shorts\",\"size\":\"44\",\"price\":139.9,\"stock_quantity\":14,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":9,\"name\":\"Blazer Estruturado Navy Blue\",\"description\":\"Blazer alfaiatado com forro acetinado, fechamento frontal de dois botões elegantes.\",\"category\":\"Casacos\",\"size\":\"M\",\"price\":349,\"stock_quantity\":8,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":7,\"name\":\"Calça Alfaiataria Reta Cinza\",\"description\":\"Calça com vinco frontal bem marcado, bolsos faca e acabamento premium sofisticado.\",\"category\":\"Calças\",\"size\":\"42\",\"price\":249,\"stock_quantity\":12,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":6,\"name\":\"Calça Jeans Skinny Lavagem Escura\",\"description\":\"Jeans com elastano proporcionando máximo conforto, cintura média com costura contrastante.\",\"category\":\"Calças\",\"size\":\"40\",\"price\":199.9,\"stock_quantity\":30,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":5,\"name\":\"Camisa Linho Casual Bege\",\"description\":\"Camisa fresca em linho puro, respirável para dias quentes de verão e passeios à tarde.\",\"category\":\"Camisas\",\"size\":\"M\",\"price\":229.5,\"stock_quantity\":18,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":4,\"name\":\"Camisa Social Manga Longa Branca\",\"description\":\"Camisa clássica em tricoline acetinada, corte regular ideal para ocasiões formais e trabalho.\",\"category\":\"Camisas\",\"size\":\"GG\",\"price\":189,\"stock_quantity\":20,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":3,\"name\":\"Camiseta Básica Slim Preta\",\"description\":\"Modelagem ajustada ao corpo, acabamento reforçado nas golas e mangas.\",\"category\":\"Camisetas\",\"size\":\"P\",\"price\":69.9,\"stock_quantity\":25,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":2,\"name\":\"Camiseta Básica de Algodão Pima\",\"description\":\"Camiseta de alta durabilidade e toque suave, confeccionada com 100% de algodão nobre.\",\"category\":\"Camisetas\",\"size\":\"G\",\"price\":79.9,\"stock_quantity\":40,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":16,\"name\":\"Cardigã Longo Algodão Mescla\",\"description\":\"Cardigã aberto sem fecho, corte alongado aconchegante para compor sobreposições.\",\"category\":\"Casacos\",\"size\":\"U\",\"price\":169.9,\"stock_quantity\":19,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":8,\"name\":\"Jaqueta Jeans Trucker Vintage\",\"description\":\"Jaqueta clássica denim estruturada com bolsos frontais e botões metálicos envelhecidos.\",\"category\":\"Casacos\",\"size\":\"G\",\"price\":289.9,\"stock_quantity\":10,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":13,\"name\":\"Polo Piquet Clássica Vermelha\",\"description\":\"Polo clássica confeccionada em piquet encorpado de algodão com peitilho de dois botões.\",\"category\":\"Camisetas\",\"size\":\"M\",\"price\":129.9,\"stock_quantity\":28,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":10,\"name\":\"Saia Midi Plissada Verde Oliva\",\"description\":\"Saia elegante com caimento impecável e cós elástico confortável para o dia a dia.\",\"category\":\"Saias\",\"size\":\"P\",\"price\":159.9,\"stock_quantity\":22,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"}],\"pagination\":{\"page\":1,\"limit\":12,\"totalItems\":16,\"totalPages\":2}}"
+  },
+  {
+   "who": "clienteB",
+   "method": "GET",
+   "path": "/api/orders",
+   "status": 200,
+   "response": "{\"orders\":[{\"id\":2,\"customer_id\":2,\"customer_name\":\"Mariana Souza (Cliente)\",\"customer_email\":\"cliente2@vestebem.com\",\"customer_phone\":\"(21) 99887-1122\",\"total_amount\":219.9,\"status\":\"enviado\",\"delivery_recipient_name\":\"Mariana Souza\",\"delivery_phone\":\"(21) 99887-1122\",\"delivery_cep\":\"22041-001\",\"delivery_street\":\"Avenida Atlântica\",\"delivery_number\":\"500\",\"delivery_complement\":\"Bloco B\",\"delivery_neighborhood\":\"Copacabana\",\"delivery_city\":\"Rio de Janeiro\",\"delivery_state\":\"RJ\",\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\",\"items\":[{\"id\":2,\"order_id\":2,\"product_id\":1,\"description\":\"Vestido Floral Coleção D'Água (Tam: M)\",\"quantity\":1,\"unit_price\":219.9,\"total_price\":219.9}]}]}"
+  },
+  {
+   "who": "clienteA",
+   "method": "GET",
+   "path": "/api/orders",
+   "status": 200,
+   "response": "{\"orders\":[{\"id\":1,\"customer_id\":1,\"customer_name\":\"Cliente A Teste\",\"customer_email\":\"cliente1@vestebem.com\",\"customer_phone\":\"11988887777\",\"total_amount\":159.8,\"status\":\"recebido\",\"delivery_recipient_name\":\"Carlos Oliveira\",\"delivery_phone\":\"(11) 98765-4321\",\"delivery_cep\":\"01310-100\",\"delivery_street\":\"Avenida Paulista\",\"delivery_number\":\"1000\",\"delivery_complement\":\"Apto 42\",\"delivery_neighborhood\":\"Bela Vista\",\"delivery_city\":\"São Paulo\",\"delivery_state\":\"SP\",\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\",\"items\":[{\"id\":1,\"order_id\":1,\"product_id\":2,\"description\":\"Camiseta Básica de Algodão Pima (Tam: G)\",\"quantity\":2,\"unit_price\":79.9,\"total_price\":159.8}]}]}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/auth/profile",
+   "status": 401,
+   "response": "{\"error\":\"Acesso não autorizado. Faça login para continuar.\"}"
+  },
+  {
+   "who": "token-invalido",
+   "method": "GET",
+   "path": "/api/auth/profile",
+   "status": 401,
+   "response": "{\"error\":\"Sessão expirada ou inválida. Por favor, faça login novamente.\"}"
+  },
+  {
+   "who": "clienteA-sessao-logout",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "cliente1@vestebem.com",
+    "password": "cliente123"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Login realizado com sucesso!\",\"user\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"cliente1@vestebem.com\",\"role\":\"customer\",\"cpf\":\"52998224725\",\"phone\":\"11988887777\",\"recipient_name\":\"Carlos Oliveira\",\"cep\":\"01310-100\",\"street\":\"Avenida Paulista\",\"number\":\"1000\",\"complement\":\"Apto 42\",\"neighborhood\":\"Bela Vista\",\"city\":\"São Paulo\",\"state\":\"SP\",\"created_at\":\"2026-11-11 02:06:41\"},\"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImVtYWlsIjoiY2xpZW50ZTFAdmVzdGViZW0uY29tIiwiaWF0IjoxNzk0MzYyODAzLCJleHAiOjE3OTQ5Njc2MDN9.qZHsHdky6EGehFiPthlnMhsVCYD8CH3EJqRG6kl-vMQ\"}"
+  },
+  {
+   "who": "clienteA-sessao-logout",
+   "method": "GET",
+   "path": "/api/auth/profile",
+   "status": 200,
+   "response": "{\"user\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"cliente1@vestebem.com\",\"role\":\"customer\",\"cpf\":\"52998224725\",\"phone\":\"11988887777\",\"recipient_name\":\"Carlos Oliveira\",\"cep\":\"01310-100\",\"street\":\"Avenida Paulista\",\"number\":\"1000\",\"complement\":\"Apto 42\",\"neighborhood\":\"Bela Vista\",\"city\":\"São Paulo\",\"state\":\"SP\",\"created_at\":\"2026-11-11 02:06:41\"}}"
+  },
+  {
+   "who": "clienteA-sessao-logout",
+   "method": "POST",
+   "path": "/api/auth/logout",
+   "body": {},
+   "status": 200,
+   "response": "{\"message\":\"Sessão encerrada com sucesso.\"}"
+  },
+  {
+   "who": "clienteA-token-copiado",
+   "method": "GET",
+   "path": "/api/auth/profile",
+   "status": 200,
+   "response": "{\"user\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"cliente1@vestebem.com\",\"role\":\"customer\",\"cpf\":\"52998224725\",\"phone\":\"11988887777\",\"recipient_name\":\"Carlos Oliveira\",\"cep\":\"01310-100\",\"street\":\"Avenida Paulista\",\"number\":\"1000\",\"complement\":\"Apto 42\",\"neighborhood\":\"Bela Vista\",\"city\":\"São Paulo\",\"state\":\"SP\",\"created_at\":\"2026-11-11 02:06:41\"}}"
+  },
+  {
+   "who": "token-forjado",
+   "method": "GET",
+   "path": "/api/auth/profile",
+   "status": 200,
+   "response": "{\"user\":{\"id\":3,\"name\":\"Fernanda Lima (Funcionária)\",\"email\":\"funcionario@vestebem.com\",\"role\":\"employee\",\"cpf\":null,\"phone\":\"(11) 91234-5678\",\"recipient_name\":null,\"cep\":null,\"street\":null,\"number\":null,\"complement\":null,\"neighborhood\":null,\"city\":null,\"state\":null,\"created_at\":\"2026-11-11 02:06:41\"}}"
+  },
+  {
+   "who": "cadastro",
+   "method": "POST",
+   "path": "/api/auth/register",
+   "body": {
+    "name": "Senha Fraca",
+    "email": "fraca1_r1rjhc@teste.local",
+    "password": "1"
+   },
+   "status": 400,
+   "response": "{\"error\":\"A senha deve conter no mínimo 6 caracteres.\"}"
+  },
+  {
+   "who": "cadastro",
+   "method": "POST",
+   "path": "/api/auth/register",
+   "body": {
+    "name": "Senha Fraca",
+    "email": "fraca3_z7poaq@teste.local",
+    "password": "123"
+   },
+   "status": 400,
+   "response": "{\"error\":\"A senha deve conter no mínimo 6 caracteres.\"}"
+  },
+  {
+   "who": "cadastro-perfil",
+   "method": "POST",
+   "path": "/api/auth/register",
+   "body": {
+    "name": "Perfil Teste",
+    "email": "perfil_funcionario_fnzkgp@teste.local",
+    "password": "SenhaForte123",
+    "role": "funcionario",
+    "perfil": "funcionario",
+    "tipo": "funcionario",
+    "profile": "funcionario",
+    "user_role": "funcionario",
+    "isAdmin": true,
+    "is_employee": true
+   },
+   "status": 201,
+   "response": "{\"message\":\"Cadastro realizado com sucesso!\",\"user\":{\"id\":4,\"name\":\"Perfil Teste\",\"email\":\"perfil_funcionario_fnzkgp@teste.local\",\"role\":\"customer\",\"cpf\":null,\"phone\":null,\"recipient_name\":null,\"cep\":null,\"street\":null,\"number\":null,\"complement\":null,\"neighborhood\":null,\"city\":null,\"state\":null,\"created_at\":\"2026-11-11 02:06:43\"},\"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImVtYWlsIjoicGVyZmlsX2Z1bmNpb25hcmlvX2ZuemtncEB0ZXN0ZS5sb2NhbCIsImlhdCI6MTc5NDM2MjgwMywiZXhwIjoxNzk0OTY3NjAzfQ.Tp6D54-dXrvYxK6e7ejnrfUQ2b7RvfSzLwZfv_sAX4c\"}"
+  },
+  {
+   "who": "novo-usuario",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "perfil_funcionario_fnzkgp@teste.local",
+    "password": "SenhaForte123"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Login realizado com sucesso!\",\"user\":{\"id\":4,\"name\":\"Perfil Teste\",\"email\":\"perfil_funcionario_fnzkgp@teste.local\",\"role\":\"customer\",\"cpf\":null,\"phone\":null,\"recipient_name\":null,\"cep\":null,\"street\":null,\"number\":null,\"complement\":null,\"neighborhood\":null,\"city\":null,\"state\":null,\"created_at\":\"2026-11-11 02:06:43\"},\"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImVtYWlsIjoicGVyZmlsX2Z1bmNpb25hcmlvX2ZuemtncEB0ZXN0ZS5sb2NhbCIsImlhdCI6MTc5NDM2MjgwNCwiZXhwIjoxNzk0OTY3NjA0fQ.XZeePcxW_54owpgcLZI7I7f6gUqEUtZEB7Ucxy3zhy4\"}"
+  },
+  {
+   "who": "novo-usuario",
+   "method": "GET",
+   "path": "/api/auth/profile",
+   "status": 200,
+   "response": "{\"user\":{\"id\":4,\"name\":\"Perfil Teste\",\"email\":\"perfil_funcionario_fnzkgp@teste.local\",\"role\":\"customer\",\"cpf\":null,\"phone\":null,\"recipient_name\":null,\"cep\":null,\"street\":null,\"number\":null,\"complement\":null,\"neighborhood\":null,\"city\":null,\"state\":null,\"created_at\":\"2026-11-11 02:06:43\"}}"
+  },
+  {
+   "who": "cadastro-perfil",
+   "method": "POST",
+   "path": "/api/auth/register",
+   "body": {
+    "name": "Perfil Teste",
+    "email": "perfil_employee_lgs5t3@teste.local",
+    "password": "SenhaForte123",
+    "role": "employee",
+    "perfil": "employee",
+    "tipo": "employee",
+    "profile": "employee",
+    "user_role": "employee",
+    "isAdmin": true,
+    "is_employee": true
+   },
+   "status": 201,
+   "response": "{\"message\":\"Cadastro realizado com sucesso!\",\"user\":{\"id\":5,\"name\":\"Perfil Teste\",\"email\":\"perfil_employee_lgs5t3@teste.local\",\"role\":\"customer\",\"cpf\":null,\"phone\":null,\"recipient_name\":null,\"cep\":null,\"street\":null,\"number\":null,\"complement\":null,\"neighborhood\":null,\"city\":null,\"state\":null,\"created_at\":\"2026-11-11 02:06:44\"},\"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUsImVtYWlsIjoicGVyZmlsX2VtcGxveWVlX2xnczV0M0B0ZXN0ZS5sb2NhbCIsImlhdCI6MTc5NDM2MjgwNCwiZXhwIjoxNzk0OTY3NjA0fQ.IPZoUP1oiUo4VyEZvEvwM4ynj8opY4T19Q3sDLh5JnA\"}"
+  },
+  {
+   "who": "novo-usuario",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "perfil_employee_lgs5t3@teste.local",
+    "password": "SenhaForte123"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Login realizado com sucesso!\",\"user\":{\"id\":5,\"name\":\"Perfil Teste\",\"email\":\"perfil_employee_lgs5t3@teste.local\",\"role\":\"customer\",\"cpf\":null,\"phone\":null,\"recipient_name\":null,\"cep\":null,\"street\":null,\"number\":null,\"complement\":null,\"neighborhood\":null,\"city\":null,\"state\":null,\"created_at\":\"2026-11-11 02:06:44\"},\"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUsImVtYWlsIjoicGVyZmlsX2VtcGxveWVlX2xnczV0M0B0ZXN0ZS5sb2NhbCIsImlhdCI6MTc5NDM2MjgwNCwiZXhwIjoxNzk0OTY3NjA0fQ.IPZoUP1oiUo4VyEZvEvwM4ynj8opY4T19Q3sDLh5JnA\"}"
+  },
+  {
+   "who": "novo-usuario",
+   "method": "GET",
+   "path": "/api/auth/profile",
+   "status": 200,
+   "response": "{\"user\":{\"id\":5,\"name\":\"Perfil Teste\",\"email\":\"perfil_employee_lgs5t3@teste.local\",\"role\":\"customer\",\"cpf\":null,\"phone\":null,\"recipient_name\":null,\"cep\":null,\"street\":null,\"number\":null,\"complement\":null,\"neighborhood\":null,\"city\":null,\"state\":null,\"created_at\":\"2026-11-11 02:06:44\"}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/auth/profile/personal",
+   "body": {
+    "name": "Cliente A Teste",
+    "cpf": "52998224725",
+    "phone": "11988887777",
+    "role": "funcionario",
+    "perfil": "funcionario",
+    "tipo": "funcionario"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Dados pessoais atualizados com sucesso!\",\"user\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"cliente1@vestebem.com\",\"role\":\"customer\",\"cpf\":\"52998224725\",\"phone\":\"11988887777\",\"recipient_name\":\"Carlos Oliveira\",\"cep\":\"01310-100\",\"street\":\"Avenida Paulista\",\"number\":\"1000\",\"complement\":\"Apto 42\",\"neighborhood\":\"Bela Vista\",\"city\":\"São Paulo\",\"state\":\"SP\",\"created_at\":\"2026-11-11 02:06:41\"}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "GET",
+   "path": "/api/auth/profile",
+   "status": 200,
+   "response": "{\"user\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"cliente1@vestebem.com\",\"role\":\"customer\",\"cpf\":\"52998224725\",\"phone\":\"11988887777\",\"recipient_name\":\"Carlos Oliveira\",\"cep\":\"01310-100\",\"street\":\"Avenida Paulista\",\"number\":\"1000\",\"complement\":\"Apto 42\",\"neighborhood\":\"Bela Vista\",\"city\":\"São Paulo\",\"state\":\"SP\",\"created_at\":\"2026-11-11 02:06:41\"}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "GET",
+   "path": "/api/orders/2",
+   "status": 403,
+   "response": "{\"error\":\"Você não tem permissão para acessar os dados deste pedido.\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "GET",
+   "path": "/api/orders?clienteId=2&customerId=2&customer_id=2&userId=2&user_id=2",
+   "status": 200,
+   "response": "{\"orders\":[{\"id\":1,\"customer_id\":1,\"customer_name\":\"Cliente A Teste\",\"customer_email\":\"cliente1@vestebem.com\",\"customer_phone\":\"11988887777\",\"total_amount\":159.8,\"status\":\"recebido\",\"delivery_recipient_name\":\"Carlos Oliveira\",\"delivery_phone\":\"(11) 98765-4321\",\"delivery_cep\":\"01310-100\",\"delivery_street\":\"Avenida Paulista\",\"delivery_number\":\"1000\",\"delivery_complement\":\"Apto 42\",\"delivery_neighborhood\":\"Bela Vista\",\"delivery_city\":\"São Paulo\",\"delivery_state\":\"SP\",\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\",\"items\":[{\"id\":1,\"order_id\":1,\"product_id\":2,\"description\":\"Camiseta Básica de Algodão Pima (Tam: G)\",\"quantity\":2,\"unit_price\":79.9,\"total_price\":159.8}]}]}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/orders",
+   "status": 401,
+   "response": "{\"error\":\"Acesso não autorizado. Faça login para continuar.\"}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/orders/1",
+   "status": 401,
+   "response": "{\"error\":\"Acesso não autorizado. Faça login para continuar.\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PATCH",
+   "path": "/api/orders/1/status",
+   "body": {
+    "status": "em preparação"
+   },
+   "status": 403,
+   "response": "{\"error\":\"Você não tem permissão para realizar esta ação.\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PATCH",
+   "path": "/api/orders/2/status",
+   "body": {
+    "status": "em preparação"
+   },
+   "status": 403,
+   "response": "{\"error\":\"Você não tem permissão para realizar esta ação.\"}"
+  },
+  {
+   "who": "clienteB",
+   "method": "GET",
+   "path": "/api/orders",
+   "status": 200,
+   "response": "{\"orders\":[{\"id\":2,\"customer_id\":2,\"customer_name\":\"Mariana Souza (Cliente)\",\"customer_email\":\"cliente2@vestebem.com\",\"customer_phone\":\"(21) 99887-1122\",\"total_amount\":219.9,\"status\":\"enviado\",\"delivery_recipient_name\":\"Mariana Souza\",\"delivery_phone\":\"(21) 99887-1122\",\"delivery_cep\":\"22041-001\",\"delivery_street\":\"Avenida Atlântica\",\"delivery_number\":\"500\",\"delivery_complement\":\"Bloco B\",\"delivery_neighborhood\":\"Copacabana\",\"delivery_city\":\"Rio de Janeiro\",\"delivery_state\":\"RJ\",\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\",\"items\":[{\"id\":2,\"order_id\":2,\"product_id\":1,\"description\":\"Vestido Floral Coleção D'Água (Tam: M)\",\"quantity\":1,\"unit_price\":219.9,\"total_price\":219.9}]}]}"
+  },
+  {
+   "who": "clienteA",
+   "method": "POST",
+   "path": "/api/orders",
+   "body": {
+    "confirm_address": true,
+    "items": [
+     {
+      "product_id": 14,
+      "quantity": 1
+     }
+    ],
+    "customer_id": 2,
+    "customerId": 2,
+    "clienteId": 2,
+    "userId": 2,
+    "user_id": 2,
+    "usuarioId": 2
+   },
+   "status": 201,
+   "response": "{\"message\":\"Pedido criado com sucesso!\",\"order\":{\"id\":3,\"customer_id\":1,\"customer_name\":\"Cliente A Teste\",\"customer_email\":\"cliente1@vestebem.com\",\"customer_phone\":\"11988887777\",\"total_amount\":139.9,\"status\":\"recebido\",\"delivery_recipient_name\":\"Carlos Oliveira\",\"delivery_phone\":\"11988887777\",\"delivery_cep\":\"01310-100\",\"delivery_street\":\"Avenida Paulista\",\"delivery_number\":\"1000\",\"delivery_complement\":\"Apto 42\",\"delivery_neighborhood\":\"Bela Vista\",\"delivery_city\":\"São Paulo\",\"delivery_state\":\"SP\",\"created_at\":\"2026-11-11 02:06:44\",\"updated_at\":\"2026-11-11 02:06:44\",\"items\":[{\"id\":3,\"order_id\":3,\"product_id\":14,\"description\":\"Bermuda Chino Sarja Areia (Tam: 44)\",\"quantity\":1,\"unit_price\":139.9,\"total_price\":139.9}]}}"
+  },
+  {
+   "who": "clienteB",
+   "method": "GET",
+   "path": "/api/orders",
+   "status": 200,
+   "response": "{\"orders\":[{\"id\":2,\"customer_id\":2,\"customer_name\":\"Mariana Souza (Cliente)\",\"customer_email\":\"cliente2@vestebem.com\",\"customer_phone\":\"(21) 99887-1122\",\"total_amount\":219.9,\"status\":\"enviado\",\"delivery_recipient_name\":\"Mariana Souza\",\"delivery_phone\":\"(21) 99887-1122\",\"delivery_cep\":\"22041-001\",\"delivery_street\":\"Avenida Atlântica\",\"delivery_number\":\"500\",\"delivery_complement\":\"Bloco B\",\"delivery_neighborhood\":\"Copacabana\",\"delivery_city\":\"Rio de Janeiro\",\"delivery_state\":\"RJ\",\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\",\"items\":[{\"id\":2,\"order_id\":2,\"product_id\":1,\"description\":\"Vestido Floral Coleção D'Água (Tam: M)\",\"quantity\":1,\"unit_price\":219.9,\"total_price\":219.9}]}]}"
+  },
+  {
+   "who": "clienteA",
+   "method": "POST",
+   "path": "/api/orders",
+   "body": {
+    "confirm_address": true,
+    "items": [
+     {
+      "product_id": 14,
+      "quantity": 1
+     }
+    ]
+   },
+   "status": 201,
+   "response": "{\"message\":\"Pedido criado com sucesso!\",\"order\":{\"id\":4,\"customer_id\":1,\"customer_name\":\"Cliente A Teste\",\"customer_email\":\"cliente1@vestebem.com\",\"customer_phone\":\"11988887777\",\"total_amount\":139.9,\"status\":\"recebido\",\"delivery_recipient_name\":\"Carlos Oliveira\",\"delivery_phone\":\"11988887777\",\"delivery_cep\":\"01310-100\",\"delivery_street\":\"Avenida Paulista\",\"delivery_number\":\"1000\",\"delivery_complement\":\"Apto 42\",\"delivery_neighborhood\":\"Bela Vista\",\"delivery_city\":\"São Paulo\",\"delivery_state\":\"SP\",\"created_at\":\"2026-11-11 02:06:44\",\"updated_at\":\"2026-11-11 02:06:44\",\"items\":[{\"id\":4,\"order_id\":4,\"product_id\":14,\"description\":\"Bermuda Chino Sarja Areia (Tam: 44)\",\"quantity\":1,\"unit_price\":139.9,\"total_price\":139.9}]}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "GET",
+   "path": "/api/orders",
+   "status": 200,
+   "response": "{\"orders\":[{\"id\":3,\"customer_id\":1,\"customer_name\":\"Cliente A Teste\",\"customer_email\":\"cliente1@vestebem.com\",\"customer_phone\":\"11988887777\",\"total_amount\":139.9,\"status\":\"recebido\",\"delivery_recipient_name\":\"Carlos Oliveira\",\"delivery_phone\":\"11988887777\",\"delivery_cep\":\"01310-100\",\"delivery_street\":\"Avenida Paulista\",\"delivery_number\":\"1000\",\"delivery_complement\":\"Apto 42\",\"delivery_neighborhood\":\"Bela Vista\",\"delivery_city\":\"São Paulo\",\"delivery_state\":\"SP\",\"created_at\":\"2026-11-11 02:06:44\",\"updated_at\":\"2026-11-11 02:06:44\",\"items\":[{\"id\":3,\"order_id\":3,\"product_id\":14,\"description\":\"Bermuda Chino Sarja Areia (Tam: 44)\",\"quantity\":1,\"unit_price\":139.9,\"total_price\":139.9}]},{\"id\":4,\"customer_id\":1,\"customer_name\":\"Cliente A Teste\",\"customer_email\":\"cliente1@vestebem.com\",\"customer_phone\":\"11988887777\",\"total_amount\":139.9,\"status\":\"recebido\",\"delivery_recipient_name\":\"Carlos Oliveira\",\"delivery_phone\":\"11988887777\",\"delivery_cep\":\"01310-100\",\"delivery_street\":\"Avenida Paulista\",\"delivery_number\":\"1000\",\"delivery_complement\":\"Apto 42\",\"delivery_neighborhood\":\"Bela Vista\",\"delivery_city\":\"São Paulo\",\"delivery_state\":\"SP\",\"created_at\":\"2026-11-11 02:06:44\",\"updated_at\":\"2026-11-11 02:06:44\",\"items\":[{\"id\":4,\"order_id\":4,\"product_id\":14,\"description\":\"Bermuda Chino Sarja Areia (Tam: 44)\",\"quantity\":1,\"unit_price\":139.9,\"total_price\":139.9}]},{\"id\":1,\"customer_id\":1,\"customer_name\":\"Cliente A Teste\",\"customer_email\":\"cliente1@vestebem.com\",\"customer_phone\":\"11988887777\",\"total_amount\":159.8,\"status\":\"recebido\",\"delivery_recipient_name\":\"Carlos Oliveira\",\"delivery_phone\":\"(11) 98765-4321\",\"delivery_cep\":\"01310-100\",\"delivery_street\":\"Avenida Paulista\",\"delivery_number\":\"1000\",\"delivery_complement\":\"Apto 42\",\"delivery_neighborhood\":\"Bela Vista\",\"delivery_city\":\"São Paulo\",\"delivery_state\":\"SP\",\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\",\"items\":[{\"id\":1,\"order_id\":1,\"product_id\":2,\"description\":\"Camiseta Básica de Algodão Pima (Tam: G)\",\"quantity\":2,\"unit_price\":79.9,\"total_price\":159.8}]}]}"
+  },
+  {
+   "who": "clienteA",
+   "method": "POST",
+   "path": "/api/orders",
+   "body": {
+    "confirm_address": true,
+    "items": [
+     {
+      "product_id": 14,
+      "quantity": 0
+     }
+    ]
+   },
+   "status": 400,
+   "response": "{\"error\":\"O item #1 deve ter uma quantidade inteira e positiva.\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "POST",
+   "path": "/api/orders",
+   "body": {
+    "confirm_address": true,
+    "items": [
+     {
+      "product_id": 14,
+      "quantity": -1
+     }
+    ]
+   },
+   "status": 400,
+   "response": "{\"error\":\"O item #1 deve ter uma quantidade inteira e positiva.\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "POST",
+   "path": "/api/orders",
+   "body": {
+    "confirm_address": true,
+    "items": [
+     {
+      "product_id": 14,
+      "quantity": 1.5
+     }
+    ]
+   },
+   "status": 400,
+   "response": "{\"error\":\"O item #1 deve ter uma quantidade inteira e positiva.\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "POST",
+   "path": "/api/orders",
+   "body": {
+    "confirm_address": true,
+    "items": [
+     {
+      "product_id": 14,
+      "quantity": "abc"
+     }
+    ]
+   },
+   "status": 400,
+   "response": "{\"error\":\"O item #1 deve ter uma quantidade inteira e positiva.\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "POST",
+   "path": "/api/orders",
+   "body": {
+    "confirm_address": true,
+    "items": []
+   },
+   "status": 400,
+   "response": "{\"error\":\"O pedido deve conter pelo menos um item.\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "GET",
+   "path": "/api/orders",
+   "status": 200,
+   "response": "{\"orders\":[{\"id\":3,\"customer_id\":1,\"customer_name\":\"Cliente A Teste\",\"customer_email\":\"cliente1@vestebem.com\",\"customer_phone\":\"11988887777\",\"total_amount\":139.9,\"status\":\"recebido\",\"delivery_recipient_name\":\"Carlos Oliveira\",\"delivery_phone\":\"11988887777\",\"delivery_cep\":\"01310-100\",\"delivery_street\":\"Avenida Paulista\",\"delivery_number\":\"1000\",\"delivery_complement\":\"Apto 42\",\"delivery_neighborhood\":\"Bela Vista\",\"delivery_city\":\"São Paulo\",\"delivery_state\":\"SP\",\"created_at\":\"2026-11-11 02:06:44\",\"updated_at\":\"2026-11-11 02:06:44\",\"items\":[{\"id\":3,\"order_id\":3,\"product_id\":14,\"description\":\"Bermuda Chino Sarja Areia (Tam: 44)\",\"quantity\":1,\"unit_price\":139.9,\"total_price\":139.9}]},{\"id\":4,\"customer_id\":1,\"customer_name\":\"Cliente A Teste\",\"customer_email\":\"cliente1@vestebem.com\",\"customer_phone\":\"11988887777\",\"total_amount\":139.9,\"status\":\"recebido\",\"delivery_recipient_name\":\"Carlos Oliveira\",\"delivery_phone\":\"11988887777\",\"delivery_cep\":\"01310-100\",\"delivery_street\":\"Avenida Paulista\",\"delivery_number\":\"1000\",\"delivery_complement\":\"Apto 42\",\"delivery_neighborhood\":\"Bela Vista\",\"delivery_city\":\"São Paulo\",\"delivery_state\":\"SP\",\"created_at\":\"2026-11-11 02:06:44\",\"updated_at\":\"2026-11-11 02:06:44\",\"items\":[{\"id\":4,\"order_id\":4,\"product_id\":14,\"description\":\"Bermuda Chino Sarja Areia (Tam: 44)\",\"quantity\":1,\"unit_price\":139.9,\"total_price\":139.9}]},{\"id\":1,\"customer_id\":1,\"customer_name\":\"Cliente A Teste\",\"customer_email\":\"cliente1@vestebem.com\",\"customer_phone\":\"11988887777\",\"total_amount\":159.8,\"status\":\"recebido\",\"delivery_recipient_name\":\"Carlos Oliveira\",\"delivery_phone\":\"(11) 98765-4321\",\"delivery_cep\":\"01310-100\",\"delivery_street\":\"Avenida Paulista\",\"delivery_number\":\"1000\",\"delivery_complement\":\"Apto 42\",\"delivery_neighborhood\":\"Bela Vista\",\"delivery_city\":\"São Paulo\",\"delivery_state\":\"SP\",\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\",\"items\":[{\"id\":1,\"order_id\":1,\"product_id\":2,\"description\":\"Camiseta Básica de Algodão Pima (Tam: G)\",\"quantity\":2,\"unit_price\":79.9,\"total_price\":159.8}]}]}"
+  },
+  {
+   "who": "clienteA",
+   "method": "POST",
+   "path": "/api/orders",
+   "body": {
+    "confirm_address": true,
+    "items": [
+     {
+      "product_id": 14,
+      "quantity": 2,
+      "price": 0.01,
+      "unit_price": 0.01,
+      "unitPrice": 0.01,
+      "priceCents": 1,
+      "preco": 0.01,
+      "precoCentavos": 1
+     }
+    ],
+    "total": 0.01,
+    "totalCents": 1,
+    "total_cents": 1,
+    "totalCentavos": 1
+   },
+   "status": 201,
+   "response": "{\"message\":\"Pedido criado com sucesso!\",\"order\":{\"id\":5,\"customer_id\":1,\"customer_name\":\"Cliente A Teste\",\"customer_email\":\"cliente1@vestebem.com\",\"customer_phone\":\"11988887777\",\"total_amount\":279.8,\"status\":\"recebido\",\"delivery_recipient_name\":\"Carlos Oliveira\",\"delivery_phone\":\"11988887777\",\"delivery_cep\":\"01310-100\",\"delivery_street\":\"Avenida Paulista\",\"delivery_number\":\"1000\",\"delivery_complement\":\"Apto 42\",\"delivery_neighborhood\":\"Bela Vista\",\"delivery_city\":\"São Paulo\",\"delivery_state\":\"SP\",\"created_at\":\"2026-11-11 02:06:44\",\"updated_at\":\"2026-11-11 02:06:44\",\"items\":[{\"id\":5,\"order_id\":5,\"product_id\":14,\"description\":\"Bermuda Chino Sarja Areia (Tam: 44)\",\"quantity\":2,\"unit_price\":139.9,\"total_price\":279.8}]}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "GET",
+   "path": "/api/orders/5",
+   "status": 200,
+   "response": "{\"order\":{\"id\":5,\"customer_id\":1,\"customer_name\":\"Cliente A Teste\",\"customer_email\":\"cliente1@vestebem.com\",\"customer_phone\":\"11988887777\",\"total_amount\":279.8,\"status\":\"recebido\",\"delivery_recipient_name\":\"Carlos Oliveira\",\"delivery_phone\":\"11988887777\",\"delivery_cep\":\"01310-100\",\"delivery_street\":\"Avenida Paulista\",\"delivery_number\":\"1000\",\"delivery_complement\":\"Apto 42\",\"delivery_neighborhood\":\"Bela Vista\",\"delivery_city\":\"São Paulo\",\"delivery_state\":\"SP\",\"created_at\":\"2026-11-11 02:06:44\",\"updated_at\":\"2026-11-11 02:06:44\",\"items\":[{\"id\":5,\"order_id\":5,\"product_id\":14,\"description\":\"Bermuda Chino Sarja Areia (Tam: 44)\",\"quantity\":2,\"unit_price\":139.9,\"total_price\":279.8}]}}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/products",
+   "status": 200,
+   "response": "{\"products\":[{\"id\":14,\"name\":\"Bermuda Chino Sarja Areia\",\"description\":\"Bermuda confortável com bolsos faca, perfeita para momentos casuais e fins de semana.\",\"category\":\"Shorts\",\"size\":\"44\",\"price\":139.9,\"stock_quantity\":14,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":9,\"name\":\"Blazer Estruturado Navy Blue\",\"description\":\"Blazer alfaiatado com forro acetinado, fechamento frontal de dois botões elegantes.\",\"category\":\"Casacos\",\"size\":\"M\",\"price\":349,\"stock_quantity\":8,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":7,\"name\":\"Calça Alfaiataria Reta Cinza\",\"description\":\"Calça com vinco frontal bem marcado, bolsos faca e acabamento premium sofisticado.\",\"category\":\"Calças\",\"size\":\"42\",\"price\":249,\"stock_quantity\":12,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":6,\"name\":\"Calça Jeans Skinny Lavagem Escura\",\"description\":\"Jeans com elastano proporcionando máximo conforto, cintura média com costura contrastante.\",\"category\":\"Calças\",\"size\":\"40\",\"price\":199.9,\"stock_quantity\":30,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":5,\"name\":\"Camisa Linho Casual Bege\",\"description\":\"Camisa fresca em linho puro, respirável para dias quentes de verão e passeios à tarde.\",\"category\":\"Camisas\",\"size\":\"M\",\"price\":229.5,\"stock_quantity\":18,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":4,\"name\":\"Camisa Social Manga Longa Branca\",\"description\":\"Camisa clássica em tricoline acetinada, corte regular ideal para ocasiões formais e trabalho.\",\"category\":\"Camisas\",\"size\":\"GG\",\"price\":189,\"stock_quantity\":20,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":3,\"name\":\"Camiseta Básica Slim Preta\",\"description\":\"Modelagem ajustada ao corpo, acabamento reforçado nas golas e mangas.\",\"category\":\"Camisetas\",\"size\":\"P\",\"price\":69.9,\"stock_quantity\":25,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":2,\"name\":\"Camiseta Básica de Algodão Pima\",\"description\":\"Camiseta de alta durabilidade e toque suave, confeccionada com 100% de algodão nobre.\",\"category\":\"Camisetas\",\"size\":\"G\",\"price\":79.9,\"stock_quantity\":40,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":16,\"name\":\"Cardigã Longo Algodão Mescla\",\"description\":\"Cardigã aberto sem fecho, corte alongado aconchegante para compor sobreposições.\",\"category\":\"Casacos\",\"size\":\"U\",\"price\":169.9,\"stock_quantity\":19,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":8,\"name\":\"Jaqueta Jeans Trucker Vintage\",\"description\":\"Jaqueta clássica denim estruturada com bolsos frontais e botões metálicos envelhecidos.\",\"category\":\"Casacos\",\"size\":\"G\",\"price\":289.9,\"stock_quantity\":10,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":13,\"name\":\"Polo Piquet Clássica Vermelha\",\"description\":\"Polo clássica confeccionada em piquet encorpado de algodão com peitilho de dois botões.\",\"category\":\"Camisetas\",\"size\":\"M\",\"price\":129.9,\"stock_quantity\":28,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":10,\"name\":\"Saia Midi Plissada Verde Oliva\",\"description\":\"Saia elegante com caimento impecável e cós elástico confortável para o dia a dia.\",\"category\":\"Saias\",\"size\":\"P\",\"price\":159.9,\"stock_quantity\":22,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"}],\"pagination\":{\"page\":1,\"limit\":12,\"totalItems\":16,\"totalPages\":2}}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/products?search=D%27%C3%81gua",
+   "status": 200,
+   "response": "{\"products\":[{\"id\":1,\"name\":\"Vestido Floral Coleção D'Água\",\"description\":\"Vestido midi confeccionado em tecido leve e fluido, com estampa botânica inspirada nas fontes naturais.\",\"category\":\"Vestidos\",\"size\":\"M\",\"price\":219.9,\"stock_quantity\":15,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"}],\"pagination\":{\"page\":1,\"limit\":12,\"totalItems\":1,\"totalPages\":1}}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/products?search=%27+OR+%271%27%3D%271",
+   "status": 200,
+   "response": "{\"products\":[],\"pagination\":{\"page\":1,\"limit\":12,\"totalItems\":0,\"totalPages\":1}}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/products?search=%25%27+OR+1%3D1+--",
+   "status": 200,
+   "response": "{\"products\":[],\"pagination\":{\"page\":1,\"limit\":12,\"totalItems\":0,\"totalPages\":1}}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/products?search=%27%29+UNION+SELECT+name%2Csql%2C1%2C1%2C1%2C1%2C1%2C1%2C1+FROM+sqlite_master+--",
+   "status": 200,
+   "response": "{\"products\":[],\"pagination\":{\"page\":1,\"limit\":12,\"totalItems\":0,\"totalPages\":1}}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/products?sortBy=preco;DROP TABLE x",
+   "status": 200,
+   "response": "{\"products\":[{\"id\":14,\"name\":\"Bermuda Chino Sarja Areia\",\"description\":\"Bermuda confortável com bolsos faca, perfeita para momentos casuais e fins de semana.\",\"category\":\"Shorts\",\"size\":\"44\",\"price\":139.9,\"stock_quantity\":14,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":9,\"name\":\"Blazer Estruturado Navy Blue\",\"description\":\"Blazer alfaiatado com forro acetinado, fechamento frontal de dois botões elegantes.\",\"category\":\"Casacos\",\"size\":\"M\",\"price\":349,\"stock_quantity\":8,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":7,\"name\":\"Calça Alfaiataria Reta Cinza\",\"description\":\"Calça com vinco frontal bem marcado, bolsos faca e acabamento premium sofisticado.\",\"category\":\"Calças\",\"size\":\"42\",\"price\":249,\"stock_quantity\":12,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":6,\"name\":\"Calça Jeans Skinny Lavagem Escura\",\"description\":\"Jeans com elastano proporcionando máximo conforto, cintura média com costura contrastante.\",\"category\":\"Calças\",\"size\":\"40\",\"price\":199.9,\"stock_quantity\":30,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":5,\"name\":\"Camisa Linho Casual Bege\",\"description\":\"Camisa fresca em linho puro, respirável para dias quentes de verão e passeios à tarde.\",\"category\":\"Camisas\",\"size\":\"M\",\"price\":229.5,\"stock_quantity\":18,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":4,\"name\":\"Camisa Social Manga Longa Branca\",\"description\":\"Camisa clássica em tricoline acetinada, corte regular ideal para ocasiões formais e trabalho.\",\"category\":\"Camisas\",\"size\":\"GG\",\"price\":189,\"stock_quantity\":20,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":3,\"name\":\"Camiseta Básica Slim Preta\",\"description\":\"Modelagem ajustada ao corpo, acabamento reforçado nas golas e mangas.\",\"category\":\"Camisetas\",\"size\":\"P\",\"price\":69.9,\"stock_quantity\":25,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":2,\"name\":\"Camiseta Básica de Algodão Pima\",\"description\":\"Camiseta de alta durabilidade e toque suave, confeccionada com 100% de algodão nobre.\",\"category\":\"Camisetas\",\"size\":\"G\",\"price\":79.9,\"stock_quantity\":40,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":16,\"name\":\"Cardigã Longo Algodão Mescla\",\"description\":\"Cardigã aberto sem fecho, corte alongado aconchegante para compor sobreposições.\",\"category\":\"Casacos\",\"size\":\"U\",\"price\":169.9,\"stock_quantity\":19,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":8,\"name\":\"Jaqueta Jeans Trucker Vintage\",\"description\":\"Jaqueta clássica denim estruturada com bolsos frontais e botões metálicos envelhecidos.\",\"category\":\"Casacos\",\"size\":\"G\",\"price\":289.9,\"stock_quantity\":10,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":13,\"name\":\"Polo Piquet Clássica Vermelha\",\"description\":\"Polo clássica confeccionada em piquet encorpado de algodão com peitilho de dois botões.\",\"category\":\"Camisetas\",\"size\":\"M\",\"price\":129.9,\"stock_quantity\":28,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":10,\"name\":\"Saia Midi Plissada Verde Oliva\",\"description\":\"Saia elegante com caimento impecável e cós elástico confortável para o dia a dia.\",\"category\":\"Saias\",\"size\":\"P\",\"price\":159.9,\"stock_quantity\":22,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"}],\"pagination\":{\"page\":1,\"limit\":12,\"totalItems\":16,\"totalPages\":2}}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/products?sortBy=(CASE WHEN 1=1 THEN name ELSE price END)",
+   "status": 200,
+   "response": "{\"products\":[{\"id\":14,\"name\":\"Bermuda Chino Sarja Areia\",\"description\":\"Bermuda confortável com bolsos faca, perfeita para momentos casuais e fins de semana.\",\"category\":\"Shorts\",\"size\":\"44\",\"price\":139.9,\"stock_quantity\":14,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":9,\"name\":\"Blazer Estruturado Navy Blue\",\"description\":\"Blazer alfaiatado com forro acetinado, fechamento frontal de dois botões elegantes.\",\"category\":\"Casacos\",\"size\":\"M\",\"price\":349,\"stock_quantity\":8,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":7,\"name\":\"Calça Alfaiataria Reta Cinza\",\"description\":\"Calça com vinco frontal bem marcado, bolsos faca e acabamento premium sofisticado.\",\"category\":\"Calças\",\"size\":\"42\",\"price\":249,\"stock_quantity\":12,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":6,\"name\":\"Calça Jeans Skinny Lavagem Escura\",\"description\":\"Jeans com elastano proporcionando máximo conforto, cintura média com costura contrastante.\",\"category\":\"Calças\",\"size\":\"40\",\"price\":199.9,\"stock_quantity\":30,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":5,\"name\":\"Camisa Linho Casual Bege\",\"description\":\"Camisa fresca em linho puro, respirável para dias quentes de verão e passeios à tarde.\",\"category\":\"Camisas\",\"size\":\"M\",\"price\":229.5,\"stock_quantity\":18,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":4,\"name\":\"Camisa Social Manga Longa Branca\",\"description\":\"Camisa clássica em tricoline acetinada, corte regular ideal para ocasiões formais e trabalho.\",\"category\":\"Camisas\",\"size\":\"GG\",\"price\":189,\"stock_quantity\":20,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":3,\"name\":\"Camiseta Básica Slim Preta\",\"description\":\"Modelagem ajustada ao corpo, acabamento reforçado nas golas e mangas.\",\"category\":\"Camisetas\",\"size\":\"P\",\"price\":69.9,\"stock_quantity\":25,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":2,\"name\":\"Camiseta Básica de Algodão Pima\",\"description\":\"Camiseta de alta durabilidade e toque suave, confeccionada com 100% de algodão nobre.\",\"category\":\"Camisetas\",\"size\":\"G\",\"price\":79.9,\"stock_quantity\":40,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":16,\"name\":\"Cardigã Longo Algodão Mescla\",\"description\":\"Cardigã aberto sem fecho, corte alongado aconchegante para compor sobreposições.\",\"category\":\"Casacos\",\"size\":\"U\",\"price\":169.9,\"stock_quantity\":19,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":8,\"name\":\"Jaqueta Jeans Trucker Vintage\",\"description\":\"Jaqueta clássica denim estruturada com bolsos frontais e botões metálicos envelhecidos.\",\"category\":\"Casacos\",\"size\":\"G\",\"price\":289.9,\"stock_quantity\":10,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":13,\"name\":\"Polo Piquet Clássica Vermelha\",\"description\":\"Polo clássica confeccionada em piquet encorpado de algodão com peitilho de dois botões.\",\"category\":\"Camisetas\",\"size\":\"M\",\"price\":129.9,\"stock_quantity\":28,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":10,\"name\":\"Saia Midi Plissada Verde Oliva\",\"description\":\"Saia elegante com caimento impecável e cós elástico confortável para o dia a dia.\",\"category\":\"Saias\",\"size\":\"P\",\"price\":159.9,\"stock_quantity\":22,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"}],\"pagination\":{\"page\":1,\"limit\":12,\"totalItems\":16,\"totalPages\":2}}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/products?sortBy=constructor",
+   "status": 200,
+   "response": "{\"products\":[{\"id\":14,\"name\":\"Bermuda Chino Sarja Areia\",\"description\":\"Bermuda confortável com bolsos faca, perfeita para momentos casuais e fins de semana.\",\"category\":\"Shorts\",\"size\":\"44\",\"price\":139.9,\"stock_quantity\":14,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":9,\"name\":\"Blazer Estruturado Navy Blue\",\"description\":\"Blazer alfaiatado com forro acetinado, fechamento frontal de dois botões elegantes.\",\"category\":\"Casacos\",\"size\":\"M\",\"price\":349,\"stock_quantity\":8,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":7,\"name\":\"Calça Alfaiataria Reta Cinza\",\"description\":\"Calça com vinco frontal bem marcado, bolsos faca e acabamento premium sofisticado.\",\"category\":\"Calças\",\"size\":\"42\",\"price\":249,\"stock_quantity\":12,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":6,\"name\":\"Calça Jeans Skinny Lavagem Escura\",\"description\":\"Jeans com elastano proporcionando máximo conforto, cintura média com costura contrastante.\",\"category\":\"Calças\",\"size\":\"40\",\"price\":199.9,\"stock_quantity\":30,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":5,\"name\":\"Camisa Linho Casual Bege\",\"description\":\"Camisa fresca em linho puro, respirável para dias quentes de verão e passeios à tarde.\",\"category\":\"Camisas\",\"size\":\"M\",\"price\":229.5,\"stock_quantity\":18,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":4,\"name\":\"Camisa Social Manga Longa Branca\",\"description\":\"Camisa clássica em tricoline acetinada, corte regular ideal para ocasiões formais e trabalho.\",\"category\":\"Camisas\",\"size\":\"GG\",\"price\":189,\"stock_quantity\":20,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":3,\"name\":\"Camiseta Básica Slim Preta\",\"description\":\"Modelagem ajustada ao corpo, acabamento reforçado nas golas e mangas.\",\"category\":\"Camisetas\",\"size\":\"P\",\"price\":69.9,\"stock_quantity\":25,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":2,\"name\":\"Camiseta Básica de Algodão Pima\",\"description\":\"Camiseta de alta durabilidade e toque suave, confeccionada com 100% de algodão nobre.\",\"category\":\"Camisetas\",\"size\":\"G\",\"price\":79.9,\"stock_quantity\":40,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":16,\"name\":\"Cardigã Longo Algodão Mescla\",\"description\":\"Cardigã aberto sem fecho, corte alongado aconchegante para compor sobreposições.\",\"category\":\"Casacos\",\"size\":\"U\",\"price\":169.9,\"stock_quantity\":19,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":8,\"name\":\"Jaqueta Jeans Trucker Vintage\",\"description\":\"Jaqueta clássica denim estruturada com bolsos frontais e botões metálicos envelhecidos.\",\"category\":\"Casacos\",\"size\":\"G\",\"price\":289.9,\"stock_quantity\":10,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":13,\"name\":\"Polo Piquet Clássica Vermelha\",\"description\":\"Polo clássica confeccionada em piquet encorpado de algodão com peitilho de dois botões.\",\"category\":\"Camisetas\",\"size\":\"M\",\"price\":129.9,\"stock_quantity\":28,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":10,\"name\":\"Saia Midi Plissada Verde Oliva\",\"description\":\"Saia elegante com caimento impecável e cós elástico confortável para o dia a dia.\",\"category\":\"Saias\",\"size\":\"P\",\"price\":159.9,\"stock_quantity\":22,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"}],\"pagination\":{\"page\":1,\"limit\":12,\"totalItems\":16,\"totalPages\":2}}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/products?sortBy=__proto__",
+   "status": 200,
+   "response": "{\"products\":[{\"id\":14,\"name\":\"Bermuda Chino Sarja Areia\",\"description\":\"Bermuda confortável com bolsos faca, perfeita para momentos casuais e fins de semana.\",\"category\":\"Shorts\",\"size\":\"44\",\"price\":139.9,\"stock_quantity\":14,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":9,\"name\":\"Blazer Estruturado Navy Blue\",\"description\":\"Blazer alfaiatado com forro acetinado, fechamento frontal de dois botões elegantes.\",\"category\":\"Casacos\",\"size\":\"M\",\"price\":349,\"stock_quantity\":8,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":7,\"name\":\"Calça Alfaiataria Reta Cinza\",\"description\":\"Calça com vinco frontal bem marcado, bolsos faca e acabamento premium sofisticado.\",\"category\":\"Calças\",\"size\":\"42\",\"price\":249,\"stock_quantity\":12,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":6,\"name\":\"Calça Jeans Skinny Lavagem Escura\",\"description\":\"Jeans com elastano proporcionando máximo conforto, cintura média com costura contrastante.\",\"category\":\"Calças\",\"size\":\"40\",\"price\":199.9,\"stock_quantity\":30,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":5,\"name\":\"Camisa Linho Casual Bege\",\"description\":\"Camisa fresca em linho puro, respirável para dias quentes de verão e passeios à tarde.\",\"category\":\"Camisas\",\"size\":\"M\",\"price\":229.5,\"stock_quantity\":18,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":4,\"name\":\"Camisa Social Manga Longa Branca\",\"description\":\"Camisa clássica em tricoline acetinada, corte regular ideal para ocasiões formais e trabalho.\",\"category\":\"Camisas\",\"size\":\"GG\",\"price\":189,\"stock_quantity\":20,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":3,\"name\":\"Camiseta Básica Slim Preta\",\"description\":\"Modelagem ajustada ao corpo, acabamento reforçado nas golas e mangas.\",\"category\":\"Camisetas\",\"size\":\"P\",\"price\":69.9,\"stock_quantity\":25,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":2,\"name\":\"Camiseta Básica de Algodão Pima\",\"description\":\"Camiseta de alta durabilidade e toque suave, confeccionada com 100% de algodão nobre.\",\"category\":\"Camisetas\",\"size\":\"G\",\"price\":79.9,\"stock_quantity\":40,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":16,\"name\":\"Cardigã Longo Algodão Mescla\",\"description\":\"Cardigã aberto sem fecho, corte alongado aconchegante para compor sobreposições.\",\"category\":\"Casacos\",\"size\":\"U\",\"price\":169.9,\"stock_quantity\":19,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":8,\"name\":\"Jaqueta Jeans Trucker Vintage\",\"description\":\"Jaqueta clássica denim estruturada com bolsos frontais e botões metálicos envelhecidos.\",\"category\":\"Casacos\",\"size\":\"G\",\"price\":289.9,\"stock_quantity\":10,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":13,\"name\":\"Polo Piquet Clássica Vermelha\",\"description\":\"Polo clássica confeccionada em piquet encorpado de algodão com peitilho de dois botões.\",\"category\":\"Camisetas\",\"size\":\"M\",\"price\":129.9,\"stock_quantity\":28,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":10,\"name\":\"Saia Midi Plissada Verde Oliva\",\"description\":\"Saia elegante com caimento impecável e cós elástico confortável para o dia a dia.\",\"category\":\"Saias\",\"size\":\"P\",\"price\":159.9,\"stock_quantity\":22,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"}],\"pagination\":{\"page\":1,\"limit\":12,\"totalItems\":16,\"totalPages\":2}}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/products?order=desc;DROP TABLE x",
+   "status": 200,
+   "response": "{\"products\":[{\"id\":14,\"name\":\"Bermuda Chino Sarja Areia\",\"description\":\"Bermuda confortável com bolsos faca, perfeita para momentos casuais e fins de semana.\",\"category\":\"Shorts\",\"size\":\"44\",\"price\":139.9,\"stock_quantity\":14,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":9,\"name\":\"Blazer Estruturado Navy Blue\",\"description\":\"Blazer alfaiatado com forro acetinado, fechamento frontal de dois botões elegantes.\",\"category\":\"Casacos\",\"size\":\"M\",\"price\":349,\"stock_quantity\":8,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":7,\"name\":\"Calça Alfaiataria Reta Cinza\",\"description\":\"Calça com vinco frontal bem marcado, bolsos faca e acabamento premium sofisticado.\",\"category\":\"Calças\",\"size\":\"42\",\"price\":249,\"stock_quantity\":12,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":6,\"name\":\"Calça Jeans Skinny Lavagem Escura\",\"description\":\"Jeans com elastano proporcionando máximo conforto, cintura média com costura contrastante.\",\"category\":\"Calças\",\"size\":\"40\",\"price\":199.9,\"stock_quantity\":30,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":5,\"name\":\"Camisa Linho Casual Bege\",\"description\":\"Camisa fresca em linho puro, respirável para dias quentes de verão e passeios à tarde.\",\"category\":\"Camisas\",\"size\":\"M\",\"price\":229.5,\"stock_quantity\":18,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":4,\"name\":\"Camisa Social Manga Longa Branca\",\"description\":\"Camisa clássica em tricoline acetinada, corte regular ideal para ocasiões formais e trabalho.\",\"category\":\"Camisas\",\"size\":\"GG\",\"price\":189,\"stock_quantity\":20,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":3,\"name\":\"Camiseta Básica Slim Preta\",\"description\":\"Modelagem ajustada ao corpo, acabamento reforçado nas golas e mangas.\",\"category\":\"Camisetas\",\"size\":\"P\",\"price\":69.9,\"stock_quantity\":25,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":2,\"name\":\"Camiseta Básica de Algodão Pima\",\"description\":\"Camiseta de alta durabilidade e toque suave, confeccionada com 100% de algodão nobre.\",\"category\":\"Camisetas\",\"size\":\"G\",\"price\":79.9,\"stock_quantity\":40,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":16,\"name\":\"Cardigã Longo Algodão Mescla\",\"description\":\"Cardigã aberto sem fecho, corte alongado aconchegante para compor sobreposições.\",\"category\":\"Casacos\",\"size\":\"U\",\"price\":169.9,\"stock_quantity\":19,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":8,\"name\":\"Jaqueta Jeans Trucker Vintage\",\"description\":\"Jaqueta clássica denim estruturada com bolsos frontais e botões metálicos envelhecidos.\",\"category\":\"Casacos\",\"size\":\"G\",\"price\":289.9,\"stock_quantity\":10,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":13,\"name\":\"Polo Piquet Clássica Vermelha\",\"description\":\"Polo clássica confeccionada em piquet encorpado de algodão com peitilho de dois botões.\",\"category\":\"Camisetas\",\"size\":\"M\",\"price\":129.9,\"stock_quantity\":28,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":10,\"name\":\"Saia Midi Plissada Verde Oliva\",\"description\":\"Saia elegante com caimento impecável e cós elástico confortável para o dia a dia.\",\"category\":\"Saias\",\"size\":\"P\",\"price\":159.9,\"stock_quantity\":22,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"}],\"pagination\":{\"page\":1,\"limit\":12,\"totalItems\":16,\"totalPages\":2}}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/products?order=ASC,(SELECT 1)",
+   "status": 200,
+   "response": "{\"products\":[{\"id\":14,\"name\":\"Bermuda Chino Sarja Areia\",\"description\":\"Bermuda confortável com bolsos faca, perfeita para momentos casuais e fins de semana.\",\"category\":\"Shorts\",\"size\":\"44\",\"price\":139.9,\"stock_quantity\":14,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":9,\"name\":\"Blazer Estruturado Navy Blue\",\"description\":\"Blazer alfaiatado com forro acetinado, fechamento frontal de dois botões elegantes.\",\"category\":\"Casacos\",\"size\":\"M\",\"price\":349,\"stock_quantity\":8,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":7,\"name\":\"Calça Alfaiataria Reta Cinza\",\"description\":\"Calça com vinco frontal bem marcado, bolsos faca e acabamento premium sofisticado.\",\"category\":\"Calças\",\"size\":\"42\",\"price\":249,\"stock_quantity\":12,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":6,\"name\":\"Calça Jeans Skinny Lavagem Escura\",\"description\":\"Jeans com elastano proporcionando máximo conforto, cintura média com costura contrastante.\",\"category\":\"Calças\",\"size\":\"40\",\"price\":199.9,\"stock_quantity\":30,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":5,\"name\":\"Camisa Linho Casual Bege\",\"description\":\"Camisa fresca em linho puro, respirável para dias quentes de verão e passeios à tarde.\",\"category\":\"Camisas\",\"size\":\"M\",\"price\":229.5,\"stock_quantity\":18,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":4,\"name\":\"Camisa Social Manga Longa Branca\",\"description\":\"Camisa clássica em tricoline acetinada, corte regular ideal para ocasiões formais e trabalho.\",\"category\":\"Camisas\",\"size\":\"GG\",\"price\":189,\"stock_quantity\":20,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":3,\"name\":\"Camiseta Básica Slim Preta\",\"description\":\"Modelagem ajustada ao corpo, acabamento reforçado nas golas e mangas.\",\"category\":\"Camisetas\",\"size\":\"P\",\"price\":69.9,\"stock_quantity\":25,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":2,\"name\":\"Camiseta Básica de Algodão Pima\",\"description\":\"Camiseta de alta durabilidade e toque suave, confeccionada com 100% de algodão nobre.\",\"category\":\"Camisetas\",\"size\":\"G\",\"price\":79.9,\"stock_quantity\":40,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":16,\"name\":\"Cardigã Longo Algodão Mescla\",\"description\":\"Cardigã aberto sem fecho, corte alongado aconchegante para compor sobreposições.\",\"category\":\"Casacos\",\"size\":\"U\",\"price\":169.9,\"stock_quantity\":19,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":8,\"name\":\"Jaqueta Jeans Trucker Vintage\",\"description\":\"Jaqueta clássica denim estruturada com bolsos frontais e botões metálicos envelhecidos.\",\"category\":\"Casacos\",\"size\":\"G\",\"price\":289.9,\"stock_quantity\":10,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":13,\"name\":\"Polo Piquet Clássica Vermelha\",\"description\":\"Polo clássica confeccionada em piquet encorpado de algodão com peitilho de dois botões.\",\"category\":\"Camisetas\",\"size\":\"M\",\"price\":129.9,\"stock_quantity\":28,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":10,\"name\":\"Saia Midi Plissada Verde Oliva\",\"description\":\"Saia elegante com caimento impecável e cós elástico confortável para o dia a dia.\",\"category\":\"Saias\",\"size\":\"P\",\"price\":159.9,\"stock_quantity\":22,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"}],\"pagination\":{\"page\":1,\"limit\":12,\"totalItems\":16,\"totalPages\":2}}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/products?categoria=' OR '1'='1&category=' OR '1'='1",
+   "status": 200,
+   "response": "{\"products\":[],\"pagination\":{\"page\":1,\"limit\":12,\"totalItems\":0,\"totalPages\":1}}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/products?tamanho=') OR 1=1 --&size=') OR 1=1 --",
+   "status": 200,
+   "response": "{\"products\":[],\"pagination\":{\"page\":1,\"limit\":12,\"totalItems\":0,\"totalPages\":1}}"
+  },
+  {
+   "who": "visitante",
+   "method": "GET",
+   "path": "/api/products?pagina=1 OR 1=1&page=1 OR 1=1",
+   "status": 200,
+   "response": "{\"products\":[{\"id\":14,\"name\":\"Bermuda Chino Sarja Areia\",\"description\":\"Bermuda confortável com bolsos faca, perfeita para momentos casuais e fins de semana.\",\"category\":\"Shorts\",\"size\":\"44\",\"price\":139.9,\"stock_quantity\":14,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":9,\"name\":\"Blazer Estruturado Navy Blue\",\"description\":\"Blazer alfaiatado com forro acetinado, fechamento frontal de dois botões elegantes.\",\"category\":\"Casacos\",\"size\":\"M\",\"price\":349,\"stock_quantity\":8,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":7,\"name\":\"Calça Alfaiataria Reta Cinza\",\"description\":\"Calça com vinco frontal bem marcado, bolsos faca e acabamento premium sofisticado.\",\"category\":\"Calças\",\"size\":\"42\",\"price\":249,\"stock_quantity\":12,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":6,\"name\":\"Calça Jeans Skinny Lavagem Escura\",\"description\":\"Jeans com elastano proporcionando máximo conforto, cintura média com costura contrastante.\",\"category\":\"Calças\",\"size\":\"40\",\"price\":199.9,\"stock_quantity\":30,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":5,\"name\":\"Camisa Linho Casual Bege\",\"description\":\"Camisa fresca em linho puro, respirável para dias quentes de verão e passeios à tarde.\",\"category\":\"Camisas\",\"size\":\"M\",\"price\":229.5,\"stock_quantity\":18,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":4,\"name\":\"Camisa Social Manga Longa Branca\",\"description\":\"Camisa clássica em tricoline acetinada, corte regular ideal para ocasiões formais e trabalho.\",\"category\":\"Camisas\",\"size\":\"GG\",\"price\":189,\"stock_quantity\":20,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":3,\"name\":\"Camiseta Básica Slim Preta\",\"description\":\"Modelagem ajustada ao corpo, acabamento reforçado nas golas e mangas.\",\"category\":\"Camisetas\",\"size\":\"P\",\"price\":69.9,\"stock_quantity\":25,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":2,\"name\":\"Camiseta Básica de Algodão Pima\",\"description\":\"Camiseta de alta durabilidade e toque suave, confeccionada com 100% de algodão nobre.\",\"category\":\"Camisetas\",\"size\":\"G\",\"price\":79.9,\"stock_quantity\":40,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":16,\"name\":\"Cardigã Longo Algodão Mescla\",\"description\":\"Cardigã aberto sem fecho, corte alongado aconchegante para compor sobreposições.\",\"category\":\"Casacos\",\"size\":\"U\",\"price\":169.9,\"stock_quantity\":19,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":8,\"name\":\"Jaqueta Jeans Trucker Vintage\",\"description\":\"Jaqueta clássica denim estruturada com bolsos frontais e botões metálicos envelhecidos.\",\"category\":\"Casacos\",\"size\":\"G\",\"price\":289.9,\"stock_quantity\":10,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":13,\"name\":\"Polo Piquet Clássica Vermelha\",\"description\":\"Polo clássica confeccionada em piquet encorpado de algodão com peitilho de dois botões.\",\"category\":\"Camisetas\",\"size\":\"M\",\"price\":129.9,\"stock_quantity\":28,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"},{\"id\":10,\"name\":\"Saia Midi Plissada Verde Oliva\",\"description\":\"Saia elegante com caimento impecável e cós elástico confortável para o dia a dia.\",\"category\":\"Saias\",\"size\":\"P\",\"price\":159.9,\"stock_quantity\":22,\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\"}],\"pagination\":{\"page\":1,\"limit\":12,\"totalItems\":16,\"totalPages\":2}}"
+  },
+  {
+   "who": "visitante",
+   "method": "POST",
+   "path": "/api/products",
+   "body": {
+    "name": "Produto Teste eg6jh7",
+    "description": "teste",
+    "category": "Teste",
+    "size": "M",
+    "price": 10,
+    "stock_quantity": 1
+   },
+   "status": 401,
+   "response": "{\"error\":\"Acesso não autorizado. Faça login para continuar.\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "POST",
+   "path": "/api/products",
+   "body": {
+    "name": "Produto Teste eg6jh7",
+    "description": "teste",
+    "category": "Teste",
+    "size": "M",
+    "price": 10,
+    "stock_quantity": 1
+   },
+   "status": 403,
+   "response": "{\"error\":\"Você não tem permissão para realizar esta ação.\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/products/14",
+   "body": {
+    "name": "Alterado por cliente",
+    "description": "x",
+    "category": "Teste",
+    "size": "M",
+    "price": 1,
+    "stock_quantity": 1
+   },
+   "status": 403,
+   "response": "{\"error\":\"Você não tem permissão para realizar esta ação.\"}"
+  },
+  {
+   "who": "funcionario",
+   "method": "POST",
+   "path": "/api/products",
+   "body": {
+    "name": "<img src=x onerror=alert(1)>",
+    "description": "<script>alert(1)</script>",
+    "category": "Teste",
+    "size": "M",
+    "price": 10,
+    "stock_quantity": 5
+   },
+   "status": 201,
+   "response": "{\"message\":\"Produto cadastrado com sucesso!\",\"product\":{\"id\":17,\"name\":\"<img src=x onerror=alert(1)>\",\"description\":\"<script>alert(1)</script>\",\"category\":\"Teste\",\"size\":\"M\",\"price\":10,\"stock_quantity\":5,\"created_at\":\"2026-11-11 02:06:44\",\"updated_at\":\"2026-11-11 02:06:44\"}}"
+  },
+  {
+   "who": "funcionario",
+   "method": "POST",
+   "path": "/api/products",
+   "body": {
+    "name": "Válido 94n1xj",
+    "description": "controle",
+    "category": "Teste",
+    "size": "M",
+    "price": 10,
+    "stock_quantity": 1
+   },
+   "status": 201,
+   "response": "{\"message\":\"Produto cadastrado com sucesso!\",\"product\":{\"id\":18,\"name\":\"Válido 94n1xj\",\"description\":\"controle\",\"category\":\"Teste\",\"size\":\"M\",\"price\":10,\"stock_quantity\":1,\"created_at\":\"2026-11-11 02:06:44\",\"updated_at\":\"2026-11-11 02:06:44\"}}"
+  },
+  {
+   "who": "funcionario",
+   "method": "POST",
+   "path": "/api/products",
+   "body": {
+    "name": "Inválido 5un0wr",
+    "description": "x",
+    "category": "Teste",
+    "size": "M",
+    "price": -1,
+    "stock_quantity": 1
+   },
+   "status": 400,
+   "response": "{\"error\":\"O preço do produto não pode ser negativo.\"}"
+  },
+  {
+   "who": "funcionario",
+   "method": "POST",
+   "path": "/api/products",
+   "body": {
+    "name": "Inválido 5cvazg",
+    "description": "x",
+    "category": "Teste",
+    "size": "M",
+    "price": 10,
+    "stock_quantity": -1
+   },
+   "status": 400,
+   "response": "{\"error\":\"O estoque deve ser um número inteiro igual ou superior a zero.\"}"
+  },
+  {
+   "who": "funcionario",
+   "method": "POST",
+   "path": "/api/products",
+   "body": {
+    "name": "Inválido nmr8b0",
+    "description": "x",
+    "category": "Teste",
+    "size": "M",
+    "price": 10,
+    "stock_quantity": 2.5
+   },
+   "status": 201,
+   "response": "{\"message\":\"Produto cadastrado com sucesso!\",\"product\":{\"id\":19,\"name\":\"Inválido nmr8b0\",\"description\":\"x\",\"category\":\"Teste\",\"size\":\"M\",\"price\":10,\"stock_quantity\":2,\"created_at\":\"2026-11-11 02:06:44\",\"updated_at\":\"2026-11-11 02:06:44\"}}"
+  },
+  {
+   "who": "funcionario",
+   "method": "POST",
+   "path": "/api/products",
+   "body": {
+    "name": "Inválido 0nn8gz",
+    "description": "x",
+    "category": "Teste",
+    "size": "M",
+    "price": 10,
+    "stock_quantity": "abc"
+   },
+   "status": 400,
+   "response": "{\"error\":\"O estoque deve ser um número inteiro igual ou superior a zero.\"}"
+  },
+  {
+   "who": "funcionario",
+   "method": "POST",
+   "path": "/api/products",
+   "body": {
+    "name": "Inválido fvr9bq",
+    "description": "x",
+    "category": "Teste",
+    "size": "M",
+    "price": "abc",
+    "stock_quantity": 1
+   },
+   "status": 400,
+   "response": "{\"error\":\"O preço do produto não pode ser negativo.\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "POST",
+   "path": "/api/orders",
+   "body": {
+    "confirm_address": true,
+    "items": [
+     {
+      "product_id": 999999,
+      "quantity": 1
+     }
+    ]
+   },
+   "status": 400,
+   "response": "{\"error\":\"Produto com identificador #999999 não encontrado no catálogo.\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "POST",
+   "path": "/api/orders",
+   "body": {
+    "confirm_address": true,
+    "items": [
+     {
+      "product_id": null,
+      "quantity": 1
+     }
+    ]
+   },
+   "status": 400,
+   "response": "{\"error\":\"O item #1 deve ter um produto selecionado válido.\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "POST",
+   "path": "/api/orders",
+   "body": {
+    "confirm_address": true,
+    "items": [
+     {
+      "product_id": "abc",
+      "quantity": 1
+     }
+    ]
+   },
+   "status": 400,
+   "response": "{\"error\":\"O item #1 deve ter um produto selecionado válido.\"}"
+  },
+  {
+   "who": "clienteB",
+   "method": "GET",
+   "path": "/api/auth/profile",
+   "status": 200,
+   "response": "{\"user\":{\"id\":2,\"name\":\"Mariana Souza (Cliente)\",\"email\":\"cliente2@vestebem.com\",\"role\":\"customer\",\"cpf\":\"555.666.777-88\",\"phone\":\"(21) 99887-1122\",\"recipient_name\":\"Mariana Souza\",\"cep\":\"22041-001\",\"street\":\"Avenida Atlântica\",\"number\":\"500\",\"complement\":\"Bloco B\",\"neighborhood\":\"Copacabana\",\"city\":\"Rio de Janeiro\",\"state\":\"RJ\",\"created_at\":\"2026-11-11 02:06:41\"}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/auth/profile/personal",
+   "body": {
+    "name": "Invasor",
+    "cpf": "52998224725",
+    "phone": "11911112222",
+    "id": 2,
+    "userId": 2,
+    "user_id": 2,
+    "usuarioId": 2,
+    "clienteId": 2,
+    "customerId": 2
+   },
+   "status": 200,
+   "response": "{\"message\":\"Dados pessoais atualizados com sucesso!\",\"user\":{\"id\":1,\"name\":\"Invasor\",\"email\":\"cliente1@vestebem.com\",\"role\":\"customer\",\"cpf\":\"52998224725\",\"phone\":\"11911112222\",\"recipient_name\":\"Carlos Oliveira\",\"cep\":\"01310-100\",\"street\":\"Avenida Paulista\",\"number\":\"1000\",\"complement\":\"Apto 42\",\"neighborhood\":\"Bela Vista\",\"city\":\"São Paulo\",\"state\":\"SP\",\"created_at\":\"2026-11-11 02:06:41\"}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/auth/profile/address",
+   "body": {
+    "recipient_name": "Invasor",
+    "cep": "01001000",
+    "street": "Rua Invasora",
+    "number": "1",
+    "complement": "",
+    "neighborhood": "Centro",
+    "city": "São Paulo",
+    "state": "SP",
+    "id": 2,
+    "userId": 2,
+    "user_id": 2,
+    "usuarioId": 2
+   },
+   "status": 200,
+   "response": "{\"message\":\"Endereço de entrega atualizado com sucesso!\",\"user\":{\"id\":1,\"name\":\"Invasor\",\"email\":\"cliente1@vestebem.com\",\"role\":\"customer\",\"cpf\":\"52998224725\",\"phone\":\"11911112222\",\"recipient_name\":\"Invasor\",\"cep\":\"01001000\",\"street\":\"Rua Invasora\",\"number\":\"1\",\"complement\":null,\"neighborhood\":\"Centro\",\"city\":\"São Paulo\",\"state\":\"SP\",\"created_at\":\"2026-11-11 02:06:41\"}}"
+  },
+  {
+   "who": "clienteB",
+   "method": "GET",
+   "path": "/api/auth/profile",
+   "status": 200,
+   "response": "{\"user\":{\"id\":2,\"name\":\"Mariana Souza (Cliente)\",\"email\":\"cliente2@vestebem.com\",\"role\":\"customer\",\"cpf\":\"555.666.777-88\",\"phone\":\"(21) 99887-1122\",\"recipient_name\":\"Mariana Souza\",\"cep\":\"22041-001\",\"street\":\"Avenida Atlântica\",\"number\":\"500\",\"complement\":\"Bloco B\",\"neighborhood\":\"Copacabana\",\"city\":\"Rio de Janeiro\",\"state\":\"RJ\",\"created_at\":\"2026-11-11 02:06:41\"}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "GET",
+   "path": "/api/auth/profile?userId=2&id=2&user_id=2&clienteId=2",
+   "status": 200,
+   "response": "{\"user\":{\"id\":1,\"name\":\"Invasor\",\"email\":\"cliente1@vestebem.com\",\"role\":\"customer\",\"cpf\":\"52998224725\",\"phone\":\"11911112222\",\"recipient_name\":\"Invasor\",\"cep\":\"01001000\",\"street\":\"Rua Invasora\",\"number\":\"1\",\"complement\":null,\"neighborhood\":\"Centro\",\"city\":\"São Paulo\",\"state\":\"SP\",\"created_at\":\"2026-11-11 02:06:41\"}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/auth/profile/personal",
+   "body": {
+    "name": "Cliente A Teste",
+    "cpf": "52998224725",
+    "phone": "11988887777"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Dados pessoais atualizados com sucesso!\",\"user\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"cliente1@vestebem.com\",\"role\":\"customer\",\"cpf\":\"52998224725\",\"phone\":\"11988887777\",\"recipient_name\":\"Invasor\",\"cep\":\"01001000\",\"street\":\"Rua Invasora\",\"number\":\"1\",\"complement\":null,\"neighborhood\":\"Centro\",\"city\":\"São Paulo\",\"state\":\"SP\",\"created_at\":\"2026-11-11 02:06:41\"}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/auth/profile/address",
+   "body": {
+    "recipient_name": "<img src=x onerror=alert(1)>",
+    "cep": "01001000",
+    "street": "Rua Teste",
+    "number": "10",
+    "complement": "<img src=x onerror=alert(1)>",
+    "neighborhood": "Centro",
+    "city": "São Paulo",
+    "state": "SP"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Endereço de entrega atualizado com sucesso!\",\"user\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"cliente1@vestebem.com\",\"role\":\"customer\",\"cpf\":\"52998224725\",\"phone\":\"11988887777\",\"recipient_name\":\"<img src=x onerror=alert(1)>\",\"cep\":\"01001000\",\"street\":\"Rua Teste\",\"number\":\"10\",\"complement\":\"<img src=x onerror=alert(1)>\",\"neighborhood\":\"Centro\",\"city\":\"São Paulo\",\"state\":\"SP\",\"created_at\":\"2026-11-11 02:06:41\"}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "POST",
+   "path": "/api/orders",
+   "body": {
+    "confirm_address": true,
+    "items": [
+     {
+      "product_id": 14,
+      "quantity": 1
+     }
+    ]
+   },
+   "status": 201,
+   "response": "{\"message\":\"Pedido criado com sucesso!\",\"order\":{\"id\":6,\"customer_id\":1,\"customer_name\":\"Cliente A Teste\",\"customer_email\":\"cliente1@vestebem.com\",\"customer_phone\":\"11988887777\",\"total_amount\":139.9,\"status\":\"recebido\",\"delivery_recipient_name\":\"<img src=x onerror=alert(1)>\",\"delivery_phone\":\"11988887777\",\"delivery_cep\":\"01001000\",\"delivery_street\":\"Rua Teste\",\"delivery_number\":\"10\",\"delivery_complement\":\"<img src=x onerror=alert(1)>\",\"delivery_neighborhood\":\"Centro\",\"delivery_city\":\"São Paulo\",\"delivery_state\":\"SP\",\"created_at\":\"2026-11-11 02:06:44\",\"updated_at\":\"2026-11-11 02:06:44\",\"items\":[{\"id\":6,\"order_id\":6,\"product_id\":14,\"description\":\"Bermuda Chino Sarja Areia (Tam: 44)\",\"quantity\":1,\"unit_price\":139.9,\"total_price\":139.9}]}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/auth/profile/address",
+   "body": {
+    "recipient_name": "Cliente A Teste",
+    "cep": "01001000",
+    "street": "Rua Teste",
+    "number": "10",
+    "complement": "",
+    "neighborhood": "Centro",
+    "city": "São Paulo",
+    "state": "SP"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Endereço de entrega atualizado com sucesso!\",\"user\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"cliente1@vestebem.com\",\"role\":\"customer\",\"cpf\":\"52998224725\",\"phone\":\"11988887777\",\"recipient_name\":\"Cliente A Teste\",\"cep\":\"01001000\",\"street\":\"Rua Teste\",\"number\":\"10\",\"complement\":null,\"neighborhood\":\"Centro\",\"city\":\"São Paulo\",\"state\":\"SP\",\"created_at\":\"2026-11-11 02:06:41\"}}"
+  },
+  {
+   "who": "funcionario",
+   "method": "GET",
+   "path": "/api/orders",
+   "status": 200,
+   "response": "{\"orders\":[{\"id\":3,\"customer_id\":1,\"customer_name\":\"Cliente A Teste\",\"customer_email\":\"cliente1@vestebem.com\",\"customer_phone\":\"11988887777\",\"total_amount\":139.9,\"status\":\"recebido\",\"delivery_recipient_name\":\"Carlos Oliveira\",\"delivery_phone\":\"11988887777\",\"delivery_cep\":\"01310-100\",\"delivery_street\":\"Avenida Paulista\",\"delivery_number\":\"1000\",\"delivery_complement\":\"Apto 42\",\"delivery_neighborhood\":\"Bela Vista\",\"delivery_city\":\"São Paulo\",\"delivery_state\":\"SP\",\"created_at\":\"2026-11-11 02:06:44\",\"updated_at\":\"2026-11-11 02:06:44\",\"items\":[{\"id\":3,\"order_id\":3,\"product_id\":14,\"description\":\"Bermuda Chino Sarja Areia (Tam: 44)\",\"quantity\":1,\"unit_price\":139.9,\"total_price\":139.9}]},{\"id\":4,\"customer_id\":1,\"customer_name\":\"Cliente A Teste\",\"customer_email\":\"cliente1@vestebem.com\",\"customer_phone\":\"11988887777\",\"total_amount\":139.9,\"status\":\"recebido\",\"delivery_recipient_name\":\"Carlos Oliveira\",\"delivery_phone\":\"11988887777\",\"delivery_cep\":\"01310-100\",\"delivery_street\":\"Avenida Paulista\",\"delivery_number\":\"1000\",\"delivery_complement\":\"Apto 42\",\"delivery_neighborhood\":\"Bela Vista\",\"delivery_city\":\"São Paulo\",\"delivery_state\":\"SP\",\"created_at\":\"2026-11-11 02:06:44\",\"updated_at\":\"2026-11-11 02:06:44\",\"items\":[{\"id\":4,\"order_id\":4,\"product_id\":14,\"description\":\"Bermuda Chino Sarja Areia (Tam: 44)\",\"quantity\":1,\"unit_price\":139.9,\"total_price\":139.9}]},{\"id\":5,\"customer_id\":1,\"customer_name\":\"Cliente A Teste\",\"customer_email\":\"cliente1@vestebem.com\",\"customer_phone\":\"11988887777\",\"total_amount\":279.8,\"status\":\"recebido\",\"delivery_recipient_name\":\"Carlos Oliveira\",\"delivery_phone\":\"11988887777\",\"delivery_cep\":\"01310-100\",\"delivery_street\":\"Avenida Paulista\",\"delivery_number\":\"1000\",\"delivery_complement\":\"Apto 42\",\"delivery_neighborhood\":\"Bela Vista\",\"delivery_city\":\"São Paulo\",\"delivery_state\":\"SP\",\"created_at\":\"2026-11-11 02:06:44\",\"updated_at\":\"2026-11-11 02:06:44\",\"items\":[{\"id\":5,\"order_id\":5,\"product_id\":14,\"description\":\"Bermuda Chino Sarja Areia (Tam: 44)\",\"quantity\":2,\"unit_price\":139.9,\"total_price\":279.8}]},{\"id\":6,\"customer_id\":1,\"customer_name\":\"Cliente A Teste\",\"customer_email\":\"cliente1@vestebem.com\",\"customer_phone\":\"11988887777\",\"total_amount\":139.9,\"status\":\"recebido\",\"delivery_recipient_name\":\"<img src=x onerror=alert(1)>\",\"delivery_phone\":\"11988887777\",\"delivery_cep\":\"01001000\",\"delivery_street\":\"Rua Teste\",\"delivery_number\":\"10\",\"delivery_complement\":\"<img src=x onerror=alert(1)>\",\"delivery_neighborhood\":\"Centro\",\"delivery_city\":\"São Paulo\",\"delivery_state\":\"SP\",\"created_at\":\"2026-11-11 02:06:44\",\"updated_at\":\"2026-11-11 02:06:44\",\"items\":[{\"id\":6,\"order_id\":6,\"product_id\":14,\"description\":\"Bermuda Chino Sarja Areia (Tam: 44)\",\"quantity\":1,\"unit_price\":139.9,\"total_price\":139.9}]},{\"id\":1,\"customer_id\":1,\"customer_name\":\"Cliente A Teste\",\"customer_email\":\"cliente1@vestebem.com\",\"customer_phone\":\"11988887777\",\"total_amount\":159.8,\"status\":\"recebido\",\"delivery_recipient_name\":\"Carlos Oliveira\",\"delivery_phone\":\"(11) 98765-4321\",\"delivery_cep\":\"01310-100\",\"delivery_street\":\"Avenida Paulista\",\"delivery_number\":\"1000\",\"delivery_complement\":\"Apto 42\",\"delivery_neighborhood\":\"Bela Vista\",\"delivery_city\":\"São Paulo\",\"delivery_state\":\"SP\",\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\",\"items\":[{\"id\":1,\"order_id\":1,\"product_id\":2,\"description\":\"Camiseta Básica de Algodão Pima (Tam: G)\",\"quantity\":2,\"unit_price\":79.9,\"total_price\":159.8}]},{\"id\":2,\"customer_id\":2,\"customer_name\":\"Mariana Souza (Cliente)\",\"customer_email\":\"cliente2@vestebem.com\",\"customer_phone\":\"(21) 99887-1122\",\"total_amount\":219.9,\"status\":\"enviado\",\"delivery_recipient_name\":\"Mariana Souza\",\"delivery_phone\":\"(21) 99887-1122\",\"delivery_cep\":\"22041-001\",\"delivery_street\":\"Avenida Atlântica\",\"delivery_number\":\"500\",\"delivery_complement\":\"Bloco B\",\"delivery_neighborhood\":\"Copacabana\",\"delivery_city\":\"Rio de Janeiro\",\"delivery_state\":\"RJ\",\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\",\"items\":[{\"id\":2,\"order_id\":2,\"prod…"
+  },
+  {
+   "who": "clienteA",
+   "method": "GET",
+   "path": "/api/orders",
+   "status": 200,
+   "response": "{\"orders\":[{\"id\":3,\"customer_id\":1,\"customer_name\":\"Cliente A Teste\",\"customer_email\":\"cliente1@vestebem.com\",\"customer_phone\":\"11988887777\",\"total_amount\":139.9,\"status\":\"recebido\",\"delivery_recipient_name\":\"Carlos Oliveira\",\"delivery_phone\":\"11988887777\",\"delivery_cep\":\"01310-100\",\"delivery_street\":\"Avenida Paulista\",\"delivery_number\":\"1000\",\"delivery_complement\":\"Apto 42\",\"delivery_neighborhood\":\"Bela Vista\",\"delivery_city\":\"São Paulo\",\"delivery_state\":\"SP\",\"created_at\":\"2026-11-11 02:06:44\",\"updated_at\":\"2026-11-11 02:06:44\",\"items\":[{\"id\":3,\"order_id\":3,\"product_id\":14,\"description\":\"Bermuda Chino Sarja Areia (Tam: 44)\",\"quantity\":1,\"unit_price\":139.9,\"total_price\":139.9}]},{\"id\":4,\"customer_id\":1,\"customer_name\":\"Cliente A Teste\",\"customer_email\":\"cliente1@vestebem.com\",\"customer_phone\":\"11988887777\",\"total_amount\":139.9,\"status\":\"recebido\",\"delivery_recipient_name\":\"Carlos Oliveira\",\"delivery_phone\":\"11988887777\",\"delivery_cep\":\"01310-100\",\"delivery_street\":\"Avenida Paulista\",\"delivery_number\":\"1000\",\"delivery_complement\":\"Apto 42\",\"delivery_neighborhood\":\"Bela Vista\",\"delivery_city\":\"São Paulo\",\"delivery_state\":\"SP\",\"created_at\":\"2026-11-11 02:06:44\",\"updated_at\":\"2026-11-11 02:06:44\",\"items\":[{\"id\":4,\"order_id\":4,\"product_id\":14,\"description\":\"Bermuda Chino Sarja Areia (Tam: 44)\",\"quantity\":1,\"unit_price\":139.9,\"total_price\":139.9}]},{\"id\":5,\"customer_id\":1,\"customer_name\":\"Cliente A Teste\",\"customer_email\":\"cliente1@vestebem.com\",\"customer_phone\":\"11988887777\",\"total_amount\":279.8,\"status\":\"recebido\",\"delivery_recipient_name\":\"Carlos Oliveira\",\"delivery_phone\":\"11988887777\",\"delivery_cep\":\"01310-100\",\"delivery_street\":\"Avenida Paulista\",\"delivery_number\":\"1000\",\"delivery_complement\":\"Apto 42\",\"delivery_neighborhood\":\"Bela Vista\",\"delivery_city\":\"São Paulo\",\"delivery_state\":\"SP\",\"created_at\":\"2026-11-11 02:06:44\",\"updated_at\":\"2026-11-11 02:06:44\",\"items\":[{\"id\":5,\"order_id\":5,\"product_id\":14,\"description\":\"Bermuda Chino Sarja Areia (Tam: 44)\",\"quantity\":2,\"unit_price\":139.9,\"total_price\":279.8}]},{\"id\":6,\"customer_id\":1,\"customer_name\":\"Cliente A Teste\",\"customer_email\":\"cliente1@vestebem.com\",\"customer_phone\":\"11988887777\",\"total_amount\":139.9,\"status\":\"recebido\",\"delivery_recipient_name\":\"<img src=x onerror=alert(1)>\",\"delivery_phone\":\"11988887777\",\"delivery_cep\":\"01001000\",\"delivery_street\":\"Rua Teste\",\"delivery_number\":\"10\",\"delivery_complement\":\"<img src=x onerror=alert(1)>\",\"delivery_neighborhood\":\"Centro\",\"delivery_city\":\"São Paulo\",\"delivery_state\":\"SP\",\"created_at\":\"2026-11-11 02:06:44\",\"updated_at\":\"2026-11-11 02:06:44\",\"items\":[{\"id\":6,\"order_id\":6,\"product_id\":14,\"description\":\"Bermuda Chino Sarja Areia (Tam: 44)\",\"quantity\":1,\"unit_price\":139.9,\"total_price\":139.9}]},{\"id\":1,\"customer_id\":1,\"customer_name\":\"Cliente A Teste\",\"customer_email\":\"cliente1@vestebem.com\",\"customer_phone\":\"11988887777\",\"total_amount\":159.8,\"status\":\"recebido\",\"delivery_recipient_name\":\"Carlos Oliveira\",\"delivery_phone\":\"(11) 98765-4321\",\"delivery_cep\":\"01310-100\",\"delivery_street\":\"Avenida Paulista\",\"delivery_number\":\"1000\",\"delivery_complement\":\"Apto 42\",\"delivery_neighborhood\":\"Bela Vista\",\"delivery_city\":\"São Paulo\",\"delivery_state\":\"SP\",\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\",\"items\":[{\"id\":1,\"order_id\":1,\"product_id\":2,\"description\":\"Camiseta Básica de Algodão Pima (Tam: G)\",\"quantity\":2,\"unit_price\":79.9,\"total_price\":159.8}]}]}"
+  },
+  {
+   "who": "funcionario",
+   "method": "GET",
+   "path": "/api/orders/3",
+   "status": 200,
+   "response": "{\"order\":{\"id\":3,\"customer_id\":1,\"customer_name\":\"Cliente A Teste\",\"customer_email\":\"cliente1@vestebem.com\",\"customer_phone\":\"11988887777\",\"total_amount\":139.9,\"status\":\"recebido\",\"delivery_recipient_name\":\"Carlos Oliveira\",\"delivery_phone\":\"11988887777\",\"delivery_cep\":\"01310-100\",\"delivery_street\":\"Avenida Paulista\",\"delivery_number\":\"1000\",\"delivery_complement\":\"Apto 42\",\"delivery_neighborhood\":\"Bela Vista\",\"delivery_city\":\"São Paulo\",\"delivery_state\":\"SP\",\"created_at\":\"2026-11-11 02:06:44\",\"updated_at\":\"2026-11-11 02:06:44\",\"items\":[{\"id\":3,\"order_id\":3,\"product_id\":14,\"description\":\"Bermuda Chino Sarja Areia (Tam: 44)\",\"quantity\":1,\"unit_price\":139.9,\"total_price\":139.9}]}}"
+  },
+  {
+   "who": "funcionario",
+   "method": "GET",
+   "path": "/api/orders/4",
+   "status": 200,
+   "response": "{\"order\":{\"id\":4,\"customer_id\":1,\"customer_name\":\"Cliente A Teste\",\"customer_email\":\"cliente1@vestebem.com\",\"customer_phone\":\"11988887777\",\"total_amount\":139.9,\"status\":\"recebido\",\"delivery_recipient_name\":\"Carlos Oliveira\",\"delivery_phone\":\"11988887777\",\"delivery_cep\":\"01310-100\",\"delivery_street\":\"Avenida Paulista\",\"delivery_number\":\"1000\",\"delivery_complement\":\"Apto 42\",\"delivery_neighborhood\":\"Bela Vista\",\"delivery_city\":\"São Paulo\",\"delivery_state\":\"SP\",\"created_at\":\"2026-11-11 02:06:44\",\"updated_at\":\"2026-11-11 02:06:44\",\"items\":[{\"id\":4,\"order_id\":4,\"product_id\":14,\"description\":\"Bermuda Chino Sarja Areia (Tam: 44)\",\"quantity\":1,\"unit_price\":139.9,\"total_price\":139.9}]}}"
+  },
+  {
+   "who": "funcionario",
+   "method": "GET",
+   "path": "/api/orders/5",
+   "status": 200,
+   "response": "{\"order\":{\"id\":5,\"customer_id\":1,\"customer_name\":\"Cliente A Teste\",\"customer_email\":\"cliente1@vestebem.com\",\"customer_phone\":\"11988887777\",\"total_amount\":279.8,\"status\":\"recebido\",\"delivery_recipient_name\":\"Carlos Oliveira\",\"delivery_phone\":\"11988887777\",\"delivery_cep\":\"01310-100\",\"delivery_street\":\"Avenida Paulista\",\"delivery_number\":\"1000\",\"delivery_complement\":\"Apto 42\",\"delivery_neighborhood\":\"Bela Vista\",\"delivery_city\":\"São Paulo\",\"delivery_state\":\"SP\",\"created_at\":\"2026-11-11 02:06:44\",\"updated_at\":\"2026-11-11 02:06:44\",\"items\":[{\"id\":5,\"order_id\":5,\"product_id\":14,\"description\":\"Bermuda Chino Sarja Areia (Tam: 44)\",\"quantity\":2,\"unit_price\":139.9,\"total_price\":279.8}]}}"
+  },
+  {
+   "who": "funcionario",
+   "method": "GET",
+   "path": "/api/orders/6",
+   "status": 200,
+   "response": "{\"order\":{\"id\":6,\"customer_id\":1,\"customer_name\":\"Cliente A Teste\",\"customer_email\":\"cliente1@vestebem.com\",\"customer_phone\":\"11988887777\",\"total_amount\":139.9,\"status\":\"recebido\",\"delivery_recipient_name\":\"<img src=x onerror=alert(1)>\",\"delivery_phone\":\"11988887777\",\"delivery_cep\":\"01001000\",\"delivery_street\":\"Rua Teste\",\"delivery_number\":\"10\",\"delivery_complement\":\"<img src=x onerror=alert(1)>\",\"delivery_neighborhood\":\"Centro\",\"delivery_city\":\"São Paulo\",\"delivery_state\":\"SP\",\"created_at\":\"2026-11-11 02:06:44\",\"updated_at\":\"2026-11-11 02:06:44\",\"items\":[{\"id\":6,\"order_id\":6,\"product_id\":14,\"description\":\"Bermuda Chino Sarja Areia (Tam: 44)\",\"quantity\":1,\"unit_price\":139.9,\"total_price\":139.9}]}}"
+  },
+  {
+   "who": "funcionario",
+   "method": "GET",
+   "path": "/api/orders/1",
+   "status": 200,
+   "response": "{\"order\":{\"id\":1,\"customer_id\":1,\"customer_name\":\"Cliente A Teste\",\"customer_email\":\"cliente1@vestebem.com\",\"customer_phone\":\"11988887777\",\"total_amount\":159.8,\"status\":\"recebido\",\"delivery_recipient_name\":\"Carlos Oliveira\",\"delivery_phone\":\"(11) 98765-4321\",\"delivery_cep\":\"01310-100\",\"delivery_street\":\"Avenida Paulista\",\"delivery_number\":\"1000\",\"delivery_complement\":\"Apto 42\",\"delivery_neighborhood\":\"Bela Vista\",\"delivery_city\":\"São Paulo\",\"delivery_state\":\"SP\",\"created_at\":\"2026-11-11 02:06:41\",\"updated_at\":\"2026-11-11 02:06:41\",\"items\":[{\"id\":1,\"order_id\":1,\"product_id\":2,\"description\":\"Camiseta Básica de Algodão Pima (Tam: G)\",\"quantity\":2,\"unit_price\":79.9,\"total_price\":159.8}]}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/auth/profile/personal",
+   "body": {
+    "name": "Cliente A Teste",
+    "cpf": "52998224725",
+    "phone": "11988887777"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Dados pessoais atualizados com sucesso!\",\"user\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"cliente1@vestebem.com\",\"role\":\"customer\",\"cpf\":\"52998224725\",\"phone\":\"11988887777\",\"recipient_name\":\"Cliente A Teste\",\"cep\":\"01001000\",\"street\":\"Rua Teste\",\"number\":\"10\",\"complement\":null,\"neighborhood\":\"Centro\",\"city\":\"São Paulo\",\"state\":\"SP\",\"created_at\":\"2026-11-11 02:06:41\"}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/auth/profile/address",
+   "body": {
+    "recipient_name": "Cliente A Teste",
+    "cep": "01001000",
+    "street": "Rua Teste",
+    "number": "10",
+    "complement": "",
+    "neighborhood": "Centro",
+    "city": "São Paulo",
+    "state": "SP"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Endereço de entrega atualizado com sucesso!\",\"user\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"cliente1@vestebem.com\",\"role\":\"customer\",\"cpf\":\"52998224725\",\"phone\":\"11988887777\",\"recipient_name\":\"Cliente A Teste\",\"cep\":\"01001000\",\"street\":\"Rua Teste\",\"number\":\"10\",\"complement\":null,\"neighborhood\":\"Centro\",\"city\":\"São Paulo\",\"state\":\"SP\",\"created_at\":\"2026-11-11 02:06:41\"}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/auth/profile/personal",
+   "body": {
+    "name": "Cliente A Teste",
+    "cpf": "abc",
+    "phone": "11988887777"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Dados pessoais atualizados com sucesso!\",\"user\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"cliente1@vestebem.com\",\"role\":\"customer\",\"cpf\":\"abc\",\"phone\":\"11988887777\",\"recipient_name\":\"Cliente A Teste\",\"cep\":\"01001000\",\"street\":\"Rua Teste\",\"number\":\"10\",\"complement\":null,\"neighborhood\":\"Centro\",\"city\":\"São Paulo\",\"state\":\"SP\",\"created_at\":\"2026-11-11 02:06:41\"}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/auth/profile/address",
+   "body": {
+    "recipient_name": "A",
+    "cep": "123",
+    "street": "Rua",
+    "number": "1",
+    "complement": "",
+    "neighborhood": "B",
+    "city": "C",
+    "state": "SP"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Endereço de entrega atualizado com sucesso!\",\"user\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"cliente1@vestebem.com\",\"role\":\"customer\",\"cpf\":\"abc\",\"phone\":\"11988887777\",\"recipient_name\":\"A\",\"cep\":\"123\",\"street\":\"Rua\",\"number\":\"1\",\"complement\":null,\"neighborhood\":\"B\",\"city\":\"C\",\"state\":\"SP\",\"created_at\":\"2026-11-11 02:06:41\"}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/auth/profile/address",
+   "body": {
+    "recipient_name": "A",
+    "cep": "01001000",
+    "street": "Rua",
+    "number": "1",
+    "complement": "",
+    "neighborhood": "B",
+    "city": "C",
+    "state": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Endereço de entrega atualizado com sucesso!\",\"user\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"cliente1@vestebem.com\",\"role\":\"customer\",\"cpf\":\"abc\",\"phone\":\"11988887777\",\"recipient_name\":\"A\",\"cep\":\"01001000\",\"street\":\"Rua\",\"number\":\"1\",\"complement\":null,\"neighborhood\":\"B\",\"city\":\"C\",\"state\":\"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\",\"created_at\":\"2026-11-11 02:06:41\"}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/auth/profile/personal",
+   "body": {
+    "name": "Cliente A Teste",
+    "cpf": "52998224725",
+    "phone": "11988887777"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Dados pessoais atualizados com sucesso!\",\"user\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"cliente1@vestebem.com\",\"role\":\"customer\",\"cpf\":\"52998224725\",\"phone\":\"11988887777\",\"recipient_name\":\"A\",\"cep\":\"01001000\",\"street\":\"Rua\",\"number\":\"1\",\"complement\":null,\"neighborhood\":\"B\",\"city\":\"C\",\"state\":\"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\",\"created_at\":\"2026-11-11 02:06:41\"}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/auth/profile/address",
+   "body": {
+    "recipient_name": "Cliente A Teste",
+    "cep": "01001000",
+    "street": "Rua Teste",
+    "number": "10",
+    "complement": "",
+    "neighborhood": "Centro",
+    "city": "São Paulo",
+    "state": "SP"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Endereço de entrega atualizado com sucesso!\",\"user\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"cliente1@vestebem.com\",\"role\":\"customer\",\"cpf\":\"52998224725\",\"phone\":\"11988887777\",\"recipient_name\":\"Cliente A Teste\",\"cep\":\"01001000\",\"street\":\"Rua Teste\",\"number\":\"10\",\"complement\":null,\"neighborhood\":\"Centro\",\"city\":\"São Paulo\",\"state\":\"SP\",\"created_at\":\"2026-11-11 02:06:41\"}}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/auth/profile/password",
+   "body": {
+    "currentPassword": "senha-errada-123",
+    "newPassword": "NovaSenhaTeste123"
+   },
+   "status": 400,
+   "response": "{\"error\":\"A senha atual informada está incorreta.\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/auth/profile/password",
+   "body": {
+    "currentPassword": "",
+    "newPassword": "NovaSenhaTeste123"
+   },
+   "status": 400,
+   "response": "{\"error\":\"Informe a senha atual e a nova senha.\"}"
+  },
+  {
+   "who": "clienteA",
+   "method": "PUT",
+   "path": "/api/auth/profile/password",
+   "body": {
+    "newPassword": "NovaSenhaTeste123"
+   },
+   "status": 400,
+   "response": "{\"error\":\"Informe a senha atual e a nova senha.\"}"
+  },
+  {
+   "who": "clienteA-confere",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "cliente1@vestebem.com",
+    "password": "cliente123"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Login realizado com sucesso!\",\"user\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"cliente1@vestebem.com\",\"role\":\"customer\",\"cpf\":\"52998224725\",\"phone\":\"11988887777\",\"recipient_name\":\"Cliente A Teste\",\"cep\":\"01001000\",\"street\":\"Rua Teste\",\"number\":\"10\",\"complement\":null,\"neighborhood\":\"Centro\",\"city\":\"São Paulo\",\"state\":\"SP\",\"created_at\":\"2026-11-11 02:06:41\"},\"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImVtYWlsIjoiY2xpZW50ZTFAdmVzdGViZW0uY29tIiwiaWF0IjoxNzk0MzYyODA0LCJleHAiOjE3OTQ5Njc2MDR9.Q2SX6oyTsqoA5_L6uuP36-zSFPdUg8K73dEoeHiHYKs\"}"
+  },
+  {
+   "who": "clienteA-sessao1",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "cliente1@vestebem.com",
+    "password": "cliente123"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Login realizado com sucesso!\",\"user\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"cliente1@vestebem.com\",\"role\":\"customer\",\"cpf\":\"52998224725\",\"phone\":\"11988887777\",\"recipient_name\":\"Cliente A Teste\",\"cep\":\"01001000\",\"street\":\"Rua Teste\",\"number\":\"10\",\"complement\":null,\"neighborhood\":\"Centro\",\"city\":\"São Paulo\",\"state\":\"SP\",\"created_at\":\"2026-11-11 02:06:41\"},\"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImVtYWlsIjoiY2xpZW50ZTFAdmVzdGViZW0uY29tIiwiaWF0IjoxNzk0MzYyODA0LCJleHAiOjE3OTQ5Njc2MDR9.Q2SX6oyTsqoA5_L6uuP36-zSFPdUg8K73dEoeHiHYKs\"}"
+  },
+  {
+   "who": "clienteA-sessao2",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "cliente1@vestebem.com",
+    "password": "cliente123"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Login realizado com sucesso!\",\"user\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"cliente1@vestebem.com\",\"role\":\"customer\",\"cpf\":\"52998224725\",\"phone\":\"11988887777\",\"recipient_name\":\"Cliente A Teste\",\"cep\":\"01001000\",\"street\":\"Rua Teste\",\"number\":\"10\",\"complement\":null,\"neighborhood\":\"Centro\",\"city\":\"São Paulo\",\"state\":\"SP\",\"created_at\":\"2026-11-11 02:06:41\"},\"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImVtYWlsIjoiY2xpZW50ZTFAdmVzdGViZW0uY29tIiwiaWF0IjoxNzk0MzYyODA0LCJleHAiOjE3OTQ5Njc2MDR9.Q2SX6oyTsqoA5_L6uuP36-zSFPdUg8K73dEoeHiHYKs\"}"
+  },
+  {
+   "who": "clienteA-sessao1",
+   "method": "PUT",
+   "path": "/api/auth/profile/password",
+   "body": {
+    "currentPassword": "cliente123",
+    "newPassword": "NovaSenhaTeste123"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Senha alterada com sucesso! Utilize a nova senha em seus próximos acessos.\"}"
+  },
+  {
+   "who": "clienteA-sessao2",
+   "method": "GET",
+   "path": "/api/auth/profile",
+   "status": 200,
+   "response": "{\"user\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"cliente1@vestebem.com\",\"role\":\"customer\",\"cpf\":\"52998224725\",\"phone\":\"11988887777\",\"recipient_name\":\"Cliente A Teste\",\"cep\":\"01001000\",\"street\":\"Rua Teste\",\"number\":\"10\",\"complement\":null,\"neighborhood\":\"Centro\",\"city\":\"São Paulo\",\"state\":\"SP\",\"created_at\":\"2026-11-11 02:06:41\"}}"
+  },
+  {
+   "who": "login-senha-antiga",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "cliente1@vestebem.com",
+    "password": "cliente123"
+   },
+   "status": 401,
+   "response": "{\"error\":\"Credenciais incorretas.\"}"
+  },
+  {
+   "who": "login-senha-nova",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "cliente1@vestebem.com",
+    "password": "NovaSenhaTeste123"
+   },
+   "status": 200,
+   "response": "{\"message\":\"Login realizado com sucesso!\",\"user\":{\"id\":1,\"name\":\"Cliente A Teste\",\"email\":\"cliente1@vestebem.com\",\"role\":\"customer\",\"cpf\":\"52998224725\",\"phone\":\"11988887777\",\"recipient_name\":\"Cliente A Teste\",\"cep\":\"01001000\",\"street\":\"Rua Teste\",\"number\":\"10\",\"complement\":null,\"neighborhood\":\"Centro\",\"city\":\"São Paulo\",\"state\":\"SP\",\"created_at\":\"2026-11-11 02:06:41\"},\"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImVtYWlsIjoiY2xpZW50ZTFAdmVzdGViZW0uY29tIiwiaWF0IjoxNzk0MzYyODA0LCJleHAiOjE3OTQ5Njc2MDR9.Q2SX6oyTsqoA5_L6uuP36-zSFPdUg8K73dEoeHiHYKs\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "cliente2@vestebem.com",
+    "password": "errada0"
+   },
+   "status": 401,
+   "response": "{\"error\":\"Credenciais incorretas.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "cliente2@vestebem.com",
+    "password": "errada1"
+   },
+   "status": 401,
+   "response": "{\"error\":\"Credenciais incorretas.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "cliente2@vestebem.com",
+    "password": "errada2"
+   },
+   "status": 401,
+   "response": "{\"error\":\"Credenciais incorretas.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "cliente2@vestebem.com",
+    "password": "errada3"
+   },
+   "status": 401,
+   "response": "{\"error\":\"Credenciais incorretas.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "cliente2@vestebem.com",
+    "password": "errada4"
+   },
+   "status": 401,
+   "response": "{\"error\":\"Credenciais incorretas.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "cliente2@vestebem.com",
+    "password": "errada5"
+   },
+   "status": 401,
+   "response": "{\"error\":\"Credenciais incorretas.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "cliente2@vestebem.com",
+    "password": "errada6"
+   },
+   "status": 401,
+   "response": "{\"error\":\"Credenciais incorretas.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "cliente2@vestebem.com",
+    "password": "errada7"
+   },
+   "status": 401,
+   "response": "{\"error\":\"Credenciais incorretas.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "cliente2@vestebem.com",
+    "password": "errada8"
+   },
+   "status": 401,
+   "response": "{\"error\":\"Credenciais incorretas.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "cliente2@vestebem.com",
+    "password": "errada9"
+   },
+   "status": 401,
+   "response": "{\"error\":\"Credenciais incorretas.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "cliente2@vestebem.com",
+    "password": "errada10"
+   },
+   "status": 401,
+   "response": "{\"error\":\"Credenciais incorretas.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "cliente2@vestebem.com",
+    "password": "errada11"
+   },
+   "status": 401,
+   "response": "{\"error\":\"Credenciais incorretas.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "cliente2@vestebem.com",
+    "password": "errada12"
+   },
+   "status": 401,
+   "response": "{\"error\":\"Credenciais incorretas.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "cliente2@vestebem.com",
+    "password": "errada13"
+   },
+   "status": 401,
+   "response": "{\"error\":\"Credenciais incorretas.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "cliente2@vestebem.com",
+    "password": "errada14"
+   },
+   "status": 401,
+   "response": "{\"error\":\"Credenciais incorretas.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "cliente2@vestebem.com",
+    "password": "errada15"
+   },
+   "status": 401,
+   "response": "{\"error\":\"Credenciais incorretas.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "cliente2@vestebem.com",
+    "password": "errada16"
+   },
+   "status": 401,
+   "response": "{\"error\":\"Credenciais incorretas.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "cliente2@vestebem.com",
+    "password": "errada17"
+   },
+   "status": 401,
+   "response": "{\"error\":\"Credenciais incorretas.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "cliente2@vestebem.com",
+    "password": "errada18"
+   },
+   "status": 401,
+   "response": "{\"error\":\"Credenciais incorretas.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "cliente2@vestebem.com",
+    "password": "errada19"
+   },
+   "status": 401,
+   "response": "{\"error\":\"Credenciais incorretas.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "cliente2@vestebem.com",
+    "password": "errada20"
+   },
+   "status": 401,
+   "response": "{\"error\":\"Credenciais incorretas.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "cliente2@vestebem.com",
+    "password": "errada21"
+   },
+   "status": 401,
+   "response": "{\"error\":\"Credenciais incorretas.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "cliente2@vestebem.com",
+    "password": "errada22"
+   },
+   "status": 401,
+   "response": "{\"error\":\"Credenciais incorretas.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "cliente2@vestebem.com",
+    "password": "errada23"
+   },
+   "status": 401,
+   "response": "{\"error\":\"Credenciais incorretas.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "cliente2@vestebem.com",
+    "password": "errada24"
+   },
+   "status": 401,
+   "response": "{\"error\":\"Credenciais incorretas.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "cliente2@vestebem.com",
+    "password": "errada25"
+   },
+   "status": 401,
+   "response": "{\"error\":\"Credenciais incorretas.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "cliente2@vestebem.com",
+    "password": "errada26"
+   },
+   "status": 401,
+   "response": "{\"error\":\"Credenciais incorretas.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "cliente2@vestebem.com",
+    "password": "errada27"
+   },
+   "status": 401,
+   "response": "{\"error\":\"Credenciais incorretas.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "cliente2@vestebem.com",
+    "password": "errada28"
+   },
+   "status": 401,
+   "response": "{\"error\":\"Credenciais incorretas.\"}"
+  },
+  {
+   "who": "forca-bruta",
+   "method": "POST",
+   "path": "/api/auth/login",
+   "body": {
+    "email": "cliente2@vestebem.com",
+    "password": "errada29"
+   },
+   "status": 401,
+   "response": "{\"error\":\"Credenciais incorretas.\"}"
+  }
+ ]
+}
